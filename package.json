@@ -1,6 +1,6 @@
 {
-  "name": "dexie",
-  "version": "2.0.1",
+  "name": "@cliqz-oss/dexie",
+  "version": "2.0.1-security-error-fix",
   "description": "A Minimalistic Wrapper for IndexedDB",
   "main": "dist/dexie.js",
   "module": "dist/dexie.es.js",
