@@ -1,4 +1,4 @@
-﻿// Type definitions for Dexie v2.0.1
+﻿// Type definitions for Dexie v2.0.1-security-error-fix
 // Project: https://github.com/dfahlander/Dexie.js
 // Definitions by: David Fahlander <http://github.com/dfahlander>
 

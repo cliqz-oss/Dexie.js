@@ -4,7 +4,7 @@
  *
  * By David Fahlander, david.fahlander@gmail.com
  *
- * Version 2.0.1, Mon Oct 02 2017
+ * Version 2.0.1-security-error-fix, Fri Dec 01 2017
  *
  * http://dexie.org
  *
@@ -294,7 +294,6 @@ function getArrayOf(arrayLike) {
 
 // By default, debug will be true only if platform is a web platform and its page is served from localhost.
 // When debug = true, error's stacks will contain asyncronic long stacks.
-// By default, debug will be true only if platform is a web platform and its page is served from localhost.
 var debug = typeof location !== 'undefined' &&
     // By default, use debug mode if served from localhost.
     /^(http|https):\/\/(localhost|127\.0\.0\.1)/.test(location.href);
@@ -690,7 +689,6 @@ var unhandledErrors = [];
 var rejectingErrors = [];
 var currentFulfiller = null;
 var rejectionMapper = mirror; // Remove in next major when removing error mapping of DOMErrors and DOMExceptions
-// Remove in next major when removing error mapping of DOMErrors and DOMExceptions
 var globalPSD = {
     id: 'global',
     global: true,
@@ -710,11 +708,8 @@ var globalPSD = {
 };
 var PSD = globalPSD;
 var microtickQueue = []; // Callbacks to call in this or next physical tick.
-// Callbacks to call in this or next physical tick.
 var numScheduledCalls = 0; // Number of listener-calls left to do in this physical tick.
-// Number of listener-calls left to do in this physical tick.
 var tickFinalizers = []; // Finalizers to call when there are no more async calls scheduled within current physical tick.
-// Finalizers to call when there are no more async calls scheduled within current physical tick.
 function Promise(fn) {
     if (typeof this !== 'object')
         throw new TypeError('Promises must be constructed via new');
@@ -772,7 +767,7 @@ var thenProp = {
     // and when that framework wants to restore the original property, we must identify that and restore the original property descriptor.
     set: function (value) {
         setProp(this, 'then', value && value.prototype === INTERNAL ?
-            thenProp :
+            thenProp : // Restore to original property descriptor.
             {
                 get: function () {
                     return value; // Getter returning provided value (behaves like value is just changed)
@@ -1480,13 +1475,13 @@ function Events(ctx) {
  *
  * By David Fahlander, david.fahlander@gmail.com
  *
- * Version 2.0.1, Mon Oct 02 2017
+ * Version 2.0.1-security-error-fix, Fri Dec 01 2017
  *
  * http://dexie.org
  *
  * Apache License Version 2.0, January 2004, http://www.apache.org/licenses/
  */
-var DEXIE_VERSION = '2.0.1';
+var DEXIE_VERSION = '2.0.1-security-error-fix';
 var maxString = String.fromCharCode(65535);
 var maxKey = (function () { try {
     IDBKeyRange.only([[]]);
@@ -1954,6 +1949,7 @@ function Dexie(dbName, options) {
                             adjustToExistingIndexNames(globalSchema, idbdb.transaction(safariMultiStoreFix(idbdb.objectStoreNames), READONLY));
                         }
                         catch (e) {
+                            // Safari may bail out if > 1 store names. However, this shouldnt be a showstopper. Issue #120.
                         }
                     }
                     idbdb.onversionchange = wrap(function (ev) {
@@ -2251,6 +2247,7 @@ function Dexie(dbName, options) {
                     Promise.resolve(returnValue).then(function (x) { return trans.active ?
                         x // Transaction still active. Continue.
                         : rejection(new exceptions.PrematureCommit("Transaction committed too early. See http://bit.ly/2kdckMn")); })
+                    // No promise returned. Wait for all outstanding promises before continuing. 
                     : promiseFollowed.then(function () { return returnValue; })).then(function (x) {
                     // sub transactions don't react to idbtrans.oncomplete. We must trigger a completion:
                     if (parentTransaction)
@@ -2419,7 +2416,7 @@ function Dexie(dbName, options) {
                 this.where(idx.name).equals(indexOrCrit[idx.keyPath])
                     .filter(simpleIndex[1]) :
                 compoundIndex ?
-                    this.filter(simpleIndex[1]) :
+                    this.filter(simpleIndex[1]) : // Has compound but browser bad. Allow filter.
                     this.where(keyPaths).equals(''); // No index at all. Fail lazily.
         },
         count: function (cb) {
@@ -4361,7 +4358,7 @@ props(Dexie, {
         //  3) setImmediate() is not supported in the ES standard.
         //  4) You might want to keep other PSD state that was set in a parent PSD, such as PSD.letThrough.
         return PSD.trans ?
-            usePSD(PSD.transless, scopeFunc) :
+            usePSD(PSD.transless, scopeFunc) : // Use the closest parent that was non-transactional.
             scopeFunc(); // No need to change scope because there is no ongoing transaction.
     },
     vip: function (fn) {
@@ -4462,8 +4459,18 @@ props(Dexie, {
     //
     dependencies: {
         // Required:
-        indexedDB: _global.indexedDB || _global.mozIndexedDB || _global.webkitIndexedDB || _global.msIndexedDB,
-        IDBKeyRange: _global.IDBKeyRange || _global.webkitIDBKeyRange
+        get indexedDB() {
+            try {
+                return _global.indexedDB || _global.mozIndexedDB || _global.webkitIndexedDB || _global.msIndexedDB;
+            }
+            catch (e) { }
+        },
+        get IDBKeyRange() {
+            try {
+                return _global.IDBKeyRange || _global.webkitIDBKeyRange;
+            }
+            catch (e) { }
+        }
     },
     // API Version Number: Type Number, make sure to always set a version number that can be comparable correctly. Example: 0.9, 0.91, 0.92, 1.0, 1.01, 1.1, 1.2, 1.21, etc.
     semVer: DEXIE_VERSION,
@@ -4495,14 +4502,18 @@ dbNamesDB.version(1).stores({ dbnames: 'name' });
 (function () {
     // Migrate from Dexie 1.x database names stored in localStorage:
     var DBNAMES = 'Dexie.DatabaseNames';
-    if (typeof localStorage !== undefined && _global.document !== undefined)
-        try {
-            // Have localStorage and is not executing in a worker. Lets migrate from Dexie 1.x.
-            JSON.parse(localStorage.getItem(DBNAMES) || "[]")
-                .forEach(function (name) { return dbNamesDB.dbnames.put({ name: name }).catch(nop); });
-            localStorage.removeItem(DBNAMES);
-        }
-        catch (_e) { }
+    try {
+        // typeof localStorage will throw error when cookie is disabled in FF
+        if (typeof localStorage !== undefined && _global.document !== undefined)
+            try {
+                // Have localStorage and is not executing in a worker. Lets migrate from Dexie 1.x.
+                JSON.parse(localStorage.getItem(DBNAMES) || "[]")
+                    .forEach(function (name) { return dbNamesDB.dbnames.put({ name: name }).catch(nop); });
+                localStorage.removeItem(DBNAMES);
+            }
+            catch (_e) { }
+    }
+    catch (e) { }
 })();
 
 return Dexie;

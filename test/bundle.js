@@ -166,6 +166,61 @@
         }
     }
 
+    var __generator = undefined && undefined.__generator || function (thisArg, body) {
+        var _ = { label: 0, sent: function () {
+                if (t[0] & 1) throw t[1];return t[1];
+            }, trys: [], ops: [] },
+            f,
+            y,
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
+        function verb(n) {
+            return function (v) {
+                return step([n, v]);
+            };
+        }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [0, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+            if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    };
     var db = new Dexie("TestDBTable");
     db.version(1).stores({
         users: "++id,first,last,&username,*&email,*pets",
@@ -395,45 +450,35 @@
             QUnit.ok(false, "Error: " + e);
         }).finally(QUnit.start);
     });
-    spawnedTest("bulkAdd", regeneratorRuntime.mark(function _callee() {
+    spawnedTest("bulkAdd", function () {
         var highestKey, result;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-            while (1) switch (_context.prev = _context.next) {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context.next = 2;
-                    return db.users.add({ username: "fsdkljfd", email: ["fjkljslk"] });
-
-                case 2:
-                    highestKey = _context.sent;
-
+                    return [4 /*yield*/, db.users.add({ username: "fsdkljfd", email: ["fjkljslk"] })];
+                case 1:
+                    highestKey = _a.sent();
                     QUnit.ok(true, "Highest key was: " + highestKey);
                     // Delete test item.
-                    _context.next = 6;
-                    return db.users.delete(highestKey);
-
-                case 6:
+                    return [4 /*yield*/, db.users.delete(highestKey)];
+                case 2:
+                    // Delete test item.
+                    _a.sent();
                     QUnit.ok(true, "Deleted test item");
-                    _context.next = 9;
-                    return db.users.bulkAdd([{ first: "Åke1", last: "Persbrant1", username: "aper1", email: ["aper1@persbrant.net"] }, { first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }]);
-
-                case 9:
-                    result = _context.sent;
-
+                    return [4 /*yield*/, db.users.bulkAdd([{ first: "Åke1", last: "Persbrant1", username: "aper1", email: ["aper1@persbrant.net"] }, { first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }])];
+                case 3:
+                    result = _a.sent();
                     QUnit.equal(result, highestKey + 2, "Result of bulkAdd() operation was equal to highestKey + 2");
-
-                case 11:
-                case 'end':
-                    return _context.stop();
+                    return [2 /*return*/];
             }
-        }, _callee, this);
-    }));
-    spawnedTest("bulkAdd-catching errors", regeneratorRuntime.mark(function _callee3() {
-        var newUsersX, newUsersY, newUsersZ;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
-            while (1) switch (_context3.prev = _context3.next) {
+        });
+    });
+    spawnedTest("bulkAdd-catching errors", function () {
+        var _a, newUsersX, e_1, _b, _c, newUsersY, e_2, _d, newUsersZ, _e;
+        return __generator(this, function (_f) {
+            switch (_f.label) {
                 case 0:
-                    _context3.next = 2;
-                    return db.transaction("rw", db.users, function () {
+                    return [4 /*yield*/, db.transaction("rw", db.users, function () {
                         var newUsers = [{ first: "Åke1", last: "Persbrant1", username: "aper1", email: ["aper1@persbrant.net"] }, { first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }, { first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }, { first: "Åke3", last: "Persbrant3", username: "aper3", email: ["aper3@persbrant.net"] }];
                         db.users.bulkAdd(newUsers).then(function () {
                             QUnit.ok(false, "Should not resolve when one operation failed");
@@ -445,173 +490,118 @@
                         db.users.where("username").startsWith("aper").count(function (count) {
                             QUnit.equal(count, 3, "Got three matches now when users are bulk-added");
                         });
-                    });
-
+                    })];
+                case 1:
+                    _f.sent();
+                    _a = QUnit.equal;
+                    return [4 /*yield*/, db.users.where("username").startsWith('aper').count()];
                 case 2:
-                    _context3.t0 = QUnit;
-                    _context3.next = 5;
-                    return db.users.where("username").startsWith('aper').count();
-
-                case 5:
-                    _context3.t1 = _context3.sent;
-
-                    _context3.t0.equal.call(_context3.t0, _context3.t1, 3, "Previous transaction committed");
-
+                    _a.apply(void 0, [_f.sent(), 3, "Previous transaction committed"]);
                     newUsersX = [{ first: "Xke1", last: "Persbrant1", username: "xper1", email: ["xper1@persbrant.net"] }, { first: "Xke2", last: "Persbrant2", username: "xper2", email: ["xper2@persbrant.net"] }, { first: "Xke2", last: "Persbrant2", username: "xper2", email: ["xper2@persbrant.net"] }, { first: "Xke3", last: "Persbrant3", username: "xper3", email: ["xper3@persbrant.net"] }];
-                    _context3.prev = 8;
-                    _context3.next = 11;
-                    return db.transaction("rw", db.users, function () {
+                    _f.label = 3;
+                case 3:
+                    _f.trys.push([3, 5,, 6]);
+                    return [4 /*yield*/, db.transaction("rw", db.users, function () {
                         db.users.bulkAdd(newUsersX).then(function () {
                             QUnit.ok(false, "Should not resolve");
                         });
-                    });
-
-                case 11:
+                    })];
+                case 4:
+                    _f.sent();
                     QUnit.ok(false, "Should not come here");
-                    _context3.next = 17;
-                    break;
-
-                case 14:
-                    _context3.prev = 14;
-                    _context3.t2 = _context3['catch'](8);
-
-                    QUnit.ok(true, "Got: " + _context3.t2);
-
-                case 17:
-                    _context3.t3 = QUnit;
-                    _context3.next = 20;
-                    return db.users.where('username').startsWith('xper').count();
-
-                case 20:
-                    _context3.t4 = _context3.sent;
-
-                    _context3.t3.equal.call(_context3.t3, _context3.t4, 0, "0 users! Good, means that previous transaction did not commit");
-
-                    _context3.next = 24;
-                    return db.users.bulkAdd(newUsersX).catch(function (e) {
-                        QUnit.ok(true, "Got error. Catching it should make the successors work.");
-                    });
-
-                case 24:
-                    _context3.t5 = QUnit;
-                    _context3.next = 27;
-                    return db.users.where('username').startsWith('xper').count();
-
-                case 27:
-                    _context3.t6 = _context3.sent;
-
-                    _context3.t5.equal.call(_context3.t5, _context3.t6, 3, "3 users! Good - means that previous operation catched and therefore committed");
-
-                    newUsersY = [{ first: "Yke1", last: "Persbrant1", username: "yper1", email: ["yper1@persbrant.net"] }, { first: "Yke2", last: "Persbrant2", username: "yper2", email: ["yper2@persbrant.net"] }, { first: "Yke2", last: "Persbrant2", username: "yper2", email: ["yper2@persbrant.net"] }, { first: "Yke3", last: "Persbrant3", username: "yper3", email: ["yper3@persbrant.net"] }];
-                    // Now check that catching the operation via try..catch should also make it succeed.
-
-                    _context3.prev = 30;
-                    _context3.next = 33;
-                    return db.users.bulkAdd(newUsersY);
-
-                case 33:
-                    _context3.next = 38;
-                    break;
-
-                case 35:
-                    _context3.prev = 35;
-                    _context3.t7 = _context3['catch'](30);
-
-                    QUnit.ok(true, "Got: " + _context3.t7);
-
-                case 38:
-                    _context3.t8 = QUnit;
-                    _context3.next = 41;
-                    return db.users.where('username').startsWith('yper').count();
-
-                case 41:
-                    _context3.t9 = _context3.sent;
-
-                    _context3.t8.equal.call(_context3.t8, _context3.t9, 3, "3 users! Good - means that previous operation catched (via try..yield..catch this time, and therefore committed");
-
-                    // Now check that catching and rethrowing should indeed make it fail
-                    newUsersZ = [{ first: "Zke1", last: "Persbrant1", username: "zper1", email: ["zper1@persbrant.net"] }, { first: "Zke2", last: "Persbrant2", username: "zper2", email: ["zper2@persbrant.net"] }, { first: "Zke2", last: "Persbrant2", username: "zper2", email: ["zper2@persbrant.net"] }, { first: "Zke3", last: "Persbrant3", username: "zper3", email: ["zper3@persbrant.net"] }];
-                    _context3.next = 46;
-                    return db.transaction('rw', db.users, regeneratorRuntime.mark(function _callee2() {
-                        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-                            while (1) switch (_context2.prev = _context2.next) {
-                                case 0:
-                                    _context2.prev = 0;
-                                    _context2.next = 3;
-                                    return db.users.bulkAdd(newUsersZ);
-
-                                case 3:
-                                    _context2.next = 8;
-                                    break;
-
-                                case 5:
-                                    _context2.prev = 5;
-                                    _context2.t0 = _context2['catch'](0);
-                                    throw _context2.t0;
-
-                                case 8:
-                                case 'end':
-                                    return _context2.stop();
-                            }
-                        }, _callee2, this, [[0, 5]]);
-                    })).catch(Dexie.BulkError, function (e) {
-                        QUnit.ok(true, "Got rethrown BulkError: " + e.stack);
-                    });
-
-                case 46:
-                    _context3.t10 = QUnit;
-                    _context3.next = 49;
-                    return db.users.where('username').startsWith('zper').count();
-
-                case 49:
-                    _context3.t11 = _context3.sent;
-
-                    _context3.t10.equal.call(_context3.t10, _context3.t11, 0, "0 users! Good - means that previous operation rethrown (via try..yield..catch--throw this time, and therefore not committed");
-
-                case 51:
-                case 'end':
-                    return _context3.stop();
-            }
-        }, _callee3, this, [[8, 14], [30, 35]]);
-    }));
-    spawnedTest("bulkAdd-non-inbound-autoincrement", regeneratorRuntime.mark(function _callee4() {
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
-            while (1) switch (_context4.prev = _context4.next) {
-                case 0:
-                    _context4.next = 2;
-                    return db.folks.bulkAdd([{ first: "Foo", last: "Bar" }, { first: "Foo", last: "Bar2" }, { first: "Foo", last: "Bar3" }, { first: "Foo", last: "Bar4" }]);
-
-                case 2:
-                    _context4.t0 = QUnit;
-                    _context4.next = 5;
-                    return db.folks.where('first').equals('Foo').count();
-
+                    return [3 /*break*/, 6];
                 case 5:
-                    _context4.t1 = _context4.sent;
-
-                    _context4.t0.equal.call(_context4.t0, _context4.t1, 4, "Should be 4 Foos");
-
-                    _context4.t2 = QUnit;
-                    _context4.next = 10;
-                    return db.folks.where('last').equals('Bar').count();
-
+                    e_1 = _f.sent();
+                    QUnit.ok(true, "Got: " + e_1);
+                    return [3 /*break*/, 6];
+                case 6:
+                    _b = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('username').startsWith('xper').count()];
+                case 7:
+                    _b.apply(void 0, [_f.sent(), 0, "0 users! Good, means that previous transaction did not commit"]);
+                    return [4 /*yield*/, db.users.bulkAdd(newUsersX).catch(function (e) {
+                        QUnit.ok(true, "Got error. Catching it should make the successors work.");
+                    })];
+                case 8:
+                    _f.sent();
+                    _c = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('username').startsWith('xper').count()];
+                case 9:
+                    _c.apply(void 0, [_f.sent(), 3, "3 users! Good - means that previous operation catched and therefore committed"]);
+                    newUsersY = [{ first: "Yke1", last: "Persbrant1", username: "yper1", email: ["yper1@persbrant.net"] }, { first: "Yke2", last: "Persbrant2", username: "yper2", email: ["yper2@persbrant.net"] }, { first: "Yke2", last: "Persbrant2", username: "yper2", email: ["yper2@persbrant.net"] }, { first: "Yke3", last: "Persbrant3", username: "yper3", email: ["yper3@persbrant.net"] }];
+                    _f.label = 10;
                 case 10:
-                    _context4.t3 = _context4.sent;
-
-                    _context4.t2.equal.call(_context4.t2, _context4.t3, 1, "Shoudl be 1 Bar");
-
+                    _f.trys.push([10, 12,, 13]);
+                    return [4 /*yield*/, db.users.bulkAdd(newUsersY)];
+                case 11:
+                    _f.sent();
+                    return [3 /*break*/, 13];
                 case 12:
-                case 'end':
-                    return _context4.stop();
+                    e_2 = _f.sent();
+                    QUnit.ok(true, "Got: " + e_2);
+                    return [3 /*break*/, 13];
+                case 13:
+                    _d = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('username').startsWith('yper').count()];
+                case 14:
+                    _d.apply(void 0, [_f.sent(), 3, "3 users! Good - means that previous operation catched (via try..yield..catch this time, and therefore committed"]);
+                    newUsersZ = [{ first: "Zke1", last: "Persbrant1", username: "zper1", email: ["zper1@persbrant.net"] }, { first: "Zke2", last: "Persbrant2", username: "zper2", email: ["zper2@persbrant.net"] }, { first: "Zke2", last: "Persbrant2", username: "zper2", email: ["zper2@persbrant.net"] }, { first: "Zke3", last: "Persbrant3", username: "zper3", email: ["zper3@persbrant.net"] }];
+                    return [4 /*yield*/, db.transaction('rw', db.users, function () {
+                        var e_3;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    _a.trys.push([0, 2,, 3]);
+                                    return [4 /*yield*/, db.users.bulkAdd(newUsersZ)];
+                                case 1:
+                                    _a.sent();
+                                    return [3 /*break*/, 3];
+                                case 2:
+                                    e_3 = _a.sent();
+                                    throw e_3;
+                                case 3:
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }).catch(Dexie.BulkError, function (e) {
+                        QUnit.ok(true, "Got rethrown BulkError: " + e.stack);
+                    })];
+                case 15:
+                    _f.sent();
+                    _e = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('username').startsWith('zper').count()];
+                case 16:
+                    _e.apply(void 0, [_f.sent(), 0, "0 users! Good - means that previous operation rethrown (via try..yield..catch--throw this time, and therefore not committed"]);
+                    return [2 /*return*/];
             }
-        }, _callee4, this);
-    }));
-    spawnedTest("bulkAdd-catch sub transaction", regeneratorRuntime.mark(function _callee5() {
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
-            while (1) switch (_context5.prev = _context5.next) {
+        });
+    });
+    spawnedTest("bulkAdd-non-inbound-autoincrement", function () {
+        var _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _context5.next = 2;
-                    return db.transaction('rw', db.users, function () {
+                    return [4 /*yield*/, db.folks.bulkAdd([{ first: "Foo", last: "Bar" }, { first: "Foo", last: "Bar2" }, { first: "Foo", last: "Bar3" }, { first: "Foo", last: "Bar4" }])];
+                case 1:
+                    _c.sent();
+                    _a = QUnit.equal;
+                    return [4 /*yield*/, db.folks.where('first').equals('Foo').count()];
+                case 2:
+                    _a.apply(void 0, [_c.sent(), 4, "Should be 4 Foos"]);
+                    _b = QUnit.equal;
+                    return [4 /*yield*/, db.folks.where('last').equals('Bar').count()];
+                case 3:
+                    _b.apply(void 0, [_c.sent(), 1, "Shoudl be 1 Bar"]);
+                    return [2 /*return*/];
+            }
+        });
+    });
+    spawnedTest("bulkAdd-catch sub transaction", function () {
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    return [4 /*yield*/, db.transaction('rw', db.users, function () {
                         var newUsers = [{ first: "Åke1", last: "Persbrant1", username: "aper1", email: ["aper1@persbrant.net"] }, { first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }, { first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }, { first: "Åke3", last: "Persbrant3", username: "aper3", email: ["aper3@persbrant.net"] }];
                         db.transaction('rw', db.users, function () {
                             db.users.bulkAdd(newUsers);
@@ -622,114 +612,81 @@
                         });
                     }).catch(function (e) {
                         QUnit.ok(true, "Outer transaction aborted due to inner transaction abort. This is ok: " + e);
-                    });
-
+                    })];
+                case 1:
+                    _b.sent();
+                    _a = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('username').startsWith('aper').count()];
                 case 2:
-                    _context5.t0 = QUnit;
-                    _context5.next = 5;
-                    return db.users.where('username').startsWith('aper').count();
-
-                case 5:
-                    _context5.t1 = _context5.sent;
-
-                    _context5.t0.equal.call(_context5.t0, _context5.t1, 0, "0 users! Good, means that inner transaction did not commit");
-
-                case 7:
-                case 'end':
-                    return _context5.stop();
+                    _a.apply(void 0, [_b.sent(), 0, "0 users! Good, means that inner transaction did not commit"]);
+                    return [2 /*return*/];
             }
-        }, _callee5, this);
-    }));
-    spawnedTest("bulkPut", regeneratorRuntime.mark(function _callee6() {
+        });
+    });
+    spawnedTest("bulkPut", function () {
         var highestKey, existingFirstUserToReplace, result, ourAddedUsers, replacedDfahlander;
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
-            while (1) switch (_context6.prev = _context6.next) {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context6.next = 2;
-                    return db.users.add({ username: "fsdkljfd", email: ["fjkljslk"] });
-
-                case 2:
-                    highestKey = _context6.sent;
-
+                    return [4 /*yield*/, db.users.add({ username: "fsdkljfd", email: ["fjkljslk"] })];
+                case 1:
+                    highestKey = _a.sent();
                     QUnit.ok(true, "Highest key was: " + highestKey);
                     // Delete test item.
-                    _context6.next = 6;
-                    return db.users.delete(highestKey);
-
-                case 6:
+                    return [4 /*yield*/, db.users.delete(highestKey)];
+                case 2:
+                    // Delete test item.
+                    _a.sent();
                     QUnit.ok(true, "Deleted test item");
-                    _context6.next = 9;
-                    return db.users.get(idOfFirstUser);
-
-                case 9:
-                    existingFirstUserToReplace = _context6.sent;
-
+                    return [4 /*yield*/, db.users.get(idOfFirstUser)];
+                case 3:
+                    existingFirstUserToReplace = _a.sent();
                     QUnit.equal(existingFirstUserToReplace.username, "dfahlander", "Existing user should be dfahlander");
-                    _context6.next = 13;
-                    return db.users.bulkPut([{ first: "Åke1", last: "Persbrant1", username: "aper1", email: ["aper1@persbrant.net"] }, { id: idOfFirstUser, first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }, { first: "Åke3", last: "Persbrant3", username: "aper3", email: ["aper3@persbrant.net"] }]);
-
-                case 13:
-                    result = _context6.sent;
-
+                    return [4 /*yield*/, db.users.bulkPut([{ first: "Åke1", last: "Persbrant1", username: "aper1", email: ["aper1@persbrant.net"] }, { id: idOfFirstUser, first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }, { first: "Åke3", last: "Persbrant3", username: "aper3", email: ["aper3@persbrant.net"] }])];
+                case 4:
+                    result = _a.sent();
                     QUnit.equal(result, highestKey + 2, "Result of bulkPut() operation was equal to highestKey + 2");
-                    _context6.next = 17;
-                    return db.users.where('username').startsWith("aper").toArray();
-
-                case 17:
-                    ourAddedUsers = _context6.sent;
-
+                    return [4 /*yield*/, db.users.where('username').startsWith("aper").toArray()];
+                case 5:
+                    ourAddedUsers = _a.sent();
                     QUnit.equal(ourAddedUsers.length, 3, "Should have put 3 users there (two additions and one replaced");
-                    _context6.next = 21;
-                    return db.users.get(idOfFirstUser);
-
-                case 21:
-                    replacedDfahlander = _context6.sent;
-
+                    return [4 /*yield*/, db.users.get(idOfFirstUser)];
+                case 6:
+                    replacedDfahlander = _a.sent();
                     QUnit.equal(replacedDfahlander.username, "aper2", "dfahlander Should now be aper2 instead");
-
-                case 23:
-                case 'end':
-                    return _context6.stop();
+                    return [2 /*return*/];
             }
-        }, _callee6, this);
-    }));
-    spawnedTest("bulkPut with overlapping objects", regeneratorRuntime.mark(function _callee7() {
+        });
+    });
+    spawnedTest("bulkPut with overlapping objects", function () {
         var theOne;
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
-            while (1) switch (_context7.prev = _context7.next) {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context7.next = 2;
-                    return db.users.bulkPut([{
+                    return [4 /*yield*/, db.users.bulkPut([{
                         id: "sdjls83",
                         first: "Daveious"
                     }, {
                         id: "sdjls83",
                         last: "Olvono"
-                    }]);
-
+                    }])];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, db.users.get("sdjls83")];
                 case 2:
-                    _context7.next = 4;
-                    return db.users.get("sdjls83");
-
-                case 4:
-                    theOne = _context7.sent;
-
+                    theOne = _a.sent();
                     QUnit.equal(theOne.last, "Olvono", "Last item is the one inserted");
                     QUnit.ok(theOne.first === undefined, "Object doesnt have a first property");
-
-                case 7:
-                case 'end':
-                    return _context7.stop();
+                    return [2 /*return*/];
             }
-        }, _callee7, this);
-    }));
-    spawnedTest("bulkPut-catching errors", regeneratorRuntime.mark(function _callee9() {
-        var newUsersX, newUsersY, newUsersZ;
-        return regeneratorRuntime.wrap(function _callee9$(_context9) {
-            while (1) switch (_context9.prev = _context9.next) {
+        });
+    });
+    spawnedTest("bulkPut-catching errors", function () {
+        var _a, newUsersX, e_4, _b, _c, newUsersY, e_5, _d, newUsersZ, _e;
+        return __generator(this, function (_f) {
+            switch (_f.label) {
                 case 0:
-                    _context9.next = 2;
-                    return db.transaction("rw", db.users, function () {
+                    return [4 /*yield*/, db.transaction("rw", db.users, function () {
                         var newUsers = [{ first: "Åke1", last: "Persbrant1", username: "aper1", email: ["aper1@persbrant.net"] }, { id: idOfLastUser, first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }, { id: idOfFirstUser, first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }, { first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }, { first: "Åke3", last: "Persbrant3", username: "aper3", email: ["aper3@persbrant.net"] }];
                         db.users.bulkPut(newUsers).then(function () {
                             QUnit.ok(false, "Should not resolve when one operation failed");
@@ -741,244 +698,158 @@
                         db.users.where("username").startsWith("aper").count(function (count) {
                             QUnit.equal(count, 3, "Got three matches now when users are bulk-putted");
                         });
-                    });
-
+                    })];
+                case 1:
+                    _f.sent();
+                    _a = QUnit.equal;
+                    return [4 /*yield*/, db.users.where("username").startsWith('aper').count()];
                 case 2:
-                    _context9.t0 = QUnit;
-                    _context9.next = 5;
-                    return db.users.where("username").startsWith('aper').count();
-
-                case 5:
-                    _context9.t1 = _context9.sent;
-
-                    _context9.t0.equal.call(_context9.t0, _context9.t1, 3, "Previous transaction committed");
-
+                    _a.apply(void 0, [_f.sent(), 3, "Previous transaction committed"]);
                     newUsersX = [{ first: "Xke1", last: "Persbrant1", username: "xper1", email: ["xper1@persbrant.net"] }, { id: idOfLastUser, first: "Xke2", last: "Persbrant2", username: "xper2", email: ["xper2@persbrant.net"] }, { first: "Xke2", last: "Persbrant2", username: "xper2", email: ["xper2@persbrant.net"] }, { id: idOfFirstUser, first: "Xke2", last: "Persbrant2", username: "xper2", email: ["xper2@persbrant.net"] }, { first: "Xke3", last: "Persbrant3", username: "xper3", email: ["xper3@persbrant.net"] }];
-                    _context9.prev = 8;
-                    _context9.next = 11;
-                    return db.transaction("rw", db.users, function () {
+                    _f.label = 3;
+                case 3:
+                    _f.trys.push([3, 5,, 6]);
+                    return [4 /*yield*/, db.transaction("rw", db.users, function () {
                         db.users.bulkPut(newUsersX).then(function () {
                             QUnit.ok(false, "Should not resolve");
                         });
-                    });
-
-                case 11:
+                    })];
+                case 4:
+                    _f.sent();
                     QUnit.ok(false, "Should not come here");
-                    _context9.next = 17;
-                    break;
-
-                case 14:
-                    _context9.prev = 14;
-                    _context9.t2 = _context9['catch'](8);
-
-                    QUnit.ok(true, "Got: " + _context9.t2);
-
-                case 17:
-                    _context9.t3 = QUnit;
-                    _context9.next = 20;
-                    return db.users.where('username').startsWith('xper').count();
-
-                case 20:
-                    _context9.t4 = _context9.sent;
-
-                    _context9.t3.equal.call(_context9.t3, _context9.t4, 0, "0 users! Good, means that previous transaction did not commit");
-
-                    _context9.next = 24;
-                    return db.users.bulkPut(newUsersX).catch(function (e) {
-                        QUnit.ok(true, "Got error. Catching it should make the successors work.");
-                    });
-
-                case 24:
-                    _context9.t5 = QUnit;
-                    _context9.next = 27;
-                    return db.users.where('username').startsWith('xper').count();
-
-                case 27:
-                    _context9.t6 = _context9.sent;
-
-                    _context9.t5.equal.call(_context9.t5, _context9.t6, 3, "Should count to 3 users because previous operation was catched and therefore should have been committed");
-
-                    newUsersY = [{ first: "Yke1", last: "Persbrant1", username: "yper1", email: ["yper1@persbrant.net"] }, { first: "Yke2", last: "Persbrant2", username: "yper2", email: ["yper2@persbrant.net"] }, { id: idOfFirstUser, first: "Yke2", last: "Persbrant2", username: "yper2", email: ["yper2@persbrant.net"] }, { first: "Yke2", last: "Persbrant2", username: "yper2", email: ["yper2@persbrant.net"] }, { first: "Yke3", last: "Persbrant3", username: "yper3", email: ["yper3@persbrant.net"] }];
-                    // Now check that catching the operation via try..catch should also make it succeed.
-
-                    _context9.prev = 30;
-                    _context9.next = 33;
-                    return db.users.bulkPut(newUsersY);
-
-                case 33:
-                    _context9.next = 38;
-                    break;
-
-                case 35:
-                    _context9.prev = 35;
-                    _context9.t7 = _context9['catch'](30);
-
-                    QUnit.ok(true, "Got: " + _context9.t7);
-
-                case 38:
-                    _context9.t8 = QUnit;
-                    _context9.next = 41;
-                    return db.users.where('username').startsWith('yper').count();
-
-                case 41:
-                    _context9.t9 = _context9.sent;
-
-                    _context9.t8.equal.call(_context9.t8, _context9.t9, 3, "Should count to 3 users because previous previous operation catched (via try..yield..catch this time, and therefore should have been committed");
-
-                    // Now check that catching and rethrowing should indeed make it fail
-                    newUsersZ = [{ first: "Zke1", last: "Persbrant1", username: "zper1", email: ["zper1@persbrant.net"] }, { first: "Zke2", last: "Persbrant2", username: "zper2", email: ["zper2@persbrant.net"] }, { first: "Zke2", last: "Persbrant2", username: "zper2", email: ["zper2@persbrant.net"] }, { id: idOfLastUser, first: "Zke2", last: "Persbrant2", username: "zper2", email: ["zper2@persbrant.net"] }, { first: "Zke3", last: "Persbrant3", username: "zper3", email: ["zper3@persbrant.net"] }];
-                    _context9.next = 46;
-                    return db.transaction('rw', db.users, regeneratorRuntime.mark(function _callee8() {
-                        return regeneratorRuntime.wrap(function _callee8$(_context8) {
-                            while (1) switch (_context8.prev = _context8.next) {
-                                case 0:
-                                    _context8.prev = 0;
-                                    _context8.next = 3;
-                                    return db.users.bulkPut(newUsersZ);
-
-                                case 3:
-                                    _context8.next = 8;
-                                    break;
-
-                                case 5:
-                                    _context8.prev = 5;
-                                    _context8.t0 = _context8['catch'](0);
-                                    throw _context8.t0;
-
-                                case 8:
-                                case 'end':
-                                    return _context8.stop();
-                            }
-                        }, _callee8, this, [[0, 5]]);
-                    })).catch(Dexie.BulkError, function (e) {
-                        QUnit.ok(true, "Got rethrown BulkError: " + e.stack);
-                    });
-
-                case 46:
-                    _context9.t10 = QUnit;
-                    _context9.next = 49;
-                    return db.users.where('username').startsWith('zper').count();
-
-                case 49:
-                    _context9.t11 = _context9.sent;
-
-                    _context9.t10.equal.call(_context9.t10, _context9.t11, 0, "0 users! Good - means that previous operation rethrown (via try..yield..catch--throw this time, and therefore not committed");
-
-                case 51:
-                case 'end':
-                    return _context9.stop();
-            }
-        }, _callee9, this, [[8, 14], [30, 35]]);
-    }));
-    spawnedTest("bulkPut-non-inbound-autoincrement", regeneratorRuntime.mark(function _callee10() {
-        return regeneratorRuntime.wrap(function _callee10$(_context10) {
-            while (1) switch (_context10.prev = _context10.next) {
-                case 0:
-                    _context10.next = 2;
-                    return db.folks.bulkPut([{ first: "Foo", last: "Bar" }, { first: "Foo", last: "Bar2" }, { first: "Foo", last: "Bar3" }, { first: "Foo", last: "Bar4" }]);
-
-                case 2:
-                    _context10.t0 = QUnit;
-                    _context10.next = 5;
-                    return db.folks.where('first').equals('Foo').count();
-
+                    return [3 /*break*/, 6];
                 case 5:
-                    _context10.t1 = _context10.sent;
-
-                    _context10.t0.equal.call(_context10.t0, _context10.t1, 4, "Should be 4 Foos");
-
-                    _context10.t2 = QUnit;
-                    _context10.next = 10;
-                    return db.folks.where('last').equals('Bar').count();
-
-                case 10:
-                    _context10.t3 = _context10.sent;
-
-                    _context10.t2.equal.call(_context10.t2, _context10.t3, 1, "Should be 1 Bar");
-
-                case 12:
-                case 'end':
-                    return _context10.stop();
-            }
-        }, _callee10, this);
-    }));
-    spawnedTest("bulkPut - mixed inbound autoIncrement", regeneratorRuntime.mark(function _callee11() {
-        var lastId, newLastId, foo2s;
-        return regeneratorRuntime.wrap(function _callee11$(_context11) {
-            while (1) switch (_context11.prev = _context11.next) {
-                case 0:
-                    _context11.next = 2;
-                    return db.users.bulkPut([{ first: "Foo", last: "Bar" }, { first: "Foo", last: "Bar2" }, { first: "Foo", last: "Bar3" }, { first: "Foo", last: "Bar4" }]);
-
-                case 2:
-                    lastId = _context11.sent;
-                    _context11.t0 = QUnit;
-                    _context11.next = 6;
-                    return db.users.where('first').equals('Foo').count();
-
+                    e_4 = _f.sent();
+                    QUnit.ok(true, "Got: " + e_4);
+                    return [3 /*break*/, 6];
                 case 6:
-                    _context11.t1 = _context11.sent;
-
-                    _context11.t0.equal.call(_context11.t0, _context11.t1, 4, "Should be 4 Foos");
-
-                    _context11.t2 = QUnit;
-                    _context11.next = 11;
-                    return db.users.where('last').equals('Bar').count();
-
+                    _b = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('username').startsWith('xper').count()];
+                case 7:
+                    _b.apply(void 0, [_f.sent(), 0, "0 users! Good, means that previous transaction did not commit"]);
+                    return [4 /*yield*/, db.users.bulkPut(newUsersX).catch(function (e) {
+                        QUnit.ok(true, "Got error. Catching it should make the successors work.");
+                    })];
+                case 8:
+                    _f.sent();
+                    _c = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('username').startsWith('xper').count()];
+                case 9:
+                    _c.apply(void 0, [_f.sent(), 3, "Should count to 3 users because previous operation was catched and therefore should have been committed"]);
+                    newUsersY = [{ first: "Yke1", last: "Persbrant1", username: "yper1", email: ["yper1@persbrant.net"] }, { first: "Yke2", last: "Persbrant2", username: "yper2", email: ["yper2@persbrant.net"] }, { id: idOfFirstUser, first: "Yke2", last: "Persbrant2", username: "yper2", email: ["yper2@persbrant.net"] }, { first: "Yke2", last: "Persbrant2", username: "yper2", email: ["yper2@persbrant.net"] }, { first: "Yke3", last: "Persbrant3", username: "yper3", email: ["yper3@persbrant.net"] }];
+                    _f.label = 10;
+                case 10:
+                    _f.trys.push([10, 12,, 13]);
+                    return [4 /*yield*/, db.users.bulkPut(newUsersY)];
                 case 11:
-                    _context11.t3 = _context11.sent;
-
-                    _context11.t2.equal.call(_context11.t2, _context11.t3, 1, "Should be 1 Bar");
-
-                    _context11.next = 15;
-                    return db.users.bulkPut([{ id: lastId - 3, first: "Foo2", last: "BarA" }, { first: "Foo2", last: "BarB" }, { id: lastId - 1, first: "Foo2", last: "BarC" }, { first: "Foo2", last: "BarD" } // Will create
-                    ]);
-
+                    _f.sent();
+                    return [3 /*break*/, 13];
+                case 12:
+                    e_5 = _f.sent();
+                    QUnit.ok(true, "Got: " + e_5);
+                    return [3 /*break*/, 13];
+                case 13:
+                    _d = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('username').startsWith('yper').count()];
+                case 14:
+                    _d.apply(void 0, [_f.sent(), 3, "Should count to 3 users because previous previous operation catched (via try..yield..catch this time, and therefore should have been committed"]);
+                    newUsersZ = [{ first: "Zke1", last: "Persbrant1", username: "zper1", email: ["zper1@persbrant.net"] }, { first: "Zke2", last: "Persbrant2", username: "zper2", email: ["zper2@persbrant.net"] }, { first: "Zke2", last: "Persbrant2", username: "zper2", email: ["zper2@persbrant.net"] }, { id: idOfLastUser, first: "Zke2", last: "Persbrant2", username: "zper2", email: ["zper2@persbrant.net"] }, { first: "Zke3", last: "Persbrant3", username: "zper3", email: ["zper3@persbrant.net"] }];
+                    return [4 /*yield*/, db.transaction('rw', db.users, function () {
+                        var e_6;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    _a.trys.push([0, 2,, 3]);
+                                    return [4 /*yield*/, db.users.bulkPut(newUsersZ)];
+                                case 1:
+                                    _a.sent();
+                                    return [3 /*break*/, 3];
+                                case 2:
+                                    e_6 = _a.sent();
+                                    throw e_6;
+                                case 3:
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }).catch(Dexie.BulkError, function (e) {
+                        QUnit.ok(true, "Got rethrown BulkError: " + e.stack);
+                    })];
                 case 15:
-                    newLastId = _context11.sent;
-
+                    _f.sent();
+                    _e = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('username').startsWith('zper').count()];
+                case 16:
+                    _e.apply(void 0, [_f.sent(), 0, "0 users! Good - means that previous operation rethrown (via try..yield..catch--throw this time, and therefore not committed"]);
+                    return [2 /*return*/];
+            }
+        });
+    });
+    spawnedTest("bulkPut-non-inbound-autoincrement", function () {
+        var _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    return [4 /*yield*/, db.folks.bulkPut([{ first: "Foo", last: "Bar" }, { first: "Foo", last: "Bar2" }, { first: "Foo", last: "Bar3" }, { first: "Foo", last: "Bar4" }])];
+                case 1:
+                    _c.sent();
+                    _a = QUnit.equal;
+                    return [4 /*yield*/, db.folks.where('first').equals('Foo').count()];
+                case 2:
+                    _a.apply(void 0, [_c.sent(), 4, "Should be 4 Foos"]);
+                    _b = QUnit.equal;
+                    return [4 /*yield*/, db.folks.where('last').equals('Bar').count()];
+                case 3:
+                    _b.apply(void 0, [_c.sent(), 1, "Should be 1 Bar"]);
+                    return [2 /*return*/];
+            }
+        });
+    });
+    spawnedTest("bulkPut - mixed inbound autoIncrement", function () {
+        var lastId, _a, _b, newLastId, _c, _d, foo2s;
+        return __generator(this, function (_e) {
+            switch (_e.label) {
+                case 0:
+                    return [4 /*yield*/, db.users.bulkPut([{ first: "Foo", last: "Bar" }, { first: "Foo", last: "Bar2" }, { first: "Foo", last: "Bar3" }, { first: "Foo", last: "Bar4" }])];
+                case 1:
+                    lastId = _e.sent();
+                    _a = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('first').equals('Foo').count()];
+                case 2:
+                    _a.apply(void 0, [_e.sent(), 4, "Should be 4 Foos"]);
+                    _b = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('last').equals('Bar').count()];
+                case 3:
+                    _b.apply(void 0, [_e.sent(), 1, "Should be 1 Bar"]);
+                    return [4 /*yield*/, db.users.bulkPut([{ id: lastId - 3, first: "Foo2", last: "BarA" }, { first: "Foo2", last: "BarB" }, { id: lastId - 1, first: "Foo2", last: "BarC" }, { first: "Foo2", last: "BarD" // Will create
+                    }])];
+                case 4:
+                    newLastId = _e.sent();
                     QUnit.equal(newLastId, lastId + 2, "Should have incremented last ID twice now");
-                    _context11.t4 = QUnit;
-                    _context11.next = 20;
-                    return db.users.where('first').equals('Foo').count();
-
-                case 20:
-                    _context11.t5 = _context11.sent;
-
-                    _context11.t4.equal.call(_context11.t4, _context11.t5, 2, "Should be 2 Foos now");
-
-                    _context11.t6 = QUnit;
-                    _context11.next = 25;
-                    return db.users.where('first').equals('Foo2').count();
-
-                case 25:
-                    _context11.t7 = _context11.sent;
-
-                    _context11.t6.equal.call(_context11.t6, _context11.t7, 4, "Should be 4 Foo2s now");
-
-                    _context11.next = 29;
-                    return db.users.where('first').equals('Foo2').toArray();
-
-                case 29:
-                    foo2s = _context11.sent;
-
+                    _c = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('first').equals('Foo').count()];
+                case 5:
+                    _c.apply(void 0, [_e.sent(), 2, "Should be 2 Foos now"]);
+                    _d = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('first').equals('Foo2').count()];
+                case 6:
+                    _d.apply(void 0, [_e.sent(), 4, "Should be 4 Foo2s now"]);
+                    return [4 /*yield*/, db.users.where('first').equals('Foo2').toArray()];
+                case 7:
+                    foo2s = _e.sent();
                     QUnit.equal(foo2s[0].last, "BarA", "BarA should be first (updated previous ID)");
                     QUnit.equal(foo2s[1].last, "BarC", "BarC should be second (updated previous ID");
                     QUnit.equal(foo2s[2].last, "BarB", "BarB should be third (got new key)");
                     QUnit.equal(foo2s[3].last, "BarD", "BarD should be forth (got new key)");
-
-                case 34:
-                case 'end':
-                    return _context11.stop();
+                    return [2 /*return*/];
             }
-        }, _callee11, this);
-    }));
-    spawnedTest("bulkPut-catch sub transaction", regeneratorRuntime.mark(function _callee12() {
-        return regeneratorRuntime.wrap(function _callee12$(_context12) {
-            while (1) switch (_context12.prev = _context12.next) {
+        });
+    });
+    spawnedTest("bulkPut-catch sub transaction", function () {
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    _context12.next = 2;
-                    return db.transaction('rw', db.users, function () {
+                    return [4 /*yield*/, db.transaction('rw', db.users, function () {
                         var newUsers = [{ first: "Åke1", last: "Persbrant1", username: "aper1", email: ["aper1@persbrant.net"] }, { first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }, { first: "Åke2", last: "Persbrant2", username: "aper2", email: ["aper2@persbrant.net"] }, { first: "Åke3", last: "Persbrant3", username: "aper3", email: ["aper3@persbrant.net"] }];
                         db.transaction('rw', db.users, function () {
                             db.users.bulkPut(newUsers);
@@ -989,102 +860,74 @@
                         });
                     }).catch(function (e) {
                         QUnit.ok(true, "Outer transaction aborted due to inner transaction abort. This is ok: " + e);
-                    });
-
+                    })];
+                case 1:
+                    _b.sent();
+                    _a = QUnit.equal;
+                    return [4 /*yield*/, db.users.where('username').startsWith('aper').count()];
                 case 2:
-                    _context12.t0 = QUnit;
-                    _context12.next = 5;
-                    return db.users.where('username').startsWith('aper').count();
-
-                case 5:
-                    _context12.t1 = _context12.sent;
-
-                    _context12.t0.equal.call(_context12.t0, _context12.t1, 0, "0 users! Good, means that inner transaction did not commit");
-
-                case 7:
-                case 'end':
-                    return _context12.stop();
+                    _a.apply(void 0, [_b.sent(), 0, "0 users! Good, means that inner transaction did not commit"]);
+                    return [2 /*return*/];
             }
-        }, _callee12, this);
-    }));
-    spawnedTest("bulkDelete", regeneratorRuntime.mark(function _callee13() {
+        });
+    });
+    spawnedTest("bulkDelete", function () {
         var userKeys, userCount;
-        return regeneratorRuntime.wrap(function _callee13$(_context13) {
-            while (1) switch (_context13.prev = _context13.next) {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context13.next = 2;
-                    return db.users.orderBy('id').keys();
-
-                case 2:
-                    userKeys = _context13.sent;
-
+                    return [4 /*yield*/, db.users.orderBy('id').keys()];
+                case 1:
+                    userKeys = _a.sent();
                     QUnit.ok(userKeys.length > 0, "User keys found: " + userKeys.join(','));
-                    _context13.next = 6;
-                    return db.users.bulkDelete(userKeys);
-
-                case 6:
-                    _context13.next = 8;
-                    return db.users.count();
-
-                case 8:
-                    userCount = _context13.sent;
-
-                    QUnit.equal(userCount, 0, "Should be no users there now");
-
-                case 10:
-                case 'end':
-                    return _context13.stop();
-            }
-        }, _callee13, this);
-    }));
-    spawnedTest("bulkDelete - nonexisting keys", regeneratorRuntime.mark(function _callee14() {
-        var userKeys, userCount;
-        return regeneratorRuntime.wrap(function _callee14$(_context14) {
-            while (1) switch (_context14.prev = _context14.next) {
-                case 0:
-                    _context14.next = 2;
-                    return db.users.orderBy(':id').lastKey();
-
+                    return [4 /*yield*/, db.users.bulkDelete(userKeys)];
                 case 2:
-                    _context14.t0 = _context14.sent;
-                    userKeys = ["nonexisting1", "nonexisting2", _context14.t0];
-                    _context14.next = 6;
-                    return db.users.bulkDelete(userKeys);
-
-                case 6:
-                    _context14.next = 8;
-                    return db.users.count();
-
-                case 8:
-                    userCount = _context14.sent;
-
-                    QUnit.equal(userCount, 1, "Should be one user there now. (the other should have been deleted)");
-
-                case 10:
-                case 'end':
-                    return _context14.stop();
+                    _a.sent();
+                    return [4 /*yield*/, db.users.count()];
+                case 3:
+                    userCount = _a.sent();
+                    QUnit.equal(userCount, 0, "Should be no users there now");
+                    return [2 /*return*/];
             }
-        }, _callee14, this);
-    }));
-    spawnedTest("bulkDelete-faulty-key", regeneratorRuntime.mark(function _callee15() {
+        });
+    });
+    spawnedTest("bulkDelete - nonexisting keys", function () {
+        var userKeys, _a, userCount;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _a = ["nonexisting1", "nonexisting2"];
+                    return [4 /*yield*/, db.users.orderBy(':id').lastKey()];
+                case 1:
+                    userKeys = _a.concat([_b.sent()]);
+                    return [4 /*yield*/, db.users.bulkDelete(userKeys)];
+                case 2:
+                    _b.sent();
+                    return [4 /*yield*/, db.users.count()];
+                case 3:
+                    userCount = _b.sent();
+                    QUnit.equal(userCount, 1, "Should be one user there now. (the other should have been deleted)");
+                    return [2 /*return*/];
+            }
+        });
+    });
+    spawnedTest("bulkDelete-faulty-key", function () {
         var userKeys;
-        return regeneratorRuntime.wrap(function _callee15$(_context15) {
-            while (1) switch (_context15.prev = _context15.next) {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     userKeys = [{ faulty: "ohyes" }];
-                    _context15.next = 3;
-                    return db.users.bulkDelete(userKeys).then(function () {
+                    return [4 /*yield*/, db.users.bulkDelete(userKeys).then(function () {
                         QUnit.ok(false, "Should not succeed");
                     }).catch('DataError', function (e) {
                         QUnit.ok(true, "Should get error: " + e);
-                    });
-
-                case 3:
-                case 'end':
-                    return _context15.stop();
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee15, this);
-    }));
+        });
+    });
     QUnit.asyncTest("delete", function () {
         // Without transaction
         db.users.get(idOfFirstUser, function (user) {
@@ -1145,64 +988,56 @@
             QUnit.ok(false, e);
         }).finally(QUnit.start);
     });
-    spawnedTest("failReadonly", regeneratorRuntime.mark(function _callee17() {
-        return regeneratorRuntime.wrap(function _callee17$(_context17) {
-            while (1) switch (_context17.prev = _context17.next) {
+    spawnedTest("failReadonly", function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context17.next = 2;
-                    return db.transaction('r', 'users', regeneratorRuntime.mark(function _callee16() {
-                        return regeneratorRuntime.wrap(function _callee16$(_context16) {
-                            while (1) switch (_context16.prev = _context16.next) {
+                    return [4 /*yield*/, db.transaction('r', 'users', function () {
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
                                 case 0:
-                                    _context16.next = 2;
-                                    return db.users.bulkAdd([{ first: "Foo", last: "Bar" }]);
-
-                                case 2:
-                                case 'end':
-                                    return _context16.stop();
+                                    return [4 /*yield*/, db.users.bulkAdd([{ first: "Foo", last: "Bar" }])];
+                                case 1:
+                                    _a.sent();
+                                    return [2 /*return*/];
                             }
-                        }, _callee16, this);
-                    })).then(function () {
+                        });
+                    }).then(function () {
                         QUnit.ok(false, "Should not happen");
                     }).catch('ReadOnlyError', function (e) {
                         QUnit.ok(true, "Got ReadOnlyError: " + e.stack);
-                    });
-
-                case 2:
-                case 'end':
-                    return _context17.stop();
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee17, this);
-    }));
-    spawnedTest("failNotIncludedStore", regeneratorRuntime.mark(function _callee19() {
-        return regeneratorRuntime.wrap(function _callee19$(_context19) {
-            while (1) switch (_context19.prev = _context19.next) {
+        });
+    });
+    spawnedTest("failNotIncludedStore", function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context19.next = 2;
-                    return db.transaction('rw', 'folks', regeneratorRuntime.mark(function _callee18() {
-                        return regeneratorRuntime.wrap(function _callee18$(_context18) {
-                            while (1) switch (_context18.prev = _context18.next) {
+                    return [4 /*yield*/, db.transaction('rw', 'folks', function () {
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
                                 case 0:
-                                    _context18.next = 2;
-                                    return db.users.bulkAdd([{ first: "Foo", last: "Bar" }]);
-
-                                case 2:
-                                case 'end':
-                                    return _context18.stop();
+                                    return [4 /*yield*/, db.users.bulkAdd([{ first: "Foo", last: "Bar" }])];
+                                case 1:
+                                    _a.sent();
+                                    return [2 /*return*/];
                             }
-                        }, _callee18, this);
-                    })).then(function () {
+                        });
+                    }).then(function () {
                         QUnit.ok(false, "Should not happen");
                     }).catch('NotFoundError', function (e) {
                         QUnit.ok(true, "Got NotFoundError: " + e.stack);
-                    });
-
-                case 2:
-                case 'end':
-                    return _context19.stop();
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee19, this);
-    }));
+        });
+    });
     QUnit.asyncTest("failNotIncludedStoreTrans", function () {
         db.transaction('rw', 'foodassaddas', function () {}).then(function () {
             QUnit.ok(false, "Should not happen");
@@ -1213,6 +1048,61 @@
         }).then(QUnit.start);
     });
 
+    var __generator$1 = undefined && undefined.__generator || function (thisArg, body) {
+        var _ = { label: 0, sent: function () {
+                if (t[0] & 1) throw t[1];return t[1];
+            }, trys: [], ops: [] },
+            f,
+            y,
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
+        function verb(n) {
+            return function (v) {
+                return step([n, v]);
+            };
+        }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [0, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+            if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    };
     var db$1 = new Dexie("TestDBCollection");
     db$1.version(1).stores({ users: "id,first,last,&username,*&email,*pets" });
     var User$1 = db$1.users.defineClass({
@@ -1236,63 +1126,49 @@
         },
         teardown: function () {}
     });
-    spawnedTest("and with values", regeneratorRuntime.mark(function _callee20() {
+    spawnedTest("and with values", function () {
         var array;
-        return regeneratorRuntime.wrap(function _callee20$(_context20) {
-            while (1) switch (_context20.prev = _context20.next) {
+        return __generator$1(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context20.next = 2;
-                    return db$1.users.where("last").inAnyRange([["a", "g"], ["A", "G"]]).and(function (user) {
+                    return [4 /*yield*/, db$1.users.where("last").inAnyRange([["a", "g"], ["A", "G"]]).and(function (user) {
                         return user.username === "dfahlander";
-                    }).toArray();
-
-                case 2:
-                    array = _context20.sent;
-
+                    }).toArray()];
+                case 1:
+                    array = _a.sent();
                     QUnit.equal(array.length, 1, "Should find one user with given criteria");
-
-                case 4:
-                case 'end':
-                    return _context20.stop();
+                    return [2 /*return*/];
             }
-        }, _callee20, this);
-    }));
-    spawnedTest("and with keys", regeneratorRuntime.mark(function _callee21() {
+        });
+    });
+    spawnedTest("and with keys", function () {
         var keys;
-        return regeneratorRuntime.wrap(function _callee21$(_context21) {
-            while (1) switch (_context21.prev = _context21.next) {
+        return __generator$1(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context21.next = 2;
-                    return db$1.users.where("last").inAnyRange([["a", "g"], ["A", "G"]]).and(function (user) {
+                    return [4 /*yield*/, db$1.users.where("last").inAnyRange([["a", "g"], ["A", "G"]]).and(function (user) {
                         return user.username === "dfahlander";
-                    }).keys();
-
-                case 2:
-                    keys = _context21.sent;
-
+                    }).keys()];
+                case 1:
+                    keys = _a.sent();
                     QUnit.equal(keys.length, 1, "Should find one user with given criteria");
-
-                case 4:
-                case 'end':
-                    return _context21.stop();
+                    return [2 /*return*/];
             }
-        }, _callee21, this);
-    }));
-    spawnedTest("and with delete", regeneratorRuntime.mark(function _callee22() {
-        return regeneratorRuntime.wrap(function _callee22$(_context22) {
-            while (1) switch (_context22.prev = _context22.next) {
+        });
+    });
+    spawnedTest("and with delete", function () {
+        return __generator$1(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context22.next = 2;
-                    return db$1.users.orderBy('username').and(function (u) {
+                    return [4 /*yield*/, db$1.users.orderBy('username').and(function (u) {
                         return QUnit.ok(!!u, "User should exist here");
-                    }).delete();
-
-                case 2:
-                case 'end':
-                    return _context22.stop();
+                    }).delete()];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee22, this);
-    }));
+        });
+    });
     QUnit.asyncTest("each", 3, function () {
         var array = [];
         db$1.users.orderBy("id").each(function (user) {
@@ -1817,14 +1693,17 @@
             step((generator = generator.apply(thisArg, _arguments || [])).next());
         });
     };
-    var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var __generator$2 = undefined && undefined.__generator || function (thisArg, body) {
         var _ = { label: 0, sent: function () {
                 if (t[0] & 1) throw t[1];return t[1];
             }, trys: [], ops: [] },
             f,
             y,
-            t;
-        return { next: verb(0), "throw": verb(1), "return": verb(2) };
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
         function verb(n) {
             return function (v) {
                 return step([n, v]);
@@ -1949,21 +1828,13 @@
         },
         teardown: function () {}
     });
-    spawnedTest('Issue#31 Compound Index with anyOf', regeneratorRuntime.mark(function _callee23() {
+    spawnedTest('Issue#31 Compound Index with anyOf', function () {
         var items;
-        return regeneratorRuntime.wrap(function _callee23$(_context23) {
-            while (1) switch (_context23.prev = _context23.next) {
+        return __generator$2(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    if (supports('compound')) {
-                        _context23.next = 2;
-                        break;
-                    }
-
-                    return _context23.abrupt('return', QUnit.ok(true, "SKIPPED - COMPOUND UNSUPPORTED"));
-
-                case 2:
-                    _context23.next = 4;
-                    return db$2.people.bulkAdd([{
+                    if (!supports('compound')) return [2 /*return*/, QUnit.ok(true, "SKIPPED - COMPOUND UNSUPPORTED")];
+                    return [4 /*yield*/, db$2.people.bulkAdd([{
                         name: 0,
                         number: 0,
                         tag: "A"
@@ -1979,26 +1850,20 @@
                         name: -3,
                         number: 0,
                         tag: "D"
-                    }]);
-
-                case 4:
-                    _context23.next = 6;
-                    return db$2.people.where('[name+number]').anyOf([[-2, 0], [-3, 0]]) // https://github.com/dfahlander/Dexie.js/issues/31
-                    .toArray();
-
-                case 6:
-                    items = _context23.sent;
-
+                    }])];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, db$2.people.where('[name+number]').anyOf([[-2, 0], [-3, 0]]) // https://github.com/dfahlander/Dexie.js/issues/31
+                    .toArray()];
+                case 2:
+                    items = _a.sent();
                     QUnit.equal(items.length, 2, "It should contain 2 items.");
                     QUnit.equal(items[0].tag, "D", "First we should get D");
                     QUnit.equal(items[1].tag, "C", "then we should get C");
-
-                case 10:
-                case 'end':
-                    return _context23.stop();
+                    return [2 /*return*/];
             }
-        }, _callee23, this);
-    }));
+        });
+    });
     QUnit.asyncTest("startsWithAnyOf()", function () {
         function runTheTests(mippler) {
             /// <param name="mippler" value="function(x){return x;}"></param>
@@ -2600,7 +2465,7 @@
     promisedTest("where({key: value})", function () {
         return __awaiter(_this, void 0, void 0, function () {
             var readme, noResult, ullaBella1, ullaBella2, ullaBella3;
-            return __generator(this, function (_a) {
+            return __generator$2(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         return [4 /*yield*/, db$2.files.where({ filename: "README" }).first()];
@@ -2658,7 +2523,7 @@
     promisedTest("orderBy(['idx1','idx2'])", function () {
         return __awaiter(_this, void 0, void 0, function () {
             var files;
-            return __generator(this, function (_a) {
+            return __generator$2(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!supports("compound")) {
@@ -2703,14 +2568,17 @@
             step((generator = generator.apply(thisArg, _arguments || [])).next());
         });
     };
-    var __generator$1 = undefined && undefined.__generator || function (thisArg, body) {
+    var __generator$3 = undefined && undefined.__generator || function (thisArg, body) {
         var _ = { label: 0, sent: function () {
                 if (t[0] & 1) throw t[1];return t[1];
             }, trys: [], ops: [] },
             f,
             y,
-            t;
-        return { next: verb(0), "throw": verb(1), "return": verb(2) };
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
         function verb(n) {
             return function (v) {
                 return step([n, v]);
@@ -3450,7 +3318,7 @@
         db$3.users.hook.deleting.subscribe(onDeleting);
         function doTheTests() {
             return __awaiter$1(this, void 0, void 0, function () {
-                return __generator$1(this, function (_a) {
+                return __generator$3(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             return [4 /*yield*/, db$3.users.add({ username: "monkey1" })];
@@ -3503,7 +3371,7 @@
             QUnit.ok(true, "Now in an explicit transaction block...");
             return db$3.transaction('rw', db$3.users, function () {
                 return __awaiter$1(_this, void 0, void 0, function () {
-                    return __generator$1(this, function (_a) {
+                    return __generator$3(this, function (_a) {
                         switch (_a.label) {
                             case 0:
                                 return [4 /*yield*/, doTheTests()];
@@ -3532,14 +3400,14 @@
     promisedTest("waitFor()", function () {
         return __awaiter$1(_this$1, void 0, void 0, function () {
             var _this = this;
-            return __generator$1(this, function (_a) {
+            return __generator$3(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         return [4 /*yield*/, db$3.transaction('rw', db$3.users, function (trans) {
                             return __awaiter$1(_this, void 0, void 0, function () {
                                 var _this = this;
                                 var result;
-                                return __generator$1(this, function (_a) {
+                                return __generator$3(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
                                             // Wait for a promise:
@@ -3573,7 +3441,7 @@
                                             // Wait for function
                                             return [4 /*yield*/, Dexie.waitFor(function () {
                                                 return __awaiter$1(_this, void 0, void 0, function () {
-                                                    return __generator$1(this, function (_a) {
+                                                    return __generator$3(this, function (_a) {
                                                         switch (_a.label) {
                                                             case 0:
                                                                 QUnit.ok(Dexie.currentTransaction === null, "We should not be in the transaction zone here because transaction can be in a temporary inactive state here");
@@ -3610,39 +3478,29 @@
                                             QUnit.ok(true, "Waiting spin count:" + trans._spinCount);
                                             QUnit.ok(Dexie.currentTransaction === trans, "Zone info should still be correct");
                                             // Subtransaction
-                                            return [4 /*yield*/, db$3.transaction('r', db$3.users, regeneratorRuntime.mark(function _callee24(subTrans) {
+                                            return [4 /*yield*/, db$3.transaction('r', db$3.users, function (subTrans) {
                                                 var count;
-                                                return regeneratorRuntime.wrap(function _callee24$(_context24) {
-                                                    while (1) switch (_context24.prev = _context24.next) {
+                                                return __generator$3(this, function (_a) {
+                                                    switch (_a.label) {
                                                         case 0:
                                                             QUnit.ok(subTrans !== trans, "Should be in a sub transaction");
                                                             QUnit.ok(Dexie.currentTransaction === subTrans, "Should be in a sub transaction");
-                                                            _context24.next = 4;
-                                                            return trans.users.count();
-
-                                                        case 4:
-                                                            count = _context24.sent;
-
+                                                            return [4 /*yield*/, trans.users.count()];
+                                                        case 1:
+                                                            count = _a.sent();
                                                             QUnit.ok(true, "Should be able to operate on sub transaction. User count = " + count);
-                                                            _context24.next = 8;
-                                                            return subTrans.waitFor(sleep(10));
-
-                                                        case 8:
+                                                            return [4 /*yield*/, subTrans.waitFor(sleep(10))];
+                                                        case 2:
+                                                            _a.sent();
                                                             QUnit.ok(true, "Should be able to call waitFor() on sub transaction");
-                                                            _context24.next = 11;
-                                                            return trans.users.count();
-
-                                                        case 11:
-                                                            count = _context24.sent;
-
+                                                            return [4 /*yield*/, trans.users.count()];
+                                                        case 3:
+                                                            count = _a.sent();
                                                             QUnit.ok(true, "Should be able to operate on sub transaction. User count = " + count);
-
-                                                        case 13:
-                                                        case 'end':
-                                                            return _context24.stop();
+                                                            return [2 /*return*/];
                                                     }
-                                                }, _callee24, this);
-                                            }))];
+                                                });
+                                            })];
                                         case 8:
                                             // Subtransaction
                                             _a.sent();
@@ -3674,7 +3532,7 @@
         return __awaiter$1(_this$1, void 0, void 0, function () {
             var _this = this;
             var result, codeExecuted;
-            return __generator$1(this, function (_a) {
+            return __generator$3(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         return [4 /*yield*/, Dexie.waitFor(sleep(10).then(function () {
@@ -3686,7 +3544,7 @@
                         codeExecuted = false;
                         return [4 /*yield*/, Dexie.waitFor(function () {
                             return __awaiter$1(_this, void 0, void 0, function () {
-                                return __generator$1(this, function (_a) {
+                                return __generator$3(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
                                             return [4 /*yield*/, sleep(10)];
@@ -3709,13 +3567,13 @@
     promisedTest("Dexie.waitFor() TransactionInactiveError", function () {
         return __awaiter$1(_this$1, void 0, void 0, function () {
             var _this = this;
-            return __generator$1(this, function (_a) {
+            return __generator$3(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         return [4 /*yield*/, db$3.transaction('r', db$3.users, function () {
                             return __awaiter$1(_this, void 0, void 0, function () {
                                 var err_1;
-                                return __generator$1(this, function (_a) {
+                                return __generator$3(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
                                             return [4 /*yield*/, sleep(100)];
@@ -3753,7 +3611,7 @@
     promisedTest("Promise.follow() should omit promises spawned under Dexie.ignoreTransaction()", function () {
         return __awaiter$1(_this$1, void 0, void 0, function () {
             var resolve, reject, p, log;
-            return __generator$1(this, function (_a) {
+            return __generator$3(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         p = new Promise(function (res, rej) {
@@ -3804,7 +3662,7 @@
     promisedTest("db.transaction() should not wait for non-awaited new top-level transactions to commit", function () {
         return __awaiter$1(_this$1, void 0, void 0, function () {
             var resolve, reject, p, log;
-            return __generator$1(this, function (_a) {
+            return __generator$3(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         p = new Promise(function (res, rej) {
@@ -3865,14 +3723,17 @@
             step((generator = generator.apply(thisArg, _arguments || [])).next());
         });
     };
-    var __generator$2 = undefined && undefined.__generator || function (thisArg, body) {
+    var __generator$4 = undefined && undefined.__generator || function (thisArg, body) {
         var _ = { label: 0, sent: function () {
                 if (t[0] & 1) throw t[1];return t[1];
             }, trys: [], ops: [] },
             f,
             y,
-            t;
-        return { next: verb(0), "throw": verb(1), "return": verb(2) };
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
         function verb(n) {
             return function (v) {
                 return step([n, v]);
@@ -3933,125 +3794,101 @@
             Dexie.delete("TestDB").then(QUnit.start);
         }
     });
-    var timeout = async$1(regeneratorRuntime.mark(function _callee25(promise, ms) {
-        return regeneratorRuntime.wrap(function _callee25$(_context25) {
-            while (1) switch (_context25.prev = _context25.next) {
+    var timeout = async$1(function (promise, ms) {
+        return __generator$4(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context25.next = 2;
-                    return Promise.race([promise, new Promise(function (resolve, reject) {
+                    return [4 /*yield*/, Promise.race([promise, new Promise(function (resolve, reject) {
                         return setTimeout(function () {
                             return reject("timeout");
                         }, ms);
-                    })]);
-
-                case 2:
-                case 'end':
-                    return _context25.stop();
+                    })])];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee25, this);
-    }));
-    spawnedTest("multiple db should not block each other", regeneratorRuntime.mark(function _callee26() {
-        var db1, db2;
-        return regeneratorRuntime.wrap(function _callee26$(_context26) {
-            while (1) switch (_context26.prev = _context26.next) {
+        });
+    });
+    spawnedTest("multiple db should not block each other", function () {
+        var db1, db2, e_1;
+        return __generator$4(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    if (supports("versionchange")) {
-                        _context26.next = 3;
-                        break;
+                    if (!supports("versionchange")) {
+                        QUnit.ok(true, "SKIPPED - versionchange UNSUPPORTED");
+                        return [2 /*return*/];
                     }
-
-                    QUnit.ok(true, "SKIPPED - versionchange UNSUPPORTED");
-                    return _context26.abrupt('return');
-
-                case 3:
                     db1 = new Dexie("TestDB"), db2 = new Dexie("TestDB");
-
                     db1.version(1).stores({
                         foo: 'bar'
                     });
                     db2.version(1).stores({
                         foo: 'bar'
                     });
-                    _context26.next = 8;
-                    return db1.open();
-
-                case 8:
+                    return [4 /*yield*/, db1.open()];
+                case 1:
+                    _a.sent();
                     QUnit.ok(true, "db1 should open");
-                    _context26.next = 11;
-                    return db2.open();
-
-                case 11:
+                    return [4 /*yield*/, db2.open()];
+                case 2:
+                    _a.sent();
                     QUnit.ok(true, "db2 should open");
-                    _context26.prev = 12;
-                    _context26.next = 15;
-                    return timeout(db1.delete(), 1500);
-
-                case 15:
+                    _a.label = 3;
+                case 3:
+                    _a.trys.push([3, 5,, 6]);
+                    return [4 /*yield*/, timeout(db1.delete(), 1500)];
+                case 4:
+                    _a.sent();
                     QUnit.ok(true, "Succeeded to delete db1 while db2 was open");
-                    _context26.next = 23;
-                    break;
-
-                case 18:
-                    _context26.prev = 18;
-                    _context26.t0 = _context26['catch'](12);
-
+                    return [3 /*break*/, 6];
+                case 5:
+                    e_1 = _a.sent();
                     db1.close();
                     db2.close();
-                    QUnit.ok(false, "Could not delete db1 - " + _context26.t0);
-
-                case 23:
-                case 'end':
-                    return _context26.stop();
+                    QUnit.ok(false, "Could not delete db1 - " + e_1);
+                    return [3 /*break*/, 6];
+                case 6:
+                    return [2 /*return*/];
             }
-        }, _callee26, this, [[12, 18]]);
-    }));
-    spawnedTest("Using db on node should be rejected with MissingAPIError", regeneratorRuntime.mark(function _callee27() {
-        var db;
-        return regeneratorRuntime.wrap(function _callee27$(_context27) {
-            while (1) switch (_context27.prev = _context27.next) {
+        });
+    });
+    spawnedTest("Using db on node should be rejected with MissingAPIError", function () {
+        var db, e_2, e_3;
+        return __generator$4(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     db = new Dexie('TestDB', {
                         indexedDB: undefined,
                         IDBKeyRange: undefined
                     });
-
                     db.version(1).stores({ foo: 'bar' });
-                    _context27.prev = 2;
-                    _context27.next = 5;
-                    return db.foo.toArray();
-
-                case 5:
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3,, 4]);
+                    return [4 /*yield*/, db.foo.toArray()];
+                case 2:
+                    _a.sent();
                     QUnit.ok(false, "Should not get any result because API is missing.");
-                    _context27.next = 11;
-                    break;
-
-                case 8:
-                    _context27.prev = 8;
-                    _context27.t0 = _context27['catch'](2);
-
-                    QUnit.ok(_context27.t0 instanceof Dexie.MissingAPIError, "Should get MissingAPIError. Got: " + _context27.t0.name);
-
-                case 11:
-                    _context27.prev = 11;
-                    _context27.next = 14;
-                    return db.open();
-
-                case 14:
-                    _context27.next = 19;
-                    break;
-
-                case 16:
-                    _context27.prev = 16;
-                    _context27.t1 = _context27['catch'](11);
-
-                    QUnit.ok(_context27.t1 instanceof Dexie.MissingAPIError, "Should get MissingAPIError. Got: " + _context27.t1.name);
-
-                case 19:
-                case 'end':
-                    return _context27.stop();
+                    return [3 /*break*/, 4];
+                case 3:
+                    e_2 = _a.sent();
+                    QUnit.ok(e_2 instanceof Dexie.MissingAPIError, "Should get MissingAPIError. Got: " + e_2.name);
+                    return [3 /*break*/, 4];
+                case 4:
+                    _a.trys.push([4, 6,, 7]);
+                    return [4 /*yield*/, db.open()];
+                case 5:
+                    _a.sent();
+                    return [3 /*break*/, 7];
+                case 6:
+                    e_3 = _a.sent();
+                    QUnit.ok(e_3 instanceof Dexie.MissingAPIError, "Should get MissingAPIError. Got: " + e_3.name);
+                    return [3 /*break*/, 7];
+                case 7:
+                    return [2 /*return*/];
             }
-        }, _callee27, this, [[2, 8], [11, 16]]);
-    }));
+        });
+    });
     QUnit.asyncTest("open, add and query data without transaction", 6, function () {
         var db = new Dexie("TestDB");
         db.version(1).stores({ employees: "++id,first,last" });
@@ -4367,13 +4204,12 @@
             }).finally(QUnit.start);
         });
     });
-    spawnedTest("db.open several times", 2, regeneratorRuntime.mark(function _callee28() {
+    spawnedTest("db.open several times", 2, function () {
         var db;
-        return regeneratorRuntime.wrap(function _callee28$(_context28) {
-            while (1) switch (_context28.prev = _context28.next) {
+        return __generator$4(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     db = new Dexie("TestDB");
-
                     db.version(1).stores({ foo: "id" });
                     db.on('populate', function () {
                         throw "Failed in populate";
@@ -4383,19 +4219,17 @@
                     }).catch(function (err) {
                         QUnit.ok(true, "Got error: " + (err.stack || err));
                     });
-                    _context28.next = 6;
-                    return db.open().then(function () {
+                    return [4 /*yield*/, db.open().then(function () {
                         QUnit.ok(false, "Should not succeed to open");
                     }).catch(function (err) {
                         QUnit.ok(true, "Got error: " + (err.stack || err));
-                    });
-
-                case 6:
-                case 'end':
-                    return _context28.stop();
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee28, this);
-    }));
+        });
+    });
     QUnit.asyncTest("#306 db.on('ready') subscriber should be called also if db is already open", function () {
         var db = new Dexie("TestDB");
         db.version(1).stores({ foo: "id" });
@@ -4418,7 +4252,7 @@
         return __awaiter$2(_this$2, void 0, void 0, function () {
             var _this = this;
             var db, first, second, third;
-            return __generator$2(this, function (_a) {
+            return __generator$4(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         db = new Dexie('TestDB');
@@ -4427,7 +4261,7 @@
                         // first is registered before open
                         db.on('ready', function () {
                             return __awaiter$2(_this, void 0, void 0, function () {
-                                return __generator$2(this, function (_a) {
+                                return __generator$4(this, function (_a) {
                                     first = true;
                                     // second is registered while first is executing
                                     db.on('ready', function () {
@@ -4455,6 +4289,61 @@
         });
     });
 
+    var __generator$5 = undefined && undefined.__generator || function (thisArg, body) {
+        var _ = { label: 0, sent: function () {
+                if (t[0] & 1) throw t[1];return t[1];
+            }, trys: [], ops: [] },
+            f,
+            y,
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
+        function verb(n) {
+            return function (v) {
+                return step([n, v]);
+            };
+        }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [0, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+            if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    };
     var db$4 = new Dexie("TestYieldDb");
     var async$2 = Dexie.async;
     var spawn = Dexie.spawn;
@@ -4471,735 +4360,524 @@
         },
         teardown: function () {}
     });
-    QUnit.asyncTest("db.transaction() with yield", async$2(regeneratorRuntime.mark(function _callee30() {
-        var finallyWasReached;
-        return regeneratorRuntime.wrap(function _callee30$(_context30) {
-            while (1) switch (_context30.prev = _context30.next) {
+    QUnit.asyncTest("db.transaction() with yield", async$2(function () {
+        var finallyWasReached, e_1;
+        return __generator$5(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     finallyWasReached = false;
-                    _context30.prev = 1;
-                    _context30.next = 4;
-                    return db$4.transaction('rw', 'friends', 'pets', regeneratorRuntime.mark(function _callee29() {
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, 4, 5]);
+                    return [4 /*yield*/, db$4.transaction('rw', 'friends', 'pets', function () {
                         var catId, dogId, gurra, gurrasPets;
-                        return regeneratorRuntime.wrap(function _callee29$(_context29) {
-                            while (1) switch (_context29.prev = _context29.next) {
+                        return __generator$5(this, function (_a) {
+                            switch (_a.label) {
                                 case 0:
-                                    _context29.next = 2;
-                                    return db$4.pets.add({ name: "Tito", kind: "cat" });
-
+                                    return [4 /*yield*/, db$4.pets.add({ name: "Tito", kind: "cat" })];
+                                case 1:
+                                    catId = _a.sent();
+                                    return [4 /*yield*/, db$4.pets.add({ name: "Josephina", kind: "dog" })];
                                 case 2:
-                                    catId = _context29.sent;
-                                    _context29.next = 5;
-                                    return db$4.pets.add({ name: "Josephina", kind: "dog" });
-
-                                case 5:
-                                    dogId = _context29.sent;
-
+                                    dogId = _a.sent();
                                     // Add a friend who owns the pets
                                     db$4.friends.add({ name: "Gurra G", pets: [catId, dogId] });
-                                    _context29.next = 9;
-                                    return db$4.friends.where('name').equals("Gurra G").first();
-
-                                case 9:
-                                    gurra = _context29.sent;
-
+                                    return [4 /*yield*/, db$4.friends.where('name').equals("Gurra G").first()];
+                                case 3:
+                                    gurra = _a.sent();
                                     QUnit.ok(!!gurra, "Gurra could be found with yield");
-                                    // Now retrieve the pet objects that Gurra is referring to:
-                                    _context29.next = 13;
-                                    return db$4.pets.where('id').anyOf(gurra.pets).toArray();
-
-                                case 13:
-                                    gurrasPets = _context29.sent;
-
+                                    return [4 /*yield*/, db$4.pets.where('id').anyOf(gurra.pets).toArray()];
+                                case 4:
+                                    gurrasPets = _a.sent();
                                     QUnit.equal(gurrasPets.length, 2, "Gurras all two pets could be retrieved via yield");
                                     QUnit.equal(gurrasPets[0].kind, "cat", "Gurras first pet is a cat");
                                     QUnit.equal(gurrasPets[1].kind, "dog", "Gurras second pet is a dog");
-
-                                case 17:
-                                case 'end':
-                                    return _context29.stop();
+                                    return [2 /*return*/];
                             }
-                        }, _callee29, this);
-                    }));
-
+                        });
+                    })];
+                case 2:
+                    _a.sent();
+                    return [3 /*break*/, 5];
+                case 3:
+                    e_1 = _a.sent();
+                    QUnit.ok(false, "Caught error: " + e_1);
+                    return [3 /*break*/, 5];
                 case 4:
-                    _context30.next = 9;
-                    break;
-
-                case 6:
-                    _context30.prev = 6;
-                    _context30.t0 = _context30['catch'](1);
-
-                    QUnit.ok(false, "Caught error: " + _context30.t0);
-
-                case 9:
-                    _context30.prev = 9;
-
                     finallyWasReached = true;
-                    return _context30.finish(9);
-
-                case 12:
+                    return [7 /*endfinally*/];
+                case 5:
                     QUnit.ok(finallyWasReached, "finally was reached");
                     QUnit.start();
-
-                case 14:
-                case 'end':
-                    return _context30.stop();
+                    return [2 /*return*/];
             }
-        }, _callee30, this, [[1, 6, 9, 12]]);
-    })));
-    QUnit.asyncTest("Catching indexedDB error event", 2, async$2(regeneratorRuntime.mark(function _callee31() {
-        return regeneratorRuntime.wrap(function _callee31$(_context31) {
-            while (1) switch (_context31.prev = _context31.next) {
+        });
+    }));
+    QUnit.asyncTest("Catching indexedDB error event", 2, async$2(function () {
+        var e_2;
+        return __generator$5(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context31.prev = 0;
-                    _context31.next = 3;
-                    return db$4.pets.add({ id: 1, name: "Tidi", kind: "Honeybadger" });
-
-                case 3:
+                    _a.trys.push([0, 3,, 4]);
+                    return [4 /*yield*/, db$4.pets.add({ id: 1, name: "Tidi", kind: "Honeybadger" })];
+                case 1:
+                    _a.sent();
                     QUnit.ok(true, "Should come so far");
-                    _context31.next = 6;
-                    return db$4.pets.add({ id: 1, name: "Todoo", kind: "Snake" });
-
-                case 6:
-                    // Should generate an IDB error event!
+                    return [4 /*yield*/, db$4.pets.add({ id: 1, name: "Todoo", kind: "Snake" })];
+                case 2:
+                    _a.sent(); // Should generate an IDB error event!
                     QUnit.ok(false, "Should not come here");
-                    _context31.next = 12;
-                    break;
-
-                case 9:
-                    _context31.prev = 9;
-                    _context31.t0 = _context31['catch'](0);
-
-                    QUnit.equal(_context31.t0.name, "ConstraintError", "Caught indexedDB DOMError event ConstraintError");
-
-                case 12:
-                    QUnit.start();
-
-                case 13:
-                case 'end':
-                    return _context31.stop();
-            }
-        }, _callee31, this, [[0, 9]]);
-    })));
-    QUnit.asyncTest("Catching error prevents transaction from aborting", 5, async$2(regeneratorRuntime.mark(function _callee33() {
-        return regeneratorRuntime.wrap(function _callee33$(_context33) {
-            while (1) switch (_context33.prev = _context33.next) {
-                case 0:
-                    _context33.prev = 0;
-                    _context33.next = 3;
-                    return db$4.transaction('rw', 'pets', regeneratorRuntime.mark(function _callee32() {
-                        return regeneratorRuntime.wrap(function _callee32$(_context32) {
-                            while (1) switch (_context32.prev = _context32.next) {
-                                case 0:
-                                    _context32.prev = 0;
-                                    _context32.next = 3;
-                                    return db$4.pets.add({ id: 1, name: "Tidi", kind: "Honeybadger" });
-
-                                case 3:
-                                    QUnit.ok(true, "Should come so far");
-                                    _context32.next = 6;
-                                    return db$4.pets.add({ id: 1, name: "Todoo", kind: "Snake" });
-
-                                case 6:
-                                    // Should generate an IDB error event!
-                                    QUnit.ok(false, "Should not come here");
-                                    _context32.next = 12;
-                                    break;
-
-                                case 9:
-                                    _context32.prev = 9;
-                                    _context32.t0 = _context32['catch'](0);
-
-                                    QUnit.equal(_context32.t0.name, "ConstraintError", "Caught indexedDB DOMError event ConstraintError");
-
-                                case 12:
-                                case 'end':
-                                    return _context32.stop();
-                            }
-                        }, _callee32, this, [[0, 9]]);
-                    }));
-
+                    return [3 /*break*/, 4];
                 case 3:
-                    QUnit.ok(true, "Should come here - transaction committed because we caught the error");
-                    _context33.t0 = QUnit;
-                    _context33.next = 7;
-                    return db$4.pets.get(1);
-
-                case 7:
-                    _context33.t1 = _context33.sent;
-
-                    _context33.t0.ok.call(_context33.t0, _context33.t1, "A pet with ID 1 exists in DB");
-
-                    _context33.t2 = QUnit;
-                    _context33.next = 12;
-                    return db$4.pets.get(1);
-
-                case 12:
-                    _context33.t3 = _context33.sent.name;
-
-                    _context33.t2.equal.call(_context33.t2, _context33.t3, "Tidi", "It was Tidi in the first position");
-
-                case 14:
-                    _context33.prev = 14;
-
+                    e_2 = _a.sent();
+                    QUnit.equal(e_2.name, "ConstraintError", "Caught indexedDB DOMError event ConstraintError");
+                    return [3 /*break*/, 4];
+                case 4:
                     QUnit.start();
-                    return _context33.finish(14);
-
-                case 17:
-                case 'end':
-                    return _context33.stop();
+                    return [2 /*return*/];
             }
-        }, _callee33, this, [[0,, 14, 17]]);
-    })));
-    QUnit.asyncTest("Transaction not committing when not catching error event", 4, async$2(regeneratorRuntime.mark(function _callee35() {
-        return regeneratorRuntime.wrap(function _callee35$(_context35) {
-            while (1) switch (_context35.prev = _context35.next) {
+        });
+    }));
+    QUnit.asyncTest("Catching error prevents transaction from aborting", 5, async$2(function () {
+        var _a, _b;
+        return __generator$5(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _context35.prev = 0;
-                    _context35.next = 3;
-                    return db$4.transaction('rw', 'pets', regeneratorRuntime.mark(function _callee34() {
-                        return regeneratorRuntime.wrap(function _callee34$(_context34) {
-                            while (1) switch (_context34.prev = _context34.next) {
+                    _c.trys.push([0,, 4, 5]);
+                    return [4 /*yield*/, db$4.transaction('rw', 'pets', function () {
+                        var e_3;
+                        return __generator$5(this, function (_a) {
+                            switch (_a.label) {
                                 case 0:
-                                    _context34.next = 2;
-                                    return db$4.pets.add({ id: 1, name: "Tidi", kind: "Honeybadger" });
-
+                                    _a.trys.push([0, 3,, 4]);
+                                    return [4 /*yield*/, db$4.pets.add({ id: 1, name: "Tidi", kind: "Honeybadger" })];
+                                case 1:
+                                    _a.sent();
+                                    QUnit.ok(true, "Should come so far");
+                                    return [4 /*yield*/, db$4.pets.add({ id: 1, name: "Todoo", kind: "Snake" })];
                                 case 2:
-                                    QUnit.ok(true, "Should come so far");
-                                    _context34.next = 5;
-                                    return db$4.pets.add({ id: 1, name: "Todoo", kind: "Snake" });
-
-                                case 5:
-                                    // Should generate an IDB error event!
+                                    _a.sent(); // Should generate an IDB error event!
                                     QUnit.ok(false, "Should not come here");
-
-                                case 6:
-                                case 'end':
-                                    return _context34.stop();
+                                    return [3 /*break*/, 4];
+                                case 3:
+                                    e_3 = _a.sent();
+                                    QUnit.equal(e_3.name, "ConstraintError", "Caught indexedDB DOMError event ConstraintError");
+                                    return [3 /*break*/, 4];
+                                case 4:
+                                    return [2 /*return*/];
                             }
-                        }, _callee34, this);
-                    }));
-
+                        });
+                    })];
+                case 1:
+                    _c.sent();
+                    QUnit.ok(true, "Should come here - transaction committed because we caught the error");
+                    _a = QUnit.ok;
+                    return [4 /*yield*/, db$4.pets.get(1)];
+                case 2:
+                    _a.apply(void 0, [_c.sent(), "A pet with ID 1 exists in DB"]);
+                    _b = QUnit.equal;
+                    return [4 /*yield*/, db$4.pets.get(1)];
                 case 3:
+                    _b.apply(void 0, [_c.sent().name, "Tidi", "It was Tidi in the first position"]);
+                    return [3 /*break*/, 5];
+                case 4:
+                    QUnit.start();
+                    return [7 /*endfinally*/];
+                case 5:
+                    return [2 /*return*/];
+            }
+        });
+    }));
+    QUnit.asyncTest("Transaction not committing when not catching error event", 4, async$2(function () {
+        var e_4, _a;
+        return __generator$5(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 2, 4, 5]);
+                    return [4 /*yield*/, db$4.transaction('rw', 'pets', function () {
+                        return __generator$5(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    return [4 /*yield*/, db$4.pets.add({ id: 1, name: "Tidi", kind: "Honeybadger" })];
+                                case 1:
+                                    _a.sent();
+                                    QUnit.ok(true, "Should come so far");
+                                    return [4 /*yield*/, db$4.pets.add({ id: 1, name: "Todoo", kind: "Snake" })];
+                                case 2:
+                                    _a.sent(); // Should generate an IDB error event!
+                                    QUnit.ok(false, "Should not come here");
+                                    return [2 /*return*/];
+                            }
+                        });
+                    })];
+                case 1:
+                    _b.sent();
                     QUnit.ok(false, "Should not come here");
-                    _context35.next = 15;
-                    break;
-
-                case 6:
-                    _context35.prev = 6;
-                    _context35.t0 = _context35['catch'](0);
-
+                    return [3 /*break*/, 5];
+                case 2:
+                    e_4 = _b.sent();
                     QUnit.ok(true, "Transaction should fail");
-                    QUnit.equal(_context35.t0.name, "ConstraintError", "Error caught was a ConstraintError!");
-                    _context35.t1 = QUnit;
-                    _context35.next = 13;
-                    return db$4.pets.count();
-
-                case 13:
-                    _context35.t2 = _context35.sent;
-
-                    _context35.t1.equal.call(_context35.t1, _context35.t2, 0, "Pets table should still be empty because transaction failed");
-
-                case 15:
-                    _context35.prev = 15;
-
-                    QUnit.start();
-                    return _context35.finish(15);
-
-                case 18:
-                case 'end':
-                    return _context35.stop();
-            }
-        }, _callee35, this, [[0, 6, 15, 18]]);
-    })));
-    QUnit.asyncTest("Should allow yielding a non-promise", async$2(regeneratorRuntime.mark(function _callee36() {
-        var x;
-        return regeneratorRuntime.wrap(function _callee36$(_context36) {
-            while (1) switch (_context36.prev = _context36.next) {
-                case 0:
-                    _context36.prev = 0;
-                    _context36.next = 3;
-                    return 3;
-
+                    QUnit.equal(e_4.name, "ConstraintError", "Error caught was a ConstraintError!");
+                    _a = QUnit.equal;
+                    return [4 /*yield*/, db$4.pets.count()];
                 case 3:
-                    x = _context36.sent;
-
+                    _a.apply(void 0, [_b.sent(), 0, "Pets table should still be empty because transaction failed"]);
+                    return [3 /*break*/, 5];
+                case 4:
+                    QUnit.start();
+                    return [7 /*endfinally*/];
+                case 5:
+                    return [2 /*return*/];
+            }
+        });
+    }));
+    QUnit.asyncTest("Should allow yielding a non-promise", async$2(function () {
+        var x, e_5;
+        return __generator$5(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, 3, 4]);
+                    return [4 /*yield*/, 3];
+                case 1:
+                    x = _a.sent();
                     QUnit.equal(x, 3, "Could yield a non-promise");
-                    _context36.next = 10;
-                    break;
-
-                case 7:
-                    _context36.prev = 7;
-                    _context36.t0 = _context36['catch'](0);
-
+                    return [3 /*break*/, 4];
+                case 2:
+                    e_5 = _a.sent();
                     QUnit.ok(false, "Yielding a non-Thenable wasn't be allowed");
-
-                case 10:
-                    _context36.prev = 10;
-
-                    QUnit.start();
-                    return _context36.finish(10);
-
-                case 13:
-                case 'end':
-                    return _context36.stop();
-            }
-        }, _callee36, this, [[0, 7, 10, 13]]);
-    })));
-    QUnit.asyncTest("Should allow yielding an array with a mix of values and thenables", async$2(regeneratorRuntime.mark(function _callee37() {
-        var results;
-        return regeneratorRuntime.wrap(function _callee37$(_context37) {
-            while (1) switch (_context37.prev = _context37.next) {
-                case 0:
-                    _context37.prev = 0;
-                    _context37.next = 3;
-                    return [1, 2, Dexie.Promise.resolve(3)];
-
+                    return [3 /*break*/, 4];
                 case 3:
-                    results = _context37.sent;
-
+                    QUnit.start();
+                    return [7 /*endfinally*/];
+                case 4:
+                    return [2 /*return*/];
+            }
+        });
+    }));
+    QUnit.asyncTest("Should allow yielding an array with a mix of values and thenables", async$2(function () {
+        var results, e_6;
+        return __generator$5(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, 3, 4]);
+                    return [4 /*yield*/, [1, 2, Dexie.Promise.resolve(3)]];
+                case 1:
+                    results = _a.sent();
                     QUnit.equal(results.length, 3, "Yielded array is of size 3");
                     QUnit.equal(results[0], 1, "First value is 1");
                     QUnit.equal(results[1], 2, "Second value is 2");
                     QUnit.equal(results[2], 3, "Third value is 3");
-                    _context37.next = 13;
-                    break;
-
-                case 10:
-                    _context37.prev = 10;
-                    _context37.t0 = _context37['catch'](0);
-
+                    return [3 /*break*/, 4];
+                case 2:
+                    e_6 = _a.sent();
                     QUnit.ok(false, "Got exception when trying to do yield an array of mixed values/promises");
-
-                case 13:
-                    _context37.prev = 13;
-
-                    QUnit.start();
-                    return _context37.finish(13);
-
-                case 16:
-                case 'end':
-                    return _context37.stop();
-            }
-        }, _callee37, this, [[0, 10, 13, 16]]);
-    })));
-    QUnit.asyncTest("Should allow yielding an array of non-promises only", async$2(regeneratorRuntime.mark(function _callee38() {
-        var results;
-        return regeneratorRuntime.wrap(function _callee38$(_context38) {
-            while (1) switch (_context38.prev = _context38.next) {
-                case 0:
-                    _context38.prev = 0;
-                    _context38.next = 3;
-                    return [1, 2, 3];
-
+                    return [3 /*break*/, 4];
                 case 3:
-                    results = _context38.sent;
-
+                    QUnit.start();
+                    return [7 /*endfinally*/];
+                case 4:
+                    return [2 /*return*/];
+            }
+        });
+    }));
+    QUnit.asyncTest("Should allow yielding an array of non-promises only", async$2(function () {
+        var results, e_7;
+        return __generator$5(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, 3, 4]);
+                    return [4 /*yield*/, [1, 2, 3]];
+                case 1:
+                    results = _a.sent();
                     QUnit.equal(results.length, 3, "Yielded array is of size 3");
                     QUnit.equal(results[0], 1, "First value is 1");
                     QUnit.equal(results[1], 2, "Second value is 2");
                     QUnit.equal(results[2], 3, "Third value is 3");
-                    _context38.next = 13;
-                    break;
-
-                case 10:
-                    _context38.prev = 10;
-                    _context38.t0 = _context38['catch'](0);
-
-                    QUnit.ok(false, _context38.t0);
-
-                case 13:
-                    _context38.prev = 13;
-
-                    QUnit.start();
-                    return _context38.finish(13);
-
-                case 16:
-                case 'end':
-                    return _context38.stop();
-            }
-        }, _callee38, this, [[0, 10, 13, 16]]);
-    })));
-    QUnit.asyncTest("Should allow yielding an empty array", async$2(regeneratorRuntime.mark(function _callee39() {
-        var results;
-        return regeneratorRuntime.wrap(function _callee39$(_context39) {
-            while (1) switch (_context39.prev = _context39.next) {
-                case 0:
-                    _context39.prev = 0;
-                    _context39.next = 3;
-                    return [];
-
+                    return [3 /*break*/, 4];
+                case 2:
+                    e_7 = _a.sent();
+                    QUnit.ok(false, e_7);
+                    return [3 /*break*/, 4];
                 case 3:
-                    results = _context39.sent;
-
-                    QUnit.equal(results.length, 0, "Yielded array is of size 0");
-                    _context39.next = 10;
-                    break;
-
-                case 7:
-                    _context39.prev = 7;
-                    _context39.t0 = _context39['catch'](0);
-
-                    QUnit.ok(false, _context39.t0);
-
-                case 10:
-                    _context39.prev = 10;
-
                     QUnit.start();
-                    return _context39.finish(10);
-
-                case 13:
-                case 'end':
-                    return _context39.stop();
+                    return [7 /*endfinally*/];
+                case 4:
+                    return [2 /*return*/];
             }
-        }, _callee39, this, [[0, 7, 10, 13]]);
-    })));
+        });
+    }));
+    QUnit.asyncTest("Should allow yielding an empty array", async$2(function () {
+        var results, e_8;
+        return __generator$5(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, 3, 4]);
+                    return [4 /*yield*/, []];
+                case 1:
+                    results = _a.sent();
+                    QUnit.equal(results.length, 0, "Yielded array is of size 0");
+                    return [3 /*break*/, 4];
+                case 2:
+                    e_8 = _a.sent();
+                    QUnit.ok(false, e_8);
+                    return [3 /*break*/, 4];
+                case 3:
+                    QUnit.start();
+                    return [7 /*endfinally*/];
+                case 4:
+                    return [2 /*return*/];
+            }
+        });
+    }));
     QUnit.asyncTest("Should allow yielding an array of different kind of any kind of promise", function () {
-        spawn(regeneratorRuntime.mark(function _callee40() {
+        spawn(function () {
             var results;
-            return regeneratorRuntime.wrap(function _callee40$(_context40) {
-                while (1) switch (_context40.prev = _context40.next) {
+            return __generator$5(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _context40.next = 2;
-                        return [Promise.resolve(1), Dexie.Promise.resolve(2), Promise.resolve(3)];
-
-                    case 2:
-                        results = _context40.sent;
-
+                        return [4 /*yield*/, [Promise.resolve(1), Dexie.Promise.resolve(2), Promise.resolve(3)]];
+                    case 1:
+                        results = _a.sent();
                         QUnit.equal(results.length, 3, "Yielded array is of size 3");
                         QUnit.equal(results[0], 1, "First value is 1");
                         QUnit.equal(results[1], 2, "Second value is 2");
                         QUnit.equal(results[2], 3, "Third value is 3");
-                        return _context40.abrupt('return', 4);
-
-                    case 8:
-                    case 'end':
-                        return _context40.stop();
+                        return [2 /*return*/, 4];
                 }
-            }, _callee40, this);
-        })).then(function (x) {
+            });
+        }).then(function (x) {
             QUnit.equal(x, 4, "Finally got the value 4");
         }).catch(function (e) {
             QUnit.ok(false, "Something is rotten in the state of Denmark: " + e);
         }).then(QUnit.start);
     });
     QUnit.asyncTest("Throw after yield 1", function () {
-        spawn(regeneratorRuntime.mark(function _callee41() {
-            return regeneratorRuntime.wrap(function _callee41$(_context41) {
-                while (1) switch (_context41.prev = _context41.next) {
+        spawn(function () {
+            var e_9;
+            return __generator$5(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _context41.prev = 0;
-                        _context41.next = 3;
-                        return Promise.resolve(3);
-
-                    case 3:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4 /*yield*/, Promise.resolve(3)];
+                    case 1:
+                        _a.sent();
                         QUnit.ok(true, "yielded a value");
                         throw "error";
-
-                    case 7:
-                        _context41.prev = 7;
-                        _context41.t0 = _context41['catch'](0);
-
-                        QUnit.ok(_context41.t0 === "error", "Catched exception: " + _context41.t0);
-
-                    case 10:
-                        return _context41.abrupt('return', 4);
-
-                    case 11:
-                    case 'end':
-                        return _context41.stop();
+                    case 2:
+                        e_9 = _a.sent();
+                        QUnit.ok(e_9 === "error", "Catched exception: " + e_9);
+                        return [3 /*break*/, 3];
+                    case 3:
+                        return [2 /*return*/, 4];
                 }
-            }, _callee41, this, [[0, 7]]);
-        })).then(function (x) {
+            });
+        }).then(function (x) {
             QUnit.equal(x, 4, "Finally got the value 4");
         }).catch(function (e) {
             QUnit.ok(false, "Something is rotten in the state of Denmark: " + e);
         }).then(QUnit.start);
     });
     QUnit.asyncTest("Throw after yield 2", function () {
-        Promise.resolve(spawn(regeneratorRuntime.mark(function _callee42() {
-            return regeneratorRuntime.wrap(function _callee42$(_context42) {
-                while (1) switch (_context42.prev = _context42.next) {
+        Promise.resolve(spawn(function () {
+            var e_10;
+            return __generator$5(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _context42.prev = 0;
-                        _context42.next = 3;
-                        return 3;
-
-                    case 3:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4 /*yield*/, 3];
+                    case 1:
+                        _a.sent();
                         QUnit.ok(true, "yielded a value");
                         throw "error";
-
-                    case 7:
-                        _context42.prev = 7;
-                        _context42.t0 = _context42['catch'](0);
-
-                        QUnit.ok(_context42.t0 === "error", "Catched exception: " + _context42.t0);
-
-                    case 10:
-                        return _context42.abrupt('return', 4);
-
-                    case 11:
-                    case 'end':
-                        return _context42.stop();
+                    case 2:
+                        e_10 = _a.sent();
+                        QUnit.ok(e_10 === "error", "Catched exception: " + e_10);
+                        return [3 /*break*/, 3];
+                    case 3:
+                        return [2 /*return*/, 4];
                 }
-            }, _callee42, this, [[0, 7]]);
-        }))).then(function (x) {
+            });
+        })).then(function (x) {
             QUnit.equal(x, 4, "Finally got the value 4");
         }).catch(function (e) {
             QUnit.ok(false, "Something is rotten in the state of Denmark: " + e);
         }).then(QUnit.start);
     });
     QUnit.asyncTest("Throw before yield", function () {
-        Promise.resolve(spawn(regeneratorRuntime.mark(function _callee43() {
-            return regeneratorRuntime.wrap(function _callee43$(_context43) {
-                while (1) switch (_context43.prev = _context43.next) {
-                    case 0:
-                        _context43.prev = 0;
-                        throw "error";
-
-                    case 4:
-                        _context43.prev = 4;
-                        _context43.t0 = _context43['catch'](0);
-
-                        QUnit.ok(_context43.t0 === "error", "Catched exception: " + _context43.t0);
-
-                    case 7:
-                        return _context43.abrupt('return', 4);
-
-                    case 8:
-                    case 'end':
-                        return _context43.stop();
+        Promise.resolve(spawn(function () {
+            return __generator$5(this, function (_a) {
+                try {
+                    throw "error";
+                } catch (e) {
+                    QUnit.ok(e === "error", "Catched exception: " + e);
                 }
-            }, _callee43, this, [[0, 4]]);
-        }))).then(function (x) {
+                return [2 /*return*/, 4];
+            });
+        })).then(function (x) {
             QUnit.equal(x, 4, "Finally got the value 4");
         }).catch(function (e) {
             QUnit.ok(false, "Something is rotten in the state of Denmark: " + e);
         }).then(QUnit.start);
     });
     QUnit.asyncTest("Catch rejected promise", function () {
-        spawn(regeneratorRuntime.mark(function _callee44() {
-            return regeneratorRuntime.wrap(function _callee44$(_context44) {
-                while (1) switch (_context44.prev = _context44.next) {
+        spawn(function () {
+            var e_11;
+            return __generator$5(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _context44.prev = 0;
-                        _context44.next = 3;
-                        return new Promise(function (resolve, reject) {
+                        _a.trys.push([0, 2,, 3]);
+                        return [4 /*yield*/, new Promise(function (resolve, reject) {
                             reject("fault fault!");
-                        });
-
-                    case 3:
+                        })];
+                    case 1:
+                        _a.sent();
                         QUnit.ok(false, "Shouldn't come here");
-                        _context44.next = 9;
-                        break;
-
-                    case 6:
-                        _context44.prev = 6;
-                        _context44.t0 = _context44['catch'](0);
-
-                        QUnit.ok(_context44.t0 === "fault fault!", "Catched exception: " + _context44.t0);
-
-                    case 9:
-                        return _context44.abrupt('return', 4);
-
-                    case 10:
-                    case 'end':
-                        return _context44.stop();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        e_11 = _a.sent();
+                        QUnit.ok(e_11 === "fault fault!", "Catched exception: " + e_11);
+                        return [3 /*break*/, 3];
+                    case 3:
+                        return [2 /*return*/, 4];
                 }
-            }, _callee44, this, [[0, 6]]);
-        })).then(function (x) {
+            });
+        }).then(function (x) {
             QUnit.equal(x, 4, "Finally got the value 4");
         }).catch(function (e) {
             QUnit.ok(false, "Something is rotten in the state of Denmark: " + e);
         }).then(QUnit.start);
     });
     QUnit.asyncTest("Catch rejected promise in an array", function () {
-        spawn(regeneratorRuntime.mark(function _callee45() {
-            return regeneratorRuntime.wrap(function _callee45$(_context45) {
-                while (1) switch (_context45.prev = _context45.next) {
+        spawn(function () {
+            var e_12;
+            return __generator$5(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _context45.prev = 0;
-                        _context45.next = 3;
-                        return [1, 2, new Promise(function (resolve, reject) {
+                        _a.trys.push([0, 2,, 3]);
+                        return [4 /*yield*/, [1, 2, new Promise(function (resolve, reject) {
                             reject("fault fault!");
-                        }), 4];
-
-                    case 3:
+                        }), 4]];
+                    case 1:
+                        _a.sent();
                         QUnit.ok(false, "Shouldn't come here");
-                        _context45.next = 9;
-                        break;
-
-                    case 6:
-                        _context45.prev = 6;
-                        _context45.t0 = _context45['catch'](0);
-
-                        QUnit.ok(_context45.t0 === "fault fault!", "Catched exception: " + _context45.t0);
-
-                    case 9:
-                        return _context45.abrupt('return', 4);
-
-                    case 10:
-                    case 'end':
-                        return _context45.stop();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        e_12 = _a.sent();
+                        QUnit.ok(e_12 === "fault fault!", "Catched exception: " + e_12);
+                        return [3 /*break*/, 3];
+                    case 3:
+                        return [2 /*return*/, 4];
                 }
-            }, _callee45, this, [[0, 6]]);
-        })).then(function (x) {
+            });
+        }).then(function (x) {
             QUnit.equal(x, 4, "Finally got the value 4");
         }).catch(function (e) {
             QUnit.ok(false, "Something is rotten in the state of Denmark: " + e);
         }).then(QUnit.start);
     });
     QUnit.asyncTest("Should allow returning a promise", function () {
-        spawn(regeneratorRuntime.mark(function _callee46() {
-            return regeneratorRuntime.wrap(function _callee46$(_context46) {
-                while (1) switch (_context46.prev = _context46.next) {
-                    case 0:
-                        return _context46.abrupt('return', Promise.resolve(3));
-
-                    case 1:
-                    case 'end':
-                        return _context46.stop();
-                }
-            }, _callee46, this);
-        })).then(function (result) {
+        spawn(function () {
+            return __generator$5(this, function (_a) {
+                return [2 /*return*/, Promise.resolve(3)];
+            });
+        }).then(function (result) {
             QUnit.equal(result, 3, "Returning a directly should also be allowed");
         }).catch(function (e) {
             QUnit.ok(false, e);
         }).then(QUnit.start);
     });
     QUnit.asyncTest("Should be able to do 'return yield Promise.resolve(x);'", function () {
-        spawn(regeneratorRuntime.mark(function _callee47() {
-            return regeneratorRuntime.wrap(function _callee47$(_context47) {
-                while (1) switch (_context47.prev = _context47.next) {
+        spawn(function () {
+            return __generator$5(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _context47.next = 2;
-                        return Promise.resolve(3);
-
-                    case 2:
-                        return _context47.abrupt('return', _context47.sent);
-
-                    case 3:
-                    case 'end':
-                        return _context47.stop();
+                        return [4 /*yield*/, Promise.resolve(3)];
+                    case 1:
+                        return [2 /*return*/, _a.sent()];
                 }
-            }, _callee47, this);
-        })).then(function () {
+            });
+        }).then(function () {
             QUnit.ok(true, "Should be able to do 'return yield Promise.resolve(x);'");
         }).catch(function (e) {
             QUnit.ok(false, "Error occurred: " + e);
         }).then(QUnit.start);
     });
-    QUnit.asyncTest("Arrow functions and let", async$2(regeneratorRuntime.mark(function _callee48() {
+    QUnit.asyncTest("Arrow functions and let", async$2(function () {
         var x, y;
-        return regeneratorRuntime.wrap(function _callee48$(_context48) {
-            while (1) switch (_context48.prev = _context48.next) {
+        return __generator$5(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context48.next = 2;
-                    return [1, 2, Promise.resolve(3)];
-
-                case 2:
-                    x = _context48.sent;
+                    return [4 /*yield*/, [1, 2, Promise.resolve(3)]];
+                case 1:
+                    x = _a.sent();
                     y = x.map(function (a) {
                         return a - 1;
                     });
-
                     QUnit.equal(y[0], 0);
                     QUnit.equal(y[1], 1);
                     QUnit.equal(y[2], 2);
                     QUnit.start();
-
-                case 8:
-                case 'end':
-                    return _context48.stop();
+                    return [2 /*return*/];
             }
-        }, _callee48, this);
-    })));
-    QUnit.asyncTest("Calling sub async function", async$2(regeneratorRuntime.mark(function _callee49() {
-        var addFriend, deleteFriends, foo, bar, numDeleted;
-        return regeneratorRuntime.wrap(function _callee49$(_context51) {
-            while (1) switch (_context51.prev = _context51.next) {
+        });
+    }));
+    QUnit.asyncTest("Calling sub async function", async$2(function () {
+        var addFriend, deleteFriends, foo, bar, numDeleted, e_13;
+        return __generator$5(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    addFriend = async$2(regeneratorRuntime.mark(function addFriend(friend) {
+                    addFriend = async$2(function addFriend(friend) {
                         var friendId;
-                        return regeneratorRuntime.wrap(function addFriend$(_context49) {
-                            while (1) switch (_context49.prev = _context49.next) {
+                        return __generator$5(this, function (_a) {
+                            switch (_a.label) {
                                 case 0:
-                                    _context49.next = 2;
-                                    return db$4.friends.add(friend);
-
+                                    return [4 /*yield*/, db$4.friends.add(friend)];
+                                case 1:
+                                    friendId = _a.sent();
+                                    return [4 /*yield*/, db$4.friends.get(friendId)];
                                 case 2:
-                                    friendId = _context49.sent;
-                                    _context49.next = 5;
-                                    return db$4.friends.get(friendId);
-
-                                case 5:
-                                    return _context49.abrupt('return', _context49.sent);
-
-                                case 6:
-                                case 'end':
-                                    return _context49.stop();
+                                    return [2 /*return*/, _a.sent()];
                             }
-                        }, addFriend, this);
-                    }));
-                    deleteFriends = async$2(regeneratorRuntime.mark(function deleteFriends() {
-                        return regeneratorRuntime.wrap(function deleteFriends$(_context50) {
-                            while (1) switch (_context50.prev = _context50.next) {
+                        });
+                    });
+                    deleteFriends = async$2(function deleteFriends() {
+                        return __generator$5(this, function (_a) {
+                            switch (_a.label) {
                                 case 0:
-                                    _context50.next = 2;
-                                    return db$4.friends.where('name').anyOf("Foo", "Bar").delete();
-
-                                case 2:
-                                    return _context50.abrupt('return', _context50.sent);
-
-                                case 3:
-                                case 'end':
-                                    return _context50.stop();
+                                    return [4 /*yield*/, db$4.friends.where('name').anyOf("Foo", "Bar").delete()];
+                                case 1:
+                                    return [2 /*return*/, _a.sent()];
                             }
-                        }, deleteFriends, this);
-                    }));
-                    _context51.prev = 2;
-                    _context51.next = 5;
-                    return addFriend({ name: "Foo" });
-
-                case 5:
-                    foo = _context51.sent;
-                    _context51.next = 8;
-                    return addFriend({ name: "Bar" });
-
-                case 8:
-                    bar = _context51.sent;
-
+                        });
+                    });
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 5, 6, 7]);
+                    return [4 /*yield*/, addFriend({ name: "Foo" })];
+                case 2:
+                    foo = _a.sent();
+                    return [4 /*yield*/, addFriend({ name: "Bar" })];
+                case 3:
+                    bar = _a.sent();
                     QUnit.ok(foo.name == "Foo", "Foo got its name");
                     QUnit.ok(bar.name == "Bar", "Bar got its name");
-                    _context51.next = 13;
-                    return deleteFriends();
-
-                case 13:
-                    numDeleted = _context51.sent;
-
+                    return [4 /*yield*/, deleteFriends()];
+                case 4:
+                    numDeleted = _a.sent();
                     QUnit.ok(true, numDeleted + " friends successfully deleted");
-                    _context51.next = 20;
-                    break;
-
-                case 17:
-                    _context51.prev = 17;
-                    _context51.t0 = _context51['catch'](2);
-
-                    QUnit.ok(false, _context51.t0);
-
-                case 20:
-                    _context51.prev = 20;
-
+                    return [3 /*break*/, 7];
+                case 5:
+                    e_13 = _a.sent();
+                    QUnit.ok(false, e_13);
+                    return [3 /*break*/, 7];
+                case 6:
                     QUnit.start();
-                    return _context51.finish(20);
-
-                case 23:
-                case 'end':
-                    return _context51.stop();
+                    return [7 /*endfinally*/];
+                case 7:
+                    return [2 /*return*/];
             }
-        }, _callee49, this, [[2, 17, 20, 23]]);
-    })));
+        });
+    }));
 
     var keys = Object.keys;
     var isArray = Array.isArray;
@@ -5334,7 +5012,6 @@
 
     // By default, debug will be true only if platform is a web platform and its page is served from localhost.
     // When debug = true, error's stacks will contain asyncronic long stacks.
-    // By default, debug will be true only if platform is a web platform and its page is served from localhost.
     var debug = typeof location !== 'undefined' &&
     // By default, use debug mode if served from localhost.
     /^(http|https):\/\/(localhost|127\.0\.0\.1)/.test(location.href);
@@ -5574,7 +5251,6 @@
     var rejectingErrors = [];
     var currentFulfiller = null;
     var rejectionMapper = mirror; // Remove in next major when removing error mapping of DOMErrors and DOMExceptions
-    // Remove in next major when removing error mapping of DOMErrors and DOMExceptions
     var globalPSD = {
         id: 'global',
         global: true,
@@ -5593,11 +5269,8 @@
     };
     var PSD = globalPSD;
     var microtickQueue = []; // Callbacks to call in this or next physical tick.
-    // Callbacks to call in this or next physical tick.
     var numScheduledCalls = 0; // Number of listener-calls left to do in this physical tick.
-    // Number of listener-calls left to do in this physical tick.
     var tickFinalizers = []; // Finalizers to call when there are no more async calls scheduled within current physical tick.
-    // Finalizers to call when there are no more async calls scheduled within current physical tick.
     function Promise$1(fn) {
         if (typeof this !== 'object') throw new TypeError('Promises must be constructed via new');
         this._listeners = [];
@@ -5651,7 +5324,8 @@
         // Be idempotent and allow another framework (such as zone.js or another instance of a Dexie.Promise module) to replace Promise.prototype.then
         // and when that framework wants to restore the original property, we must identify that and restore the original property descriptor.
         set: function (value) {
-            setProp(this, 'then', value && value.prototype === INTERNAL ? thenProp : {
+            setProp(this, 'then', value && value.prototype === INTERNAL ? thenProp : // Restore to original property descriptor.
+            {
                 get: function () {
                     return value; // Getter returning provided value (behaves like value is just changed)
                 },
@@ -6235,13 +5909,20 @@
     });
     var rejection = Promise$1.reject;
 
-    var __extends = undefined && undefined.__extends || function (d, b) {
-        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-        function __() {
-            this.constructor = d;
-        }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
+    var __extends = undefined && undefined.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
     var __awaiter$4 = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
         return new (P || (P = Promise))(function (resolve, reject) {
             function fulfilled(value) {
@@ -6266,14 +5947,17 @@
             step((generator = generator.apply(thisArg, _arguments || [])).next());
         });
     };
-    var __generator$4 = undefined && undefined.__generator || function (thisArg, body) {
+    var __generator$7 = undefined && undefined.__generator || function (thisArg, body) {
         var _ = { label: 0, sent: function () {
                 if (t[0] & 1) throw t[1];return t[1];
             }, trys: [], ops: [] },
             f,
             y,
-            t;
-        return { next: verb(0), "throw": verb(1), "return": verb(2) };
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
         function verb(n) {
             return function (v) {
                 return step([n, v]);
@@ -6320,7 +6004,7 @@
     };
     var _resolve = NativePromise$2.resolve.bind(NativePromise$2);
     var _then = NativePromise$2.prototype.then;
-    var IdbPromiseIncompatibleError = function (_super) {
+    var IdbPromiseIncompatibleError = /** @class */function (_super) {
         __extends(IdbPromiseIncompatibleError, _super);
         function IdbPromiseIncompatibleError() {
             var _this = _super.call(this, "IndexedDB and Promise are incompatible on this browser") || this;
@@ -6333,7 +6017,7 @@
         return __awaiter$4(this, void 0, void 0, function () {
             var _this = this;
             var db;
-            return __generator$4(this, function (_a) {
+            return __generator$7(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         db = new Dexie("idbPromiseCompatTest");
@@ -6341,7 +6025,7 @@
                         return [4 /*yield*/, db.transaction('r', db.foo, function () {
                             return __awaiter$4(_this, void 0, void 0, function () {
                                 var x, p, i, result, ex_1;
-                                return __generator$4(this, function (_a) {
+                                return __generator$7(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
                                             return [4 /*yield*/, db.foo.count()];
@@ -6406,14 +6090,17 @@
             step((generator = generator.apply(thisArg, _arguments || [])).next());
         });
     };
-    var __generator$3 = undefined && undefined.__generator || function (thisArg, body) {
+    var __generator$6 = undefined && undefined.__generator || function (thisArg, body) {
         var _ = { label: 0, sent: function () {
                 if (t[0] & 1) throw t[1];return t[1];
             }, trys: [], ops: [] },
             f,
             y,
-            t;
-        return { next: verb(0), "throw": verb(1), "return": verb(2) };
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
         function verb(n) {
             return function (v) {
                 return step([n, v]);
@@ -6516,7 +6203,7 @@
     QUnit.test("Must not leak PSD zone", function (assert) {
         return __awaiter$3(this, void 0, void 0, function () {
             var done, compatiblity, F;
-            return __generator$3(this, function (_a) {
+            return __generator$6(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         done = assert.async();
@@ -6547,7 +6234,7 @@
     QUnit.test("Must not leak PSD zone2", function (assert) {
         return __awaiter$3(this, void 0, void 0, function () {
             var done;
-            return __generator$3(this, function (_a) {
+            return __generator$6(this, function (_a) {
                 done = assert.async();
                 QUnit.ok(Dexie.currentTransaction === null, "Should not have an ongoing transaction to start with");
                 db$5.transaction('rw', db$5.items, function () {
@@ -6609,7 +6296,7 @@
     QUnit.test("Should be able to await Promise.all()", function (assert) {
         return __awaiter$3(_this$3, void 0, void 0, function () {
             var done, compatible;
-            return __generator$3(this, function (_a) {
+            return __generator$6(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         done = assert.async();
@@ -6636,65 +6323,50 @@
             });
         });
     });
-    spawnedTest("Should use Promise.all where applicable", regeneratorRuntime.mark(function _callee51() {
-        return regeneratorRuntime.wrap(function _callee51$(_context53) {
-            while (1) switch (_context53.prev = _context53.next) {
+    spawnedTest("Should use Promise.all where applicable", function () {
+        return __generator$6(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context53.next = 2;
-                    return db$5.transaction('rw', db$5.items, regeneratorRuntime.mark(function _callee50() {
+                    return [4 /*yield*/, db$5.transaction('rw', db$5.items, function () {
                         var x, all;
-                        return regeneratorRuntime.wrap(function _callee50$(_context52) {
-                            while (1) switch (_context52.prev = _context52.next) {
+                        return __generator$6(this, function (_a) {
+                            switch (_a.label) {
                                 case 0:
-                                    _context52.next = 2;
-                                    return Promise.resolve(3);
-
+                                    return [4 /*yield*/, Promise.resolve(3)];
+                                case 1:
+                                    x = _a.sent();
+                                    return [4 /*yield*/, db$5.items.bulkAdd([{ id: 'a' }, { id: 'b' }])];
                                 case 2:
-                                    x = _context52.sent;
-                                    _context52.next = 5;
-                                    return db$5.items.bulkAdd([{ id: 'a' }, { id: 'b' }]);
-
-                                case 5:
-                                    _context52.next = 7;
-                                    return Promise.all([db$5.items.get('a'), db$5.items.get('b')]);
-
-                                case 7:
-                                    all = _context52.sent;
-
+                                    _a.sent();
+                                    return [4 /*yield*/, Promise.all([db$5.items.get('a'), db$5.items.get('b')])];
+                                case 3:
+                                    all = _a.sent();
                                     QUnit.equal(all.length, 2);
                                     QUnit.equal(all[0].id, 'a');
                                     QUnit.equal(all[1].id, 'b');
-                                    _context52.next = 13;
-                                    return Promise.all([db$5.items.get('a'), db$5.items.get('b')]);
-
-                                case 13:
-                                    all = _context52.sent;
-
+                                    return [4 /*yield*/, Promise.all([db$5.items.get('a'), db$5.items.get('b')])];
+                                case 4:
+                                    all = _a.sent();
                                     QUnit.equal(all.length, 2);
                                     QUnit.equal(all[0].id, 'a');
                                     QUnit.equal(all[1].id, 'b');
-
-                                case 17:
-                                case 'end':
-                                    return _context52.stop();
+                                    return [2 /*return*/];
                             }
-                        }, _callee50, this);
-                    }));
-
-                case 2:
-                case 'end':
-                    return _context53.stop();
+                        });
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee51, this);
-    }));
-    spawnedTest("Even when keeping a reference to global Promise, still maintain PSD zone states", regeneratorRuntime.mark(function _callee52() {
+        });
+    });
+    spawnedTest("Even when keeping a reference to global Promise, still maintain PSD zone states", function () {
         var Promise;
-        return regeneratorRuntime.wrap(function _callee52$(_context54) {
-            while (1) switch (_context54.prev = _context54.next) {
+        return __generator$6(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     Promise = window.Promise;
-                    _context54.next = 3;
-                    return db$5.transaction('rw', db$5.items, function () {
+                    return [4 /*yield*/, db$5.transaction('rw', db$5.items, function () {
                         var trans = Dexie.currentTransaction;
                         QUnit.ok(trans !== null, "Have a transaction");
                         return Promise.resolve().then(function () {
@@ -6705,61 +6377,46 @@
                         }).then(function () {
                             QUnit.ok(Dexie.currentTransaction === trans, "Still have the same current transaction after multiple global.Promise.resolve() calls");
                         });
-                    });
-
-                case 3:
-                case 'end':
-                    return _context54.stop();
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee52, this);
-    }));
-    spawnedTest("Sub Transactions with async await", regeneratorRuntime.mark(function _callee53() {
-        var compatible;
-        return regeneratorRuntime.wrap(function _callee53$(_context55) {
-            while (1) switch (_context55.prev = _context55.next) {
+        });
+    });
+    spawnedTest("Sub Transactions with async await", function () {
+        var compatible, e_1;
+        return __generator$6(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context55.prev = 0;
-                    _context55.next = 3;
-                    return idbAndPromiseCompatible.catch(function () {
+                    _a.trys.push([0, 3,, 4]);
+                    return [4 /*yield*/, idbAndPromiseCompatible.catch(function () {
                         return false;
-                    });
-
-                case 3:
-                    compatible = _context55.sent;
-
-                    if (compatible) {
-                        _context55.next = 7;
-                        break;
+                    })];
+                case 1:
+                    compatible = _a.sent();
+                    if (!compatible) {
+                        QUnit.ok(true, "Promise and IndexedDB is incompatible on this browser. Native async await fails \"by design\" for indexedDB transactions");
+                        return [2 /*return*/];
                     }
-
-                    QUnit.ok(true, "Promise and IndexedDB is incompatible on this browser. Native async await fails \"by design\" for indexedDB transactions");
-                    return _context55.abrupt('return');
-
-                case 7:
-                    _context55.next = 9;
-                    return new Function('equal', 'ok', 'Dexie', 'db', "return (async ()=>{\n            await db.items.bulkAdd([{id: 1}, {id:2}, {id: 3}]);\n            let result = await db.transaction('rw', db.items, async ()=>{\n                let items = await db.items.toArray();\n                let numItems = await db.transaction('r', db.items, async ()=>{\n                    equal(await db.items.count(), await db.items.count(), \"Two awaits of count should equal\");\n                    equal(await db.items.count(), 3, \"Should be 3 items\");\n                    return await db.items.count();\n                });\n                let numItems2 = await db.transaction('r', db.items, async ()=>{\n                    equal(await db.items.count(), await db.items.count(), \"Two awaits of count should equal\");\n                    equal(await db.items.count(), 3, \"Should be 3 items\");\n                    return await db.items.count();\n                });\n                equal (numItems, numItems2, \"The total two inner transactions should be possible to run after each other\");\n                return numItems;\n            });\n            equal (result, 3, \"Result should be 3\");\n        })();")(QUnit.equal, QUnit.ok, Dexie, db$5);
-
-                case 9:
-                    _context55.next = 14;
-                    break;
-
-                case 11:
-                    _context55.prev = 11;
-                    _context55.t0 = _context55['catch'](0);
-
-                    QUnit.ok(_context55.t0.name === 'SyntaxError', "No support for native async functions in this browser");
-
-                case 14:
-                case 'end':
-                    return _context55.stop();
+                    return [4 /*yield*/, new Function('equal', 'ok', 'Dexie', 'db', "return (async ()=>{\n            await db.items.bulkAdd([{id: 1}, {id:2}, {id: 3}]);\n            let result = await db.transaction('rw', db.items, async ()=>{\n                let items = await db.items.toArray();\n                let numItems = await db.transaction('r', db.items, async ()=>{\n                    equal(await db.items.count(), await db.items.count(), \"Two awaits of count should equal\");\n                    equal(await db.items.count(), 3, \"Should be 3 items\");\n                    return await db.items.count();\n                });\n                let numItems2 = await db.transaction('r', db.items, async ()=>{\n                    equal(await db.items.count(), await db.items.count(), \"Two awaits of count should equal\");\n                    equal(await db.items.count(), 3, \"Should be 3 items\");\n                    return await db.items.count();\n                });\n                equal (numItems, numItems2, \"The total two inner transactions should be possible to run after each other\");\n                return numItems;\n            });\n            equal (result, 3, \"Result should be 3\");\n        })();")(QUnit.equal, QUnit.ok, Dexie, db$5)];
+                case 2:
+                    _a.sent();
+                    return [3 /*break*/, 4];
+                case 3:
+                    e_1 = _a.sent();
+                    QUnit.ok(e_1.name === 'SyntaxError', "No support for native async functions in this browser");
+                    return [3 /*break*/, 4];
+                case 4:
+                    return [2 /*return*/];
             }
-        }, _callee53, this, [[0, 11]]);
-    }));
+        });
+    });
     promisedTest("Should patch global Promise within transaction scopes but leave them intact outside", function () {
         return __awaiter$3(_this$3, void 0, void 0, function () {
             var _this = this;
             var GlobalPromise;
-            return __generator$3(this, function (_a) {
+            return __generator$6(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         QUnit.ok(Promise !== Dexie.Promise, "At global scope. Promise should not be Dexie.Promise");
@@ -6767,7 +6424,7 @@
                         GlobalPromise = window.Promise;
                         return [4 /*yield*/, db$5.transaction('rw', db$5.items, function () {
                             return __awaiter$3(_this, void 0, void 0, function () {
-                                return __generator$3(this, function (_a) {
+                                return __generator$6(this, function (_a) {
                                     QUnit.ok(Promise === Dexie.Promise, "Within transaction scope, Promise should be Dexie.Promise.");
                                     QUnit.ok(window.Promise === Dexie.Promise, "Within transaction scope, window.Promise should be Dexie.Promise.");
                                     QUnit.ok(GlobalPromise !== Promise, "Promises are different");
@@ -6789,14 +6446,14 @@
     promisedTest("Should be able to use transpiled async await", function () {
         return __awaiter$3(_this$3, void 0, void 0, function () {
             var _this = this;
-            return __generator$3(this, function (_a) {
+            return __generator$6(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         return [4 /*yield*/, db$5.transaction('rw', db$5.items, function () {
                             return __awaiter$3(_this, void 0, void 0, function () {
                                 var _this = this;
                                 var trans;
-                                return __generator$3(this, function (_a) {
+                                return __generator$6(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
                                             trans = Dexie.currentTransaction;
@@ -6816,7 +6473,7 @@
                                             return [4 /*yield*/, db$5.transaction('r', db$5.items, function (innerTrans) {
                                                 return __awaiter$3(_this, void 0, void 0, function () {
                                                     var x;
-                                                    return __generator$3(this, function (_a) {
+                                                    return __generator$6(this, function (_a) {
                                                         switch (_a.label) {
                                                             case 0:
                                                                 QUnit.ok(!!innerTrans, "Should have inner transaction");
@@ -6836,7 +6493,7 @@
                                             QUnit.ok(Dexie.currentTransaction === trans, "Transaction persisted between await calls of sub transaction");
                                             return [4 /*yield*/, function () {
                                                 return __awaiter$3(_this, void 0, void 0, function () {
-                                                    return __generator$3(this, function (_a) {
+                                                    return __generator$6(this, function (_a) {
                                                         switch (_a.label) {
                                                             case 0:
                                                                 return [4 /*yield*/, db$5.items.get(1)];
@@ -6852,12 +6509,12 @@
                                             return [4 /*yield*/, function () {
                                                 return __awaiter$3(_this, void 0, void 0, function () {
                                                     var _this = this;
-                                                    return __generator$3(this, function (_a) {
+                                                    return __generator$6(this, function (_a) {
                                                         switch (_a.label) {
                                                             case 0:
                                                                 return [4 /*yield*/, Promise.all([db$5.transaction('r', db$5.items, function () {
                                                                     return __awaiter$3(_this, void 0, void 0, function () {
-                                                                        return __generator$3(this, function (_a) {
+                                                                        return __generator$6(this, function (_a) {
                                                                             switch (_a.label) {
                                                                                 case 0:
                                                                                     return [4 /*yield*/, db$5.items.get(1)];
@@ -6872,7 +6529,7 @@
                                                                     });
                                                                 }), db$5.transaction('r', db$5.items, function () {
                                                                     return __awaiter$3(_this, void 0, void 0, function () {
-                                                                        return __generator$3(this, function (_a) {
+                                                                        return __generator$6(this, function (_a) {
                                                                             switch (_a.label) {
                                                                                 case 0:
                                                                                     return [4 /*yield*/, db$5.items.get(1)];
@@ -6896,7 +6553,7 @@
                                                 QUnit.ok(Dexie.currentTransaction === trans, "Transaction persisted after window.Promise.resolve().then()");
                                                 return function () {
                                                     return __awaiter$3(_this, void 0, void 0, function () {
-                                                        return __generator$3(this, function (_a) {
+                                                        return __generator$6(this, function (_a) {
                                                             return [2 /*return*/];
                                                         });
                                                     });
@@ -6908,7 +6565,7 @@
                                                 QUnit.ok(Dexie.currentTransaction === trans, "Transaction persisted after window.Promise.resolve().then()");
                                                 return function () {
                                                     return __awaiter$3(_this, void 0, void 0, function () {
-                                                        return __generator$3(this, function (_a) {
+                                                        return __generator$6(this, function (_a) {
                                                             return [2 /*return*/];
                                                         });
                                                     });
@@ -6934,7 +6591,7 @@
     promisedTest("Should be able to use some simpe native async await even without zone echoing ", function () {
         return __awaiter$3(_this$3, void 0, void 0, function () {
             var compatible;
-            return __generator$3(this, function (_a) {
+            return __generator$6(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!hasNativeAsyncFunctions) {
@@ -6962,7 +6619,7 @@
     promisedTest("Should behave outside transactions as well", function () {
         return __awaiter$3(_this$3, void 0, void 0, function () {
             var compatible;
-            return __generator$3(this, function (_a) {
+            return __generator$6(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!hasNativeAsyncFunctions) {
@@ -6987,6 +6644,61 @@
         });
     });
 
+    var __generator$8 = undefined && undefined.__generator || function (thisArg, body) {
+        var _ = { label: 0, sent: function () {
+                if (t[0] & 1) throw t[1];return t[1];
+            }, trys: [], ops: [] },
+            f,
+            y,
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
+        function verb(n) {
+            return function (v) {
+                return step([n, v]);
+            };
+        }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [0, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+            if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    };
     var db$6 = new Dexie("TestDBException");
     db$6.version(1).stores({ users: "id,first,last,&username,&*email,*pets" });
     db$6.on("populate", function (trans) {
@@ -7018,50 +6730,37 @@
             QUnit.start();
         }, 100);
     });
-    spawnedTest("transaction should abort on collection error", regeneratorRuntime.mark(function _callee55() {
-        return regeneratorRuntime.wrap(function _callee55$(_context57) {
-            while (1) switch (_context57.prev = _context57.next) {
+    spawnedTest("transaction should abort on collection error", function () {
+        var _a, _b;
+        return __generator$8(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _context57.next = 2;
-                    return db$6.transaction("rw", db$6.users, regeneratorRuntime.mark(function _callee54() {
+                    return [4 /*yield*/, db$6.transaction("rw", db$6.users, function () {
                         var id;
-                        return regeneratorRuntime.wrap(function _callee54$(_context56) {
-                            while (1) switch (_context56.prev = _context56.next) {
+                        return __generator$8(this, function (_a) {
+                            switch (_a.label) {
                                 case 0:
-                                    _context56.next = 2;
-                                    return db$6.users.add({ id: 3, first: "Foo", last: "Bar", username: "foobar" });
-
-                                case 2:
-                                    id = _context56.sent;
-
+                                    return [4 /*yield*/, db$6.users.add({ id: 3, first: "Foo", last: "Bar", username: "foobar" })];
+                                case 1:
+                                    id = _a.sent();
                                     QUnit.equal(id, 3);
-                                    _context56.next = 6;
-                                    return db$6.users.where('id').equals(null).toArray();
-
-                                case 6:
+                                    return [4 /*yield*/, db$6.users.where('id').equals(null).toArray()];
+                                case 2:
+                                    _a.sent();
                                     QUnit.ok(false, "Should not come here");
-
-                                case 7:
-                                case 'end':
-                                    return _context56.stop();
+                                    return [2 /*return*/];
                             }
-                        }, _callee54, this);
-                    })).catch(function (e) {
+                        });
+                    }).catch(function (e) {
                         QUnit.ok(true, "Got error because WhereClause.equals(null) should throw DataError: " + e);
-                    });
-
+                    })];
+                case 1:
+                    _c.sent();
+                    _a = QUnit.equal;
+                    return [4 /*yield*/, db$6.users.where('first').equals("Foo").count()];
                 case 2:
-                    _context57.t0 = QUnit;
-                    _context57.next = 5;
-                    return db$6.users.where('first').equals("Foo").count();
-
-                case 5:
-                    _context57.t1 = _context57.sent;
-
-                    _context57.t0.equal.call(_context57.t0, _context57.t1, 0, "Should not have succeeded to add when transaction was aborted");
-
-                    _context57.next = 9;
-                    return db$6.transaction("rw", db$6.users, function () {
+                    _a.apply(void 0, [_c.sent(), 0, "Should not have succeeded to add when transaction was aborted"]);
+                    return [4 /*yield*/, db$6.transaction("rw", db$6.users, function () {
                         db$6.users.add({ id: 3, first: "Foo", last: "Bar", username: "foobar" });
                         db$6.users.where('id').equals(null).toArray(function (res) {
                             QUnit.ok(false, "Not possible to query null");
@@ -7070,24 +6769,17 @@
                         QUnit.ok(false, "Transaction shouldnt commit");
                     }).catch(function (e) {
                         QUnit.ok(true, "Got error because WhereClause.equals(null) should throw TypeError");
-                    });
-
-                case 9:
-                    _context57.t2 = QUnit;
-                    _context57.next = 12;
-                    return db$6.users.where('first').equals("Foo").count();
-
-                case 12:
-                    _context57.t3 = _context57.sent;
-
-                    _context57.t2.equal.call(_context57.t2, _context57.t3, 0, "Should not have succeeded to add when transaction was aborted");
-
-                case 14:
-                case 'end':
-                    return _context57.stop();
+                    })];
+                case 3:
+                    _c.sent();
+                    _b = QUnit.equal;
+                    return [4 /*yield*/, db$6.users.where('first').equals("Foo").count()];
+                case 4:
+                    _b.apply(void 0, [_c.sent(), 0, "Should not have succeeded to add when transaction was aborted"]);
+                    return [2 /*return*/];
             }
-        }, _callee55, this);
-    }));
+        });
+    });
     QUnit.asyncTest("eventError-transaction-catch", function () {
         db$6.transaction("rw", db$6.users, function () {
             db$6.users.add({ id: 100, username: "dfahlander" }).then(function () {
@@ -7944,12 +7636,68 @@
         });
     });
 
+    var __generator$9 = undefined && undefined.__generator || function (thisArg, body) {
+        var _ = { label: 0, sent: function () {
+                if (t[0] & 1) throw t[1];return t[1];
+            }, trys: [], ops: [] },
+            f,
+            y,
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
+        function verb(n) {
+            return function (v) {
+                return step([n, v]);
+            };
+        }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [0, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+            if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    };
     var async$3 = Dexie.async;
     var db$7 = new Dexie("TestIssuesDB");
     db$7.version(1).stores({
         users: "id,first,last,&username,*&email,*pets",
         keyless: ",name",
         foo: "id"
+        // If required for your test, add more tables here
     });
     QUnit.module("misc", {
         setup: function () {
@@ -7982,130 +7730,103 @@
             QUnit.ok(false, e);
         }).finally(QUnit.start);
     });
-    QUnit.asyncTest("#102 Passing an empty array to anyOf throws exception", async$3(regeneratorRuntime.mark(function _callee56() {
-        var count;
-        return regeneratorRuntime.wrap(function _callee56$(_context58) {
-            while (1) switch (_context58.prev = _context58.next) {
+    QUnit.asyncTest("#102 Passing an empty array to anyOf throws exception", async$3(function () {
+        var count, err_1;
+        return __generator$9(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context58.prev = 0;
-                    _context58.next = 3;
-                    return db$7.users.where("username").anyOf([]).count();
-
-                case 3:
-                    count = _context58.sent;
-
+                    _a.trys.push([0, 2, 3, 4]);
+                    return [4 /*yield*/, db$7.users.where("username").anyOf([]).count()];
+                case 1:
+                    count = _a.sent();
                     QUnit.equal(count, 0, "Zarro items matched the query anyOf([])");
-                    _context58.next = 10;
-                    break;
-
-                case 7:
-                    _context58.prev = 7;
-                    _context58.t0 = _context58['catch'](0);
-
-                    QUnit.ok(false, "Error when calling anyOf([]): " + _context58.t0);
-
-                case 10:
-                    _context58.prev = 10;
-
+                    return [3 /*break*/, 4];
+                case 2:
+                    err_1 = _a.sent();
+                    QUnit.ok(false, "Error when calling anyOf([]): " + err_1);
+                    return [3 /*break*/, 4];
+                case 3:
                     QUnit.start();
-                    return _context58.finish(10);
-
-                case 13:
-                case 'end':
-                    return _context58.stop();
+                    return [7 /*endfinally*/];
+                case 4:
+                    return [2 /*return*/];
             }
-        }, _callee56, this, [[0, 7, 10, 13]]);
-    })));
-    spawnedTest("#248 'modifications' object in 'updating' hook can be bizarre", regeneratorRuntime.mark(function _callee57() {
-        var numCreating, numUpdating, CustomDate, creatingHook, updatingHook, isDate, readingHook, testDate, testDate2, retrieved;
-        return regeneratorRuntime.wrap(function _callee57$(_context59) {
-            while (1) switch (_context59.prev = _context59.next) {
+        });
+    }));
+    spawnedTest("#248 'modifications' object in 'updating' hook can be bizarre", function () {
+        function CustomDate(realDate) {
+            this._year = new Date(realDate).getFullYear();
+            this._month = new Date(realDate).getMonth();
+            this._day = new Date(realDate).getDate();
+            this._millisec = new Date(realDate).getTime();
+            //...
+        }
+        function creatingHook(primKey, obj) {
+            ++numCreating;
+            var date = obj.date;
+            if (date && date instanceof CustomDate) {
+                obj.date = new Date(date._year, date._month, date._day);
+            }
+        }
+        function updatingHook(modifications, primKey, obj) {
+            ++numUpdating;
+            var date = modifications.date;
+            if (date && date instanceof CustomDate) {
+                return { date: new Date(date._year, date._month, date._day) };
+            }
+        }
+        function isDate(obj) {
+            // obj instanceof Date does NOT work with Safari when Date are retrieved from IDB.
+            return obj.getTime && obj.getDate && obj.getFullYear;
+        }
+        function readingHook(obj) {
+            if (obj.date && isDate(obj.date)) {
+                obj.date = new CustomDate(obj.date);
+            }
+            return obj;
+        }
+        var numCreating, numUpdating, testDate, testDate2, retrieved;
+        return __generator$9(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    readingHook = function readingHook(obj) {
-                        if (obj.date && isDate(obj.date)) {
-                            obj.date = new CustomDate(obj.date);
-                        }
-                        return obj;
-                    };
-
-                    isDate = function isDate(obj) {
-                        // obj instanceof Date does NOT work with Safari when Date are retrieved from IDB.
-                        return obj.getTime && obj.getDate && obj.getFullYear;
-                    };
-
-                    updatingHook = function updatingHook(modifications, primKey, obj) {
-                        ++numUpdating;
-                        var date = modifications.date;
-                        if (date && date instanceof CustomDate) {
-                            return { date: new Date(date._year, date._month, date._day) };
-                        }
-                    };
-
-                    creatingHook = function creatingHook(primKey, obj) {
-                        ++numCreating;
-                        var date = obj.date;
-                        if (date && date instanceof CustomDate) {
-                            obj.date = new Date(date._year, date._month, date._day);
-                        }
-                    };
-
-                    CustomDate = function CustomDate(realDate) {
-                        this._year = new Date(realDate).getFullYear();
-                        this._month = new Date(realDate).getMonth();
-                        this._day = new Date(realDate).getDate();
-                        this._millisec = new Date(realDate).getTime();
-                        //...
-                    };
-
                     numCreating = 0, numUpdating = 0;
-
                     db$7.foo.hook('creating', creatingHook);
                     db$7.foo.hook('reading', readingHook);
                     db$7.foo.hook('updating', updatingHook);
                     testDate = new CustomDate(new Date(2016, 5, 11));
-
                     QUnit.equal(testDate._year, 2016, "CustomDate has year 2016");
                     QUnit.equal(testDate._month, 5, "CustomDate has month 5");
                     QUnit.equal(testDate._day, 11, "CustomDate has day 11");
                     testDate2 = new CustomDate(new Date(2016, 5, 12));
-                    _context59.prev = 14;
-
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1,, 4, 5]);
                     db$7.foo.add({ id: 1, date: testDate });
-                    _context59.next = 18;
-                    return db$7.foo.get(1);
-
-                case 18:
-                    retrieved = _context59.sent;
-
+                    return [4 /*yield*/, db$7.foo.get(1)];
+                case 2:
+                    retrieved = _a.sent();
                     QUnit.ok(retrieved.date instanceof CustomDate, "Got a CustomDate object when retrieving object");
                     QUnit.equal(retrieved.date._day, 11, "The CustomDate is on day 11");
                     db$7.foo.put({ id: 1, date: testDate2 });
-                    _context59.next = 24;
-                    return db$7.foo.get(1);
-
-                case 24:
-                    retrieved = _context59.sent;
-
+                    return [4 /*yield*/, db$7.foo.get(1)];
+                case 3:
+                    retrieved = _a.sent();
                     QUnit.ok(retrieved.date.constructor === CustomDate, "Got a CustomDate object when retrieving object");
                     QUnit.equal(retrieved.date._day, 12, "The CustomDate is now on day 12");
                     // Check that hooks has been called expected number of times
                     QUnit.equal(numCreating, 1, "creating hook called once");
                     QUnit.equal(numUpdating, 1, "updating hook called once");
-
-                case 29:
-                    _context59.prev = 29;
-
+                    return [3 /*break*/, 5];
+                case 4:
                     db$7.foo.hook('creating').unsubscribe(creatingHook);
                     db$7.foo.hook('reading').unsubscribe(readingHook);
                     db$7.foo.hook('updating').unsubscribe(updatingHook);
-                    return _context59.finish(29);
-
-                case 34:
-                case 'end':
-                    return _context59.stop();
+                    return [7 /*endfinally*/];
+                case 5:
+                    return [2 /*return*/];
             }
-        }, _callee57, this, [[14,, 29, 34]]);
-    }));
+        });
+    });
     QUnit.asyncTest("Issue: Broken Promise rejection #264", 1, function () {
         db$7.open().then(function () {
             return db$7.users.where('id').equals('does-not-exist').first();
@@ -8120,7 +7841,7 @@
         });
     });
     QUnit.asyncTest("#323 @gitawego's post. Should not fail unexpectedly on readonly properties", function () {
-        var Foo = function () {
+        var Foo = /** @class */function () {
             function Foo() {}
             Object.defineProperty(Foo.prototype, "synced", {
                 get: function () {
@@ -8168,51 +7889,38 @@
             QUnit.ok(true, "Got error from sortBy(): " + (e.stack || e));
         }).finally(QUnit.start);
     });
-    spawnedTest("#360 DB unresponsive after multiple Table.update() or Collection.modify()", regeneratorRuntime.mark(function _callee59() {
+    spawnedTest("#360 DB unresponsive after multiple Table.update() or Collection.modify()", function () {
         var NUM_UPDATES, result;
-        return regeneratorRuntime.wrap(function _callee59$(_context61) {
-            while (1) switch (_context61.prev = _context61.next) {
+        return __generator$9(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     NUM_UPDATES = 2000;
-                    _context61.next = 3;
-                    return db$7.transaction('rw', db$7.foo, regeneratorRuntime.mark(function _callee58() {
+                    return [4 /*yield*/, db$7.transaction('rw', db$7.foo, function () {
                         var i;
-                        return regeneratorRuntime.wrap(function _callee58$(_context60) {
-                            while (1) switch (_context60.prev = _context60.next) {
+                        return __generator$9(this, function (_a) {
+                            switch (_a.label) {
                                 case 0:
-                                    _context60.next = 2;
-                                    return db$7.foo.put({ id: 1, value: 0 });
-
-                                case 2:
+                                    return [4 /*yield*/, db$7.foo.put({ id: 1, value: 0 })];
+                                case 1:
+                                    _a.sent();
                                     for (i = 0; i < NUM_UPDATES; ++i) {
                                         db$7.foo.where('id').equals(1).modify(function (item) {
                                             return ++item.value;
                                         });
                                     }
-                                    _context60.next = 5;
-                                    return db$7.foo.get(1);
-
-                                case 5:
-                                    return _context60.abrupt('return', _context60.sent);
-
-                                case 6:
-                                case 'end':
-                                    return _context60.stop();
+                                    return [4 /*yield*/, db$7.foo.get(1)];
+                                case 2:
+                                    return [2 /*return*/, _a.sent()];
                             }
-                        }, _callee58, this);
-                    }));
-
-                case 3:
-                    result = _context61.sent;
-
+                        });
+                    })];
+                case 1:
+                    result = _a.sent();
                     QUnit.equal(result.value, NUM_UPDATES, "Should have updated id 1 a " + NUM_UPDATES + " times");
-
-                case 5:
-                case 'end':
-                    return _context61.stop();
+                    return [2 /*return*/];
             }
-        }, _callee59, this);
-    }));
+        });
+    });
 
     QUnit.module("promise");
     //Dexie.debug = "dexie";
@@ -8646,6 +8354,61 @@
         QUnit.ok(!(branch2 instanceof branch1.constructor), "!(branch2 instanceof branch1.constructor)");
     });
 
+    var __generator$10 = undefined && undefined.__generator || function (thisArg, body) {
+        var _ = { label: 0, sent: function () {
+                if (t[0] & 1) throw t[1];return t[1];
+            }, trys: [], ops: [] },
+            f,
+            y,
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
+        function verb(n) {
+            return function (v) {
+                return step([n, v]);
+            };
+        }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [0, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+            if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    };
     /**
      * Created by David on 3/31/2016.
      */
@@ -8698,17 +8461,16 @@
             table.hook('deleting', deleting2);
         });
     }
-    var reset = async$4(regeneratorRuntime.mark(function reset() {
-        return regeneratorRuntime.wrap(function reset$(_context62) {
-            while (1) switch (_context62.prev = _context62.next) {
+    var reset = async$4(function reset() {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     unsubscribeHooks();
-                    _context62.next = 3;
-                    return all(ourTables.map(function (table) {
+                    return [4 /*yield*/, all(ourTables.map(function (table) {
                         return table.clear();
-                    }));
-
-                case 3:
+                    }))];
+                case 1:
+                    _a.sent();
                     subscrubeHooks();
                     opLog = [];
                     successLog = [];
@@ -8723,13 +8485,10 @@
                     successLog2 = [];
                     errorLog2 = [];
                     transLog = [];
-
-                case 17:
-                case 'end':
-                    return _context62.stop();
+                    return [2 /*return*/];
             }
-        }, reset, this);
-    }));
+        });
+    });
     /*function stack() {
         if (Error.captureStackTrace) {
             let obj = {};
@@ -8919,32 +8678,28 @@
             unsubscribeHooks();
         }
     });
-    var expect = async$4(regeneratorRuntime.mark(function _callee60(expected, modifyer) {
-        return regeneratorRuntime.wrap(function _callee60$(_context63) {
-            while (1) switch (_context63.prev = _context63.next) {
+    var expect = async$4(function (expected, modifyer) {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context63.next = 2;
-                    return reset();
-
+                    return [4 /*yield*/, reset()];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, modifyer()];
                 case 2:
-                    _context63.next = 4;
-                    return modifyer();
-
-                case 4:
+                    _a.sent();
                     QUnit.equal(JSON.stringify(opLog, null, 2), JSON.stringify(expected, null, 2), "Expected oplog: " + JSON.stringify(expected));
                     QUnit.ok(transLog.every(function (x) {
                         return x.trans && x.current === x.trans;
                     }), "transaction argument is valid and same as Dexie.currentTransaction");
-                    _context63.next = 8;
-                    return reset();
-
-                case 8:
+                    return [4 /*yield*/, reset()];
+                case 3:
+                    _a.sent();
                     watchSuccess = true;
                     watchError = true;
-                    _context63.next = 12;
-                    return modifyer();
-
-                case 12:
+                    return [4 /*yield*/, modifyer()];
+                case 4:
+                    _a.sent();
                     QUnit.equal(errorLog.length + errorLog2.length, 0, "No errors should have been registered");
                     QUnit.equal(successLog.length, expected.filter(function (op) {
                         return op.op !== 'read';
@@ -8958,18 +8713,14 @@
                             QUnit.equal(successLog2[i], x.key, "Success events got the correct key (2)");
                         }
                     });
-
                     if (!expected.some(function (x) {
                         return x.op === "create" && x.key === undefined;
-                    })) {
-                        _context63.next = 27;
-                        break;
-                    }
-
-                    _context63.next = 19;
-                    return reset();
-
-                case 19:
+                    })) return [3 /*break*/, 7];
+                    // Test to deliver prim key from both hooks and expect the second hook's key to win.
+                    return [4 /*yield*/, reset()];
+                case 5:
+                    // Test to deliver prim key from both hooks and expect the second hook's key to win.
+                    _a.sent();
                     deliverKeys = expected.map(function (x, i) {
                         return "Hook1Key" + i;
                     });
@@ -8978,10 +8729,9 @@
                     });
                     watchSuccess = true;
                     watchError = true;
-                    _context63.next = 25;
-                    return modifyer();
-
-                case 25:
+                    return [4 /*yield*/, modifyer()];
+                case 6:
+                    _a.sent();
                     QUnit.equal(errorLog.length + errorLog2.length, 0, "No errors should have been registered");
                     expected.forEach(function (x, i) {
                         if (x.op === "create" && x.key === undefined) {
@@ -8991,24 +8741,18 @@
                             QUnit.equal(successLog2[i], deliverKeys2[i], "Success event got delivered key from hook2 (2)");
                         }
                     });
-
-                case 27:
+                    _a.label = 7;
+                case 7:
                     if (!expected.some(function (x) {
                         return x.op === "update";
-                    })) {
-                        _context63.next = 34;
-                        break;
-                    }
-
-                    _context63.next = 30;
-                    return reset();
-
-                case 30:
+                    })) return [3 /*break*/, 10];
+                    return [4 /*yield*/, reset()];
+                case 8:
+                    _a.sent();
                     deliverModifications = { "someProp.someSubProp": "someValue" };
-                    _context63.next = 33;
-                    return modifyer();
-
-                case 33:
+                    return [4 /*yield*/, modifyer()];
+                case 9:
+                    _a.sent();
                     expected.forEach(function (x, i) {
                         if (x.op === "update") {
                             QUnit.equal(JSON.stringify(opLog[i].obj), JSON.stringify(opLog2[i].obj), "Object has not yet been changed in hook2");
@@ -9018,38 +8762,32 @@
                             QUnit.ok("someProp.someSubProp" in opLog2[i].mods, "oplog2 got first hook's additional modifications");
                         }
                     });
-
-                case 34:
-                case 'end':
-                    return _context63.stop();
+                    _a.label = 10;
+                case 10:
+                    return [2 /*return*/];
             }
-        }, _callee60, this);
-    }));
-    var verifyErrorFlows = async$4(regeneratorRuntime.mark(function _callee61(modifyer) {
-        return regeneratorRuntime.wrap(function _callee61$(_context64) {
-            while (1) switch (_context64.prev = _context64.next) {
+        });
+    });
+    var verifyErrorFlows = async$4(function (modifyer) {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context64.next = 2;
-                    return reset();
-
-                case 2:
+                    return [4 /*yield*/, reset()];
+                case 1:
+                    _a.sent();
                     QUnit.ok(true, "Verifying ERROR flows");
                     watchSuccess = true;
                     watchError = true;
-                    _context64.next = 7;
-                    return modifyer();
-
-                case 7:
+                    return [4 /*yield*/, modifyer()];
+                case 2:
+                    _a.sent();
                     QUnit.equal(opLog.length, opLog2.length, "Number of ops same for hook1 and hook2: " + opLog.length);
                     QUnit.equal(successLog.length + errorLog.length, opLog.length, "Either onerror or onsuccess must have been called for every op. onerror: " + errorLog.length + ". onsuccess: " + successLog.length + ". opLog: " + JSON.stringify(opLog));
                     QUnit.equal(successLog2.length + errorLog2.length, opLog2.length, "Either onerror or onsuccess must have been called for every op (hook2). onerror: " + errorLog2.length + ". onsuccess: " + successLog2.length + ". opLog: " + JSON.stringify(opLog2));
-
-                case 10:
-                case 'end':
-                    return _context64.stop();
+                    return [2 /*return*/];
             }
-        }, _callee61, this);
-    }));
+        });
+    });
     //
     //
     //   Tests goes here...
@@ -9063,12 +8801,11 @@
     //  Table.put()
     //  Table.bulkAdd()
     //  Table.bulkPut()
-    spawnedTest("creating using Table.add()", regeneratorRuntime.mark(function _callee63() {
-        return regeneratorRuntime.wrap(function _callee63$(_context66) {
-            while (1) switch (_context66.prev = _context66.next) {
+    spawnedTest("creating using Table.add()", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context66.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1, idx: 11 }
@@ -9089,54 +8826,45 @@
                             db$8.table3.add({ idx: 13 });
                             db$8.table4.add({ idx: 14 });
                         });
-                    });
-
-                case 2:
-                    _context66.next = 4;
-                    return verifyErrorFlows(function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee62() {
-                            return regeneratorRuntime.wrap(function _callee62$(_context65) {
-                                while (1) switch (_context65.prev = _context65.next) {
+                    })];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, verifyErrorFlows(function () {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _context65.next = 2;
-                                        return db$8.table1.add({ id: 1 });
-
+                                        return [4 /*yield*/, db$8.table1.add({ id: 1 })];
+                                    case 1:
+                                        _a.sent(); // success
+                                        return [4 /*yield*/, db$8.table1.add({ id: 1 }).catch(nop$1)];
                                     case 2:
-                                        _context65.next = 4;
-                                        return db$8.table1.add({ id: 1 }).catch(nop$1);
-
+                                        _a.sent(); // Trigger error event (constraint)
+                                        return [4 /*yield*/, db$8.table2.add({}, 1)];
+                                    case 3:
+                                        _a.sent(); // sucesss
+                                        return [4 /*yield*/, db$8.table2.add({}, 1).catch(nop$1)];
                                     case 4:
-                                        _context65.next = 6;
-                                        return db$8.table2.add({}, 1);
-
-                                    case 6:
-                                        _context65.next = 8;
-                                        return db$8.table2.add({}, 1).catch(nop$1);
-
-                                    case 8:
-                                        _context65.next = 10;
-                                        return db$8.table1.add({ id: {} }).catch(nop$1);
-
-                                    case 10:
-                                    case 'end':
-                                        return _context65.stop();
+                                        _a.sent(); // Trigger error event (constraint)
+                                        return [4 /*yield*/, db$8.table1.add({ id: {} }).catch(nop$1)];
+                                    case 5:
+                                        _a.sent(); // Trigger direct exception (invalid key type)
+                                        return [2 /*return*/];
                                 }
-                            }, _callee62, this);
-                        })).catch(nop$1);
-                    });
-
-                case 4:
-                case 'end':
-                    return _context66.stop();
+                            });
+                        }).catch(nop$1);
+                    })];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee63, this);
-    }));
-    spawnedTest("creating using Table.put()", regeneratorRuntime.mark(function _callee65() {
-        return regeneratorRuntime.wrap(function _callee65$(_context68) {
-            while (1) switch (_context68.prev = _context68.next) {
+        });
+    });
+    spawnedTest("creating using Table.put()", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context68.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1, idx: 11 }
@@ -9157,54 +8885,45 @@
                             db$8.table3.put({ idx: 13 });
                             db$8.table4.put({ idx: 14 });
                         });
-                    });
-
-                case 2:
-                    _context68.next = 4;
-                    return verifyErrorFlows(function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee64() {
-                            return regeneratorRuntime.wrap(function _callee64$(_context67) {
-                                while (1) switch (_context67.prev = _context67.next) {
+                    })];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, verifyErrorFlows(function () {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _context67.next = 2;
-                                        return db$8.table3.put({ idx: 1 });
-
+                                        return [4 /*yield*/, db$8.table3.put({ idx: 1 })];
+                                    case 1:
+                                        _a.sent(); // success
+                                        return [4 /*yield*/, db$8.table3.put({ idx: 1 }).catch(nop$1)];
                                     case 2:
-                                        _context67.next = 4;
-                                        return db$8.table3.put({ idx: 1 }).catch(nop$1);
-
+                                        _a.sent(); // Trigger error event (constraint)
+                                        return [4 /*yield*/, db$8.table2.put({}, 1)];
+                                    case 3:
+                                        _a.sent(); // sucesss
+                                        return [4 /*yield*/, db$8.table2.put({}, 1).catch(nop$1)];
                                     case 4:
-                                        _context67.next = 6;
-                                        return db$8.table2.put({}, 1);
-
-                                    case 6:
-                                        _context67.next = 8;
-                                        return db$8.table2.put({}, 1).catch(nop$1);
-
-                                    case 8:
-                                        _context67.next = 10;
-                                        return db$8.table3.put({ id: {} }).catch(nop$1);
-
-                                    case 10:
-                                    case 'end':
-                                        return _context67.stop();
+                                        _a.sent(); // Trigger error event (constraint)
+                                        return [4 /*yield*/, db$8.table3.put({ id: {} }).catch(nop$1)];
+                                    case 5:
+                                        _a.sent(); // Trigger direct exception (invalid key type)
+                                        return [2 /*return*/];
                                 }
-                            }, _callee64, this);
-                        })).catch(nop$1);
-                    });
-
-                case 4:
-                case 'end':
-                    return _context68.stop();
+                            });
+                        }).catch(nop$1);
+                    })];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee65, this);
-    }));
-    spawnedTest("creating using Table.bulkAdd()", regeneratorRuntime.mark(function _callee68() {
-        return regeneratorRuntime.wrap(function _callee68$(_context71) {
-            while (1) switch (_context71.prev = _context71.next) {
+        });
+    });
+    spawnedTest("creating using Table.bulkAdd()", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context71.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1, idx: 11 }
@@ -9233,69 +8952,54 @@
                         op: "create",
                         value: { idx: 14.2 }
                     }], function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee66() {
-                            return regeneratorRuntime.wrap(function _callee66$(_context69) {
-                                while (1) switch (_context69.prev = _context69.next) {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                db$8.table1.bulkAdd([{ id: 1, idx: 11 }, { id: 1.2, idx: 11.2 }]);
+                                db$8.table2.bulkAdd([{ idx: 12 }, { idx: 12.2 }], [2, 2.2]);
+                                db$8.table3.bulkAdd([{ idx: 13 }, { idx: 13.2 }]);
+                                db$8.table4.bulkAdd([{ idx: 14 }, { idx: 14.2 }]);
+                                return [2 /*return*/];
+                            });
+                        });
+                    })];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, verifyErrorFlows(function () {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        db$8.table1.bulkAdd([{ id: 1, idx: 11 }, { id: 1.2, idx: 11.2 }]);
-                                        db$8.table2.bulkAdd([{ idx: 12 }, { idx: 12.2 }], [2, 2.2]);
-                                        db$8.table3.bulkAdd([{ idx: 13 }, { idx: 13.2 }]);
-                                        db$8.table4.bulkAdd([{ idx: 14 }, { idx: 14.2 }]);
-
-                                    case 4:
-                                    case 'end':
-                                        return _context69.stop();
-                                }
-                            }, _callee66, this);
-                        }));
-                    });
-
-                case 2:
-                    _context71.next = 4;
-                    return verifyErrorFlows(function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee67() {
-                            return regeneratorRuntime.wrap(function _callee67$(_context70) {
-                                while (1) switch (_context70.prev = _context70.next) {
-                                    case 0:
-                                        _context70.next = 2;
-                                        return db$8.table1.bulkAdd([{ id: 1 }, { id: 1 }]).catch(nop$1);
-
+                                        return [4 /*yield*/, db$8.table1.bulkAdd([{ id: 1 }, { id: 1 }]).catch(nop$1)];
+                                    case 1:
+                                        _a.sent(); // 1. success, 2. error event.
+                                        return [4 /*yield*/, db$8.table1.bulkAdd([{ id: 2 }, { id: 2 }, { id: 3 }]).catch(nop$1)];
                                     case 2:
-                                        _context70.next = 4;
-                                        return db$8.table1.bulkAdd([{ id: 2 }, { id: 2 }, { id: 3 }]).catch(nop$1);
-
+                                        _a.sent(); // 1. success, 2. error event., 3. success
+                                        return [4 /*yield*/, db$8.table2.bulkAdd([{}, {}], [1, 1]).catch(nop$1)];
+                                    case 3:
+                                        _a.sent(); // 1. success, 2. error event.
+                                        return [4 /*yield*/, db$8.table2.bulkAdd([{}, {}, {}], [2, 2, 3]).catch(nop$1)];
                                     case 4:
-                                        _context70.next = 6;
-                                        return db$8.table2.bulkAdd([{}, {}], [1, 1]).catch(nop$1);
-
-                                    case 6:
-                                        _context70.next = 8;
-                                        return db$8.table2.bulkAdd([{}, {}, {}], [2, 2, 3]).catch(nop$1);
-
-                                    case 8:
-                                        _context70.next = 10;
-                                        return db$8.table1.bulkAdd([{ id: {} }]).catch(nop$1);
-
-                                    case 10:
-                                    case 'end':
-                                        return _context70.stop();
+                                        _a.sent(); // 1. success, 2. error event. 3. success.
+                                        return [4 /*yield*/, db$8.table1.bulkAdd([{ id: {} }]).catch(nop$1)];
+                                    case 5:
+                                        _a.sent(); // Trigger direct exception (invalid key type)
+                                        return [2 /*return*/];
                                 }
-                            }, _callee67, this);
-                        })).catch(nop$1);
-                    });
-
-                case 4:
-                case 'end':
-                    return _context71.stop();
+                            });
+                        }).catch(nop$1);
+                    })];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee68, this);
-    }));
-    spawnedTest("creating using Table.bulkPut()", regeneratorRuntime.mark(function _callee71() {
-        return regeneratorRuntime.wrap(function _callee71$(_context74) {
-            while (1) switch (_context74.prev = _context74.next) {
+        });
+    });
+    spawnedTest("creating using Table.bulkPut()", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context74.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1, idx: 11 }
@@ -9324,65 +9028,54 @@
                         op: "create",
                         value: { idx: 14.2 }
                     }], function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee69() {
-                            return regeneratorRuntime.wrap(function _callee69$(_context72) {
-                                while (1) switch (_context72.prev = _context72.next) {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _context72.next = 2;
-                                        return db$8.table1.bulkPut([{ id: 1, idx: 11 }, { id: 1.2, idx: 11.2 }]);
-
+                                        return [4 /*yield*/, db$8.table1.bulkPut([{ id: 1, idx: 11 }, { id: 1.2, idx: 11.2 }])];
+                                    case 1:
+                                        _a.sent();
+                                        return [4 /*yield*/, db$8.table2.bulkPut([{ idx: 12 }, { idx: 12.2 }], [2, 2.2])];
                                     case 2:
-                                        _context72.next = 4;
-                                        return db$8.table2.bulkPut([{ idx: 12 }, { idx: 12.2 }], [2, 2.2]);
-
+                                        _a.sent();
+                                        return [4 /*yield*/, db$8.table3.bulkPut([{ idx: 13 }, { idx: 13.2 }])];
+                                    case 3:
+                                        _a.sent();
+                                        return [4 /*yield*/, db$8.table4.bulkPut([{ idx: 14 }, { idx: 14.2 }])];
                                     case 4:
-                                        _context72.next = 6;
-                                        return db$8.table3.bulkPut([{ idx: 13 }, { idx: 13.2 }]);
-
-                                    case 6:
-                                        _context72.next = 8;
-                                        return db$8.table4.bulkPut([{ idx: 14 }, { idx: 14.2 }]);
-
-                                    case 8:
-                                    case 'end':
-                                        return _context72.stop();
+                                        _a.sent();
+                                        return [2 /*return*/];
                                 }
-                            }, _callee69, this);
-                        }));
-                    });
-
+                            });
+                        });
+                    })];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, verifyErrorFlows(function () {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        return [4 /*yield*/, db$8.table3.bulkPut([{ idx: 1 }, { idx: 1 }]).catch(nop$1)];
+                                    case 1:
+                                        _a.sent(); // 1. success, 2. error event.
+                                        return [4 /*yield*/, db$8.table3.bulkPut([{ idx: 2 }, { idx: 2 }, { idx: 3 }]).catch(nop$1)];
+                                    case 2:
+                                        _a.sent(); // 1. success, 2. error event., 3. success
+                                        return [4 /*yield*/, db$8.table1.bulkPut([{ id: {} }]).catch(nop$1)];
+                                    case 3:
+                                        _a.sent(); // Trigger direct exception (invalid key type)
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }).catch(nop$1);
+                    })];
                 case 2:
-                    _context74.next = 4;
-                    return verifyErrorFlows(function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee70() {
-                            return regeneratorRuntime.wrap(function _callee70$(_context73) {
-                                while (1) switch (_context73.prev = _context73.next) {
-                                    case 0:
-                                        _context73.next = 2;
-                                        return db$8.table3.bulkPut([{ idx: 1 }, { idx: 1 }]).catch(nop$1);
-
-                                    case 2:
-                                        _context73.next = 4;
-                                        return db$8.table3.bulkPut([{ idx: 2 }, { idx: 2 }, { idx: 3 }]).catch(nop$1);
-
-                                    case 4:
-                                        _context73.next = 6;
-                                        return db$8.table1.bulkPut([{ id: {} }]).catch(nop$1);
-
-                                    case 6:
-                                    case 'end':
-                                        return _context73.stop();
-                                }
-                            }, _callee70, this);
-                        })).catch(nop$1);
-                    });
-
-                case 4:
-                case 'end':
-                    return _context74.stop();
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee71, this);
-    }));
+        });
+    });
     //
     // READING hooks test
     // Ways to produce READs:
@@ -9393,13 +9086,12 @@
     //  Collection.last()
     // But not:
     //  Table.filter() / Collection.and()
-    spawnedTest("reading tests", regeneratorRuntime.mark(function _callee73() {
+    spawnedTest("reading tests", function () {
         var readOps, readOps2;
-        return regeneratorRuntime.wrap(function _callee73$(_context76) {
-            while (1) switch (_context76.prev = _context76.next) {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context76.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { foo: "bar" }
@@ -9426,60 +9118,49 @@
                         op: "read",
                         obj: { fee: "bore" }
                     }], function () {
-                        return db$8.transaction('rw', 'table5', regeneratorRuntime.mark(function _callee72() {
-                            return regeneratorRuntime.wrap(function _callee72$(_context75) {
-                                while (1) switch (_context75.prev = _context75.next) {
+                        return db$8.transaction('rw', 'table5', function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _context75.next = 2;
-                                        return db$8.table5.bulkAdd([{ foo: "bar" }, { fee: "bore" }], [1, 2]);
-
+                                        return [4 /*yield*/, db$8.table5.bulkAdd([{ foo: "bar" }, { fee: "bore" }], [1, 2])];
+                                    case 1:
+                                        _a.sent();
+                                        return [4 /*yield*/, db$8.table5.toArray()];
                                     case 2:
-                                        _context75.next = 4;
-                                        return db$8.table5.toArray();
-
+                                        _a.sent();
+                                        return [4 /*yield*/, db$8.table5.reverse().each(function (x) {})];
+                                    case 3:
+                                        _a.sent();
+                                        return [4 /*yield*/, db$8.table5.orderBy(':id').first()];
                                     case 4:
-                                        _context75.next = 6;
-                                        return db$8.table5.reverse().each(function (x) {});
-
-                                    case 6:
-                                        _context75.next = 8;
-                                        return db$8.table5.orderBy(':id').first();
-
-                                    case 8:
-                                        _context75.next = 10;
-                                        return db$8.table5.orderBy(':id').last();
-
-                                    case 10:
-                                        _context75.next = 12;
-                                        return db$8.table5.filter(function (x) {
+                                        _a.sent();
+                                        return [4 /*yield*/, db$8.table5.orderBy(':id').last()];
+                                    case 5:
+                                        _a.sent();
+                                        return [4 /*yield*/, db$8.table5.filter(function (x) {
                                             return false;
-                                        }).toArray();
-
-                                    case 12:
-                                    case 'end':
-                                        return _context75.stop();
+                                        }).toArray()];
+                                    case 6:
+                                        _a.sent();
+                                        return [2 /*return*/];
                                 }
-                            }, _callee72, this);
-                        }));
-                    });
-
-                case 2:
+                            });
+                        });
+                    })];
+                case 1:
+                    _a.sent();
                     readOps = opLog.filter(function (o) {
                         return o.op === 'read';
                     }), readOps2 = opLog2.filter(function (o) {
                         return o.op === 'read';
                     });
-
                     QUnit.ok(readOps.every(function (o, i) {
                         return JSON.stringify(readOps2[i].obj.theObject) === JSON.stringify(o.obj);
                     }), "hook2 should have got hook1's return value");
-
-                case 4:
-                case 'end':
-                    return _context76.stop();
+                    return [2 /*return*/];
             }
-        }, _callee73, this);
-    }));
+        });
+    });
     //
     // UPDATING hooks test
     // Ways to produce UPDATEs:
@@ -9487,12 +9168,11 @@
     //  Table.bulkPut()
     //  Table.update()
     //  Collection.modify()
-    spawnedTest("updating using Table.put()", regeneratorRuntime.mark(function _callee76() {
-        return regeneratorRuntime.wrap(function _callee76$(_context79) {
-            while (1) switch (_context79.prev = _context79.next) {
+    spawnedTest("updating using Table.put()", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context79.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1, address: { city: 'A' } }
@@ -9502,59 +9182,46 @@
                         obj: { id: 1, address: { city: 'A' } },
                         mods: { "address.city": "B" }
                     }], function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee74() {
-                            return regeneratorRuntime.wrap(function _callee74$(_context77) {
-                                while (1) switch (_context77.prev = _context77.next) {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                db$8.table1.put({ id: 1, address: { city: 'A' } }); // create
+                                db$8.table1.put({ id: 1, address: { city: 'B' } }); // update
+                                return [2 /*return*/];
+                            });
+                        });
+                    })];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, verifyErrorFlows(function () {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        db$8.table1.put({ id: 1, address: { city: 'A' } }); // create
-                                        db$8.table1.put({ id: 1, address: { city: 'B' } }); // update
-
+                                        return [4 /*yield*/, db$8.table3.add({ id: 1, idx: 1 })];
+                                    case 1:
+                                        _a.sent();
+                                        return [4 /*yield*/, db$8.table3.put({ id: 2, idx: 1 }).catch(nop$1)];
                                     case 2:
-                                    case 'end':
-                                        return _context77.stop();
+                                        _a.sent(); // error event (constraint)
+                                        return [4 /*yield*/, db$8.table3.put({ id: {} }).catch(nop$1)];
+                                    case 3:
+                                        _a.sent(); // Trigger direct exception (invalid key type)
+                                        return [2 /*return*/];
                                 }
-                            }, _callee74, this);
-                        }));
-                    });
-
+                            });
+                        }).catch(nop$1);
+                    })];
                 case 2:
-                    _context79.next = 4;
-                    return verifyErrorFlows(function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee75() {
-                            return regeneratorRuntime.wrap(function _callee75$(_context78) {
-                                while (1) switch (_context78.prev = _context78.next) {
-                                    case 0:
-                                        _context78.next = 2;
-                                        return db$8.table3.add({ id: 1, idx: 1 });
-
-                                    case 2:
-                                        _context78.next = 4;
-                                        return db$8.table3.put({ id: 2, idx: 1 }).catch(nop$1);
-
-                                    case 4:
-                                        _context78.next = 6;
-                                        return db$8.table3.put({ id: {} }).catch(nop$1);
-
-                                    case 6:
-                                    case 'end':
-                                        return _context78.stop();
-                                }
-                            }, _callee75, this);
-                        })).catch(nop$1);
-                    });
-
-                case 4:
-                case 'end':
-                    return _context79.stop();
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee76, this);
-    }));
-    spawnedTest("updating using Table.bulkPut()", regeneratorRuntime.mark(function _callee79() {
-        return regeneratorRuntime.wrap(function _callee79$(_context82) {
-            while (1) switch (_context82.prev = _context82.next) {
+        });
+    });
+    spawnedTest("updating using Table.bulkPut()", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context82.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1, address: { city: 'A' } }
@@ -9564,59 +9231,46 @@
                         obj: { id: 1, address: { city: 'A' } },
                         mods: { "address.city": "B" }
                     }], function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee77() {
-                            return regeneratorRuntime.wrap(function _callee77$(_context80) {
-                                while (1) switch (_context80.prev = _context80.next) {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                db$8.table1.put({ id: 1, address: { city: 'A' } }); // create
+                                db$8.table1.put({ id: 1, address: { city: 'B' } }); // update
+                                return [2 /*return*/];
+                            });
+                        });
+                    })];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, verifyErrorFlows(function () {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        db$8.table1.put({ id: 1, address: { city: 'A' } }); // create
-                                        db$8.table1.put({ id: 1, address: { city: 'B' } }); // update
-
+                                        return [4 /*yield*/, db$8.table4.add({ idx: 1 }, 1)];
+                                    case 1:
+                                        _a.sent();
+                                        return [4 /*yield*/, db$8.table4.bulkPut([{ idx: 1 }], [2]).catch(nop$1)];
                                     case 2:
-                                    case 'end':
-                                        return _context80.stop();
+                                        _a.sent(); // error event (DataError)
+                                        return [4 /*yield*/, db$8.table3.bulkPut([{}], [{}]).catch(nop$1)];
+                                    case 3:
+                                        _a.sent(); // Trigger direct exception (invalid key type)
+                                        return [2 /*return*/];
                                 }
-                            }, _callee77, this);
-                        }));
-                    });
-
+                            });
+                        }).catch(nop$1);
+                    })];
                 case 2:
-                    _context82.next = 4;
-                    return verifyErrorFlows(function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee78() {
-                            return regeneratorRuntime.wrap(function _callee78$(_context81) {
-                                while (1) switch (_context81.prev = _context81.next) {
-                                    case 0:
-                                        _context81.next = 2;
-                                        return db$8.table4.add({ idx: 1 }, 1);
-
-                                    case 2:
-                                        _context81.next = 4;
-                                        return db$8.table4.bulkPut([{ idx: 1 }], [2]).catch(nop$1);
-
-                                    case 4:
-                                        _context81.next = 6;
-                                        return db$8.table3.bulkPut([{}], [{}]).catch(nop$1);
-
-                                    case 6:
-                                    case 'end':
-                                        return _context81.stop();
-                                }
-                            }, _callee78, this);
-                        })).catch(nop$1);
-                    });
-
-                case 4:
-                case 'end':
-                    return _context82.stop();
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee79, this);
-    }));
-    spawnedTest("updating using Table.update()", regeneratorRuntime.mark(function _callee82() {
-        return regeneratorRuntime.wrap(function _callee82$(_context85) {
-            while (1) switch (_context85.prev = _context85.next) {
+        });
+    });
+    spawnedTest("updating using Table.update()", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context85.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1, address: { city: 'A' } }
@@ -9626,63 +9280,53 @@
                         obj: { id: 1, address: { city: 'A' } },
                         mods: { "address.city": "B" }
                     }], function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee80() {
-                            return regeneratorRuntime.wrap(function _callee80$(_context83) {
-                                while (1) switch (_context83.prev = _context83.next) {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _context83.next = 2;
-                                        return db$8.table1.add({ id: 1, address: { city: 'A' } });
-
+                                        return [4 /*yield*/, db$8.table1.add({ id: 1, address: { city: 'A' } })];
+                                    case 1:
+                                        _a.sent(); // create
+                                        return [4 /*yield*/, db$8.table1.update(1, { "address.city": "B" })];
                                     case 2:
-                                        _context83.next = 4;
-                                        return db$8.table1.update(1, { "address.city": "B" });
-
-                                    case 4:
-                                    case 'end':
-                                        return _context83.stop();
+                                        _a.sent(); // update
+                                        return [2 /*return*/];
                                 }
-                            }, _callee80, this);
-                        }));
-                    });
-
+                            });
+                        });
+                    })];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, verifyErrorFlows(function () {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        return [4 /*yield*/, db$8.table3.bulkAdd([{ id: 1, idx: 1 }, { id: 2, idx: 2 }])];
+                                    case 1:
+                                        _a.sent();
+                                        return [4 /*yield*/, db$8.table3.update(1, { idx: 2 }).catch(nop$1)];
+                                    case 2:
+                                        _a.sent(); // error event (constraint)
+                                        return [4 /*yield*/, db$8.table3.update(1, 3).catch(nop$1)];
+                                    case 3:
+                                        _a.sent(); // Trigger direct exception?
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }).catch(nop$1);
+                    })];
                 case 2:
-                    _context85.next = 4;
-                    return verifyErrorFlows(function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee81() {
-                            return regeneratorRuntime.wrap(function _callee81$(_context84) {
-                                while (1) switch (_context84.prev = _context84.next) {
-                                    case 0:
-                                        _context84.next = 2;
-                                        return db$8.table3.bulkAdd([{ id: 1, idx: 1 }, { id: 2, idx: 2 }]);
-
-                                    case 2:
-                                        _context84.next = 4;
-                                        return db$8.table3.update(1, { idx: 2 }).catch(nop$1);
-
-                                    case 4:
-                                        _context84.next = 6;
-                                        return db$8.table3.update(1, 3).catch(nop$1);
-
-                                    case 6:
-                                    case 'end':
-                                        return _context84.stop();
-                                }
-                            }, _callee81, this);
-                        })).catch(nop$1);
-                    });
-
-                case 4:
-                case 'end':
-                    return _context85.stop();
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee82, this);
-    }));
-    spawnedTest("updating using Collection.modify()", regeneratorRuntime.mark(function _callee85() {
-        return regeneratorRuntime.wrap(function _callee85$(_context88) {
-            while (1) switch (_context88.prev = _context88.next) {
+        });
+    });
+    spawnedTest("updating using Collection.modify()", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context88.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1, address: { city: 'A' } }
@@ -9692,59 +9336,50 @@
                         obj: { id: 1, address: { city: 'A' } },
                         mods: { "address.city": "B" }
                     }], function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee83() {
-                            return regeneratorRuntime.wrap(function _callee83$(_context86) {
-                                while (1) switch (_context86.prev = _context86.next) {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _context86.next = 2;
-                                        return db$8.table1.add({ id: 1, address: { city: 'A' } });
-
+                                        return [4 /*yield*/, db$8.table1.add({ id: 1, address: { city: 'A' } })];
+                                    case 1:
+                                        _a.sent(); // create
+                                        return [4 /*yield*/, db$8.table1.where('id').equals(1).modify({ "address.city": "B" })];
                                     case 2:
-                                        _context86.next = 4;
-                                        return db$8.table1.where('id').equals(1).modify({ "address.city": "B" });
-
-                                    case 4:
-                                    case 'end':
-                                        return _context86.stop();
+                                        _a.sent(); // update
+                                        return [2 /*return*/];
                                 }
-                            }, _callee83, this);
-                        }));
-                    });
-
-                case 2:
-                    _context88.next = 4;
-                    return verifyErrorFlows(function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee84() {
-                            return regeneratorRuntime.wrap(function _callee84$(_context87) {
-                                while (1) switch (_context87.prev = _context87.next) {
+                            });
+                        });
+                    })];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, verifyErrorFlows(function () {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _context87.next = 2;
-                                        return db$8.table3.bulkAdd([{ id: 1, idx: 1 }, { id: 2, idx: 2 }]);
-
+                                        return [4 /*yield*/, db$8.table3.bulkAdd([{ id: 1, idx: 1 }, { id: 2, idx: 2 }])];
+                                    case 1:
+                                        _a.sent();
+                                        return [4 /*yield*/, db$8.table3.where('id').equals(1).modify({ idx: 2 }).catch(nop$1)];
                                     case 2:
-                                        _context87.next = 4;
-                                        return db$8.table3.where('id').equals(1).modify({ idx: 2 }).catch(nop$1);
-
-                                    case 4:
-                                        _context87.next = 6;
-                                        return db$8.table3.where('id').equals(1).modify(function () {
+                                        _a.sent(); // error event (constraint)
+                                        return [4 /*yield*/, db$8.table3.where('id').equals(1).modify(function () {
                                             throw "apa";
-                                        }).catch(nop$1);
-
-                                    case 6:
-                                    case 'end':
-                                        return _context87.stop();
+                                        }).catch(nop$1)];
+                                    case 3:
+                                        _a.sent(); // Trigger direct exception
+                                        return [2 /*return*/];
                                 }
-                            }, _callee84, this);
-                        })).catch(nop$1);
-                    });
-
-                case 4:
-                case 'end':
-                    return _context88.stop();
+                            });
+                        }).catch(nop$1);
+                    })];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee85, this);
-    }));
+        });
+    });
     //
     // DELETING hook tests
     //
@@ -9754,12 +9389,11 @@
     //  Table.clear()
     //  Collection.modify()
     //  Collection.delete()
-    spawnedTest("deleting using Table.delete(key)", regeneratorRuntime.mark(function _callee87() {
-        return regeneratorRuntime.wrap(function _callee87$(_context90) {
-            while (1) switch (_context90.prev = _context90.next) {
+    spawnedTest("deleting using Table.delete(key)", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context90.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1 }
@@ -9768,37 +9402,32 @@
                         key: 1,
                         obj: { id: 1 }
                     }], function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee86() {
-                            return regeneratorRuntime.wrap(function _callee86$(_context89) {
-                                while (1) switch (_context89.prev = _context89.next) {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _context89.next = 2;
-                                        return db$8.table1.add({ id: 1 });
-
+                                        return [4 /*yield*/, db$8.table1.add({ id: 1 })];
+                                    case 1:
+                                        _a.sent(); // create
+                                        return [4 /*yield*/, db$8.table1.delete(1)];
                                     case 2:
-                                        _context89.next = 4;
-                                        return db$8.table1.delete(1);
-
-                                    case 4:
-                                    case 'end':
-                                        return _context89.stop();
+                                        _a.sent(); // delete
+                                        return [2 /*return*/];
                                 }
-                            }, _callee86, this);
-                        }));
-                    });
-
-                case 2:
-                case 'end':
-                    return _context90.stop();
+                            });
+                        });
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee87, this);
-    }));
-    spawnedTest("deleting using Table.bulkDelete(key)", regeneratorRuntime.mark(function _callee89() {
-        return regeneratorRuntime.wrap(function _callee89$(_context92) {
-            while (1) switch (_context92.prev = _context92.next) {
+        });
+    });
+    spawnedTest("deleting using Table.bulkDelete(key)", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context92.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1 }
@@ -9807,37 +9436,32 @@
                         key: 1,
                         obj: { id: 1 }
                     }], function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee88() {
-                            return regeneratorRuntime.wrap(function _callee88$(_context91) {
-                                while (1) switch (_context91.prev = _context91.next) {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _context91.next = 2;
-                                        return db$8.table1.add({ id: 1 });
-
+                                        return [4 /*yield*/, db$8.table1.add({ id: 1 })];
+                                    case 1:
+                                        _a.sent(); // create
+                                        return [4 /*yield*/, db$8.table1.bulkDelete([1])];
                                     case 2:
-                                        _context91.next = 4;
-                                        return db$8.table1.bulkDelete([1]);
-
-                                    case 4:
-                                    case 'end':
-                                        return _context91.stop();
+                                        _a.sent(); // delete
+                                        return [2 /*return*/];
                                 }
-                            }, _callee88, this);
-                        }));
-                    });
-
-                case 2:
-                case 'end':
-                    return _context92.stop();
+                            });
+                        });
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee89, this);
-    }));
-    spawnedTest("deleting using Table.clear()", regeneratorRuntime.mark(function _callee91() {
-        return regeneratorRuntime.wrap(function _callee91$(_context94) {
-            while (1) switch (_context94.prev = _context94.next) {
+        });
+    });
+    spawnedTest("deleting using Table.clear()", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context94.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1 }
@@ -9846,37 +9470,32 @@
                         key: 1,
                         obj: { id: 1 }
                     }], function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee90() {
-                            return regeneratorRuntime.wrap(function _callee90$(_context93) {
-                                while (1) switch (_context93.prev = _context93.next) {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _context93.next = 2;
-                                        return db$8.table1.add({ id: 1 });
-
+                                        return [4 /*yield*/, db$8.table1.add({ id: 1 })];
+                                    case 1:
+                                        _a.sent(); // create
+                                        return [4 /*yield*/, db$8.table1.clear()];
                                     case 2:
-                                        _context93.next = 4;
-                                        return db$8.table1.clear();
-
-                                    case 4:
-                                    case 'end':
-                                        return _context93.stop();
+                                        _a.sent(); // delete
+                                        return [2 /*return*/];
                                 }
-                            }, _callee90, this);
-                        }));
-                    });
-
-                case 2:
-                case 'end':
-                    return _context94.stop();
+                            });
+                        });
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee91, this);
-    }));
-    spawnedTest("deleting using Table.modify()", regeneratorRuntime.mark(function _callee93() {
-        return regeneratorRuntime.wrap(function _callee93$(_context96) {
-            while (1) switch (_context96.prev = _context96.next) {
+        });
+    });
+    spawnedTest("deleting using Table.modify()", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context96.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1 }
@@ -9885,39 +9504,34 @@
                         key: 1,
                         obj: { id: 1 }
                     }], function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee92() {
-                            return regeneratorRuntime.wrap(function _callee92$(_context95) {
-                                while (1) switch (_context95.prev = _context95.next) {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _context95.next = 2;
-                                        return db$8.table1.add({ id: 1 });
-
-                                    case 2:
-                                        _context95.next = 4;
-                                        return db$8.table1.where('id').between(0, 2).modify(function () {
+                                        return [4 /*yield*/, db$8.table1.add({ id: 1 })];
+                                    case 1:
+                                        _a.sent(); // create
+                                        return [4 /*yield*/, db$8.table1.where('id').between(0, 2).modify(function () {
                                             delete this.value;
-                                        });
-
-                                    case 4:
-                                    case 'end':
-                                        return _context95.stop();
+                                        })];
+                                    case 2:
+                                        _a.sent(); // delete
+                                        return [2 /*return*/];
                                 }
-                            }, _callee92, this);
-                        }));
-                    });
-
-                case 2:
-                case 'end':
-                    return _context96.stop();
+                            });
+                        });
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee93, this);
-    }));
-    spawnedTest("deleting using Collection.delete()", regeneratorRuntime.mark(function _callee95() {
-        return regeneratorRuntime.wrap(function _callee95$(_context98) {
-            while (1) switch (_context98.prev = _context98.next) {
+        });
+    });
+    spawnedTest("deleting using Collection.delete()", function () {
+        return __generator$10(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _context98.next = 2;
-                    return expect([{
+                    return [4 /*yield*/, expect([{
                         op: "create",
                         key: 1,
                         value: { id: 1 }
@@ -9926,31 +9540,27 @@
                         key: 1,
                         obj: { id: 1 }
                     }], function () {
-                        return db$8.transaction('rw', db$8.tables, regeneratorRuntime.mark(function _callee94() {
-                            return regeneratorRuntime.wrap(function _callee94$(_context97) {
-                                while (1) switch (_context97.prev = _context97.next) {
+                        return db$8.transaction('rw', db$8.tables, function () {
+                            return __generator$10(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _context97.next = 2;
-                                        return db$8.table1.add({ id: 1 });
-
+                                        return [4 /*yield*/, db$8.table1.add({ id: 1 })];
+                                    case 1:
+                                        _a.sent(); // create
+                                        return [4 /*yield*/, db$8.table1.where('id').between(0, 2).delete()];
                                     case 2:
-                                        _context97.next = 4;
-                                        return db$8.table1.where('id').between(0, 2).delete();
-
-                                    case 4:
-                                    case 'end':
-                                        return _context97.stop();
+                                        _a.sent(); // delete
+                                        return [2 /*return*/];
                                 }
-                            }, _callee94, this);
-                        }));
-                    });
-
-                case 2:
-                case 'end':
-                    return _context98.stop();
+                            });
+                        });
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
-        }, _callee95, this);
-    }));
+        });
+    });
 
     var __awaiter$5 = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
         return new (P || (P = Promise))(function (resolve, reject) {
@@ -9976,14 +9586,17 @@
             step((generator = generator.apply(thisArg, _arguments || [])).next());
         });
     };
-    var __generator$5 = undefined && undefined.__generator || function (thisArg, body) {
+    var __generator$11 = undefined && undefined.__generator || function (thisArg, body) {
         var _ = { label: 0, sent: function () {
                 if (t[0] & 1) throw t[1];return t[1];
             }, trys: [], ops: [] },
             f,
             y,
-            t;
-        return { next: verb(0), "throw": verb(1), "return": verb(2) };
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
         function verb(n) {
             return function (v) {
                 return step([n, v]);
@@ -10068,7 +9681,7 @@
     promisedTest("Test blobs", function () {
         return __awaiter$5(_this$4, void 0, void 0, function () {
             var binaryData, blob, back, arrayBuffer, resultBinaryData;
-            return __generator$5(this, function (_a) {
+            return __generator$11(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         binaryData = new Uint8Array([1, 2, 3, 4]);
@@ -10095,7 +9708,7 @@
                 QUnit.ok(modifications.blob instanceof Blob, "When hook is called, the modifications should point to a Blob object");
             }
             var binaryData, blob, back, arrayBuffer, resultBinaryData;
-            return __generator$5(this, function (_a) {
+            return __generator$11(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0,, 5, 6]);
@@ -10151,14 +9764,17 @@
             step((generator = generator.apply(thisArg, _arguments || [])).next());
         });
     };
-    var __generator$6 = undefined && undefined.__generator || function (thisArg, body) {
+    var __generator$12 = undefined && undefined.__generator || function (thisArg, body) {
         var _ = { label: 0, sent: function () {
                 if (t[0] & 1) throw t[1];return t[1];
             }, trys: [], ops: [] },
             f,
             y,
-            t;
-        return { next: verb(0), "throw": verb(1), "return": verb(2) };
+            t,
+            g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+            return this;
+        }), g;
         function verb(n) {
             return function (v) {
                 return step([n, v]);
@@ -10223,7 +9839,7 @@
     promisedTest('Binary Primary Key (Int32Array)', function () {
         return __awaiter$6(_this$5, void 0, void 0, function () {
             var id, back;
-            return __generator$6(this, function (_a) {
+            return __generator$12(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!supports("binarykeys")) {
@@ -10262,7 +9878,7 @@
     promisedTest('Binary Primary Key (Float32Array)', function () {
         return __awaiter$6(_this$5, void 0, void 0, function () {
             var id, back;
-            return __generator$6(this, function (_a) {
+            return __generator$12(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!supports("binarykeys")) {
@@ -10301,9 +9917,9 @@
     });
     promisedTest('Binary Index', function () {
         return __awaiter$6(_this$5, void 0, void 0, function () {
-            var _a, _b, x;
-            return __generator$6(this, function (_c) {
-                switch (_c.label) {
+            var _a, x;
+            return __generator$12(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         if (!supports("binarykeys")) {
                             QUnit.ok(true, "This browser does not support IndexedDB 2.0");
@@ -10312,10 +9928,10 @@
                         _a = QUnit.equal;
                         return [4 /*yield*/, db$10.items.where('data').equals(new Uint8Array([1, 2, 3])).count()];
                     case 1:
-                        _a.apply(void 0, [_c.sent(), 1, "Should be able to query on binary key"]);
+                        _a.apply(void 0, [_b.sent(), 1, "Should be able to query on binary key"]);
                         return [4 /*yield*/, db$10.items.where('data').anyOf([new Uint8Array([1, 2, 3]), new Uint8Array([4, 5, 6])]).toArray()];
                     case 2:
-                        x = _c.sent();
+                        x = _b.sent();
                         QUnit.equal(x.length, 2, "Should find both keys even though the second has another binary type (IndexedDB should not distinguish them)");
                         return [2 /*return*/];
                 }
@@ -10325,7 +9941,7 @@
     promisedTest('OR-query', function () {
         return __awaiter$6(_this$5, void 0, void 0, function () {
             var a;
-            return __generator$6(this, function (_a) {
+            return __generator$12(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!supports("binarykeys")) {
