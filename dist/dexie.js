@@ -4,7 +4,7 @@
  *
  * By David Fahlander, david.fahlander@gmail.com
  *
- * Version 2.0.2, Thu Mar 01 2018
+ * Version 2.0.2, Tue Mar 13 2018
  *
  * http://dexie.org
  *
@@ -1469,7 +1469,7 @@ function Events(ctx) {
  *
  * Copyright (c) 2014-2017 David Fahlander
  *
- * Version 2.0.2, Thu Mar 01 2018
+ * Version 2.0.2, Tue Mar 13 2018
  *
  * http://dexie.org
  *
@@ -4097,7 +4097,7 @@ function Dexie(dbName, options) {
             }
         }
         // Bug with getAll() on Safari ver<604 on Workers only, see discussion following PR #579
-        if (/Safari/.test(navigator.userAgent) &&
+        if (typeof navigator !== 'undefined' && /Safari/.test(navigator.userAgent) &&
             !/(Chrome\/|Edge\/)/.test(navigator.userAgent) &&
             _global.WorkerGlobalScope && _global instanceof _global.WorkerGlobalScope &&
             [].concat(navigator.userAgent.match(/Safari\/(\d*)/))[1] < 604) {
