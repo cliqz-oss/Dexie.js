@@ -621,7 +621,7 @@ var ZONE_ECHO_LIMIT = 7;
 var nativePromiseInstanceAndProto = (function () {
     try {
         // Be able to patch native async functions
-        return new Function("let F=async ()=>{},p=F();return [p,Object.getPrototypeOf(p),Promise.resolve(),F.constructor];")();
+        return [Promise.resolve(), Promise.prototype, Promise.resolve(), Function.constructor];
     }
     catch (e) {
         var P = _global.Promise;
@@ -1071,7 +1071,7 @@ function getStack(promise, stacks, limit) {
 function linkToPreviousPromise(promise, prev) {
     // Support long stacks by linking to previous completed promise.
     var numPrev = prev ? prev._numPrev + 1 : 0;
-    if (numPrev < LONG_STACKS_CLIP_LIMIT) {
+    if (numPrev < LONG_STACKS_CLIP_LIMIT) { // Prohibit infinite Promise loops to get an infinite long memory consuming "tail".
         promise._prev = prev;
         promise._numPrev = numPrev;
     }
@@ -1712,7 +1712,7 @@ function Dexie(dbName, options) {
                 }
             });
             queue.push(function (idbtrans) {
-                if (!anyContentUpgraderHasRun || !hasIEDeleteObjectStoreBug) {
+                if (!anyContentUpgraderHasRun || !hasIEDeleteObjectStoreBug) { // Dont delete old tables if ieBug is present and a content upgrader has run. Let tables be left in DB so far. This needs to be taken care of.
                     var newSchema = version._cfg.dbschema;
                     // Delete old tables
                     deleteRemovedTables(newSchema, idbtrans);
@@ -1903,7 +1903,7 @@ function Dexie(dbName, options) {
                 req.onblocked = wrap(fireOnBlocked);
                 req.onupgradeneeded = wrap(function (e) {
                     upgradeTransaction = req.transaction;
-                    if (autoSchema && !db._allowEmptyDB) {
+                    if (autoSchema && !db._allowEmptyDB) { // Unless an addon has specified db._allowEmptyDB, lets make the call fail.
                         // Caller did not specify a version or schema. Doing that is only acceptable for opening alread existing databases.
                         // If onupgradeneeded is called it means database did not exist. Reject the open() promise and make sure that we
                         // do not create a new database by accident here.
@@ -2648,7 +2648,7 @@ function Dexie(dbName, options) {
                 if (creatingHook !== nop) {
                     var effectiveKey = (key != null) ? key : (idbstore.keyPath ? getByKeyPath(obj, idbstore.keyPath) : undefined);
                     var keyToUse = creatingHook.call(hookCtx, effectiveKey, obj, trans); // Allow subscribers to when("creating") to generate the key.
-                    if (effectiveKey == null && keyToUse != null) {
+                    if (effectiveKey == null && keyToUse != null) { // Using "==" and "!=" to check for either null or undefined!
                         if (idbstore.keyPath)
                             setByKeyPath(obj, idbstore.keyPath, keyToUse);
                         else
@@ -2690,7 +2690,7 @@ function Dexie(dbName, options) {
                 //
                 var keyPath = this.schema.primKey.keyPath;
                 var effectiveKey = (key !== undefined) ? key : (keyPath && getByKeyPath(obj, keyPath));
-                if (effectiveKey == null)
+                if (effectiveKey == null) // "== null" means checking for either null or undefined.
                     return this.add(obj);
                 // Since key is optional, make sure we get it from obj if not provided
                 // Primary key exist. Lock transaction and try modifying existing. If nothing modified, call add().
@@ -3829,7 +3829,7 @@ function Dexie(dbName, options) {
                             checkFinished();
                             return true; // Catch these errors and let a final rejection decide whether or not to abort entire transaction
                         }
-                        if (modifyer.call(thisContext, item, thisContext) !== false) {
+                        if (modifyer.call(thisContext, item, thisContext) !== false) { // If a callback explicitely returns false, do not perform the update!
                             var bDelete = !hasOwn(thisContext, "value");
                             ++count;
                             tryCatch(function () {
@@ -3873,7 +3873,8 @@ function Dexie(dbName, options) {
                 var ctx = this._ctx, range = ctx.range, deletingHook = ctx.table.hook.deleting.fire, hasDeleteHook = deletingHook !== nop;
                 if (!hasDeleteHook &&
                     isPlainKeyRange(ctx) &&
-                    ((ctx.isPrimKey && !hangsOnDeleteLargeKeyRange) || !range)) {
+                    ((ctx.isPrimKey && !hangsOnDeleteLargeKeyRange) || !range)) // if no range, we'll use clear().
+                 {
                     // May use IDBObjectStore.delete(IDBKeyRange) in this case (Issue #208)
                     // For chromium, this is the way most optimized version.
                     // For IE/Edge, this could hang the indexedDB engine and make operating system instable
@@ -3905,6 +3906,7 @@ function Dexie(dbName, options) {
                         keysOnly: !ctx.isMatch && !hasDeleteHook
                     }) // load just keys (unless filter() or and() or deleteHook has subscribers)
                         .distinct() // In case multiEntry is used, never delete same key twice because resulting count
+                        // would become larger than actual delete count.
                         .limit(CHUNKSIZE)
                         .raw(); // Don't filter through reading-hooks (like mapped classes etc)
                     var keysOrTuples = [];
@@ -4182,9 +4184,9 @@ function hookedEventRejectHandler(reject) {
     });
 }
 function preventDefault(event) {
-    if (event.stopPropagation)
+    if (event.stopPropagation) // IndexedDBShim doesnt support this on Safari 8 and below.
         event.stopPropagation();
-    if (event.preventDefault)
+    if (event.preventDefault) // IndexedDBShim doesnt support this on Safari 8 and below.
         event.preventDefault();
 }
 function awaitIterator(iterator) {

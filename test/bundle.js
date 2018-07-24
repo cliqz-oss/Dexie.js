@@ -185,8 +185,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
@@ -1067,8 +1067,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
@@ -1731,8 +1731,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
@@ -2606,8 +2606,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
@@ -3424,8 +3424,8 @@
                     case 0:
                         return [4 /*yield*/, db$3.transaction('rw', db$3.users, function (trans) {
                             return __awaiter$1(_this, void 0, void 0, function () {
-                                var _this = this;
                                 var result;
+                                var _this = this;
                                 return __generator$3(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
@@ -3549,8 +3549,8 @@
     });
     promisedTest("Dexie.waitFor() outside transaction", function () {
         return __awaiter$1(_this$1, void 0, void 0, function () {
-            var _this = this;
             var result, codeExecuted;
+            var _this = this;
             return __generator$3(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -3761,8 +3761,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
@@ -4269,8 +4269,8 @@
     });
     promisedTest("#392 db.on('ready') don't fire if subscribed while waiting other promise-returning subscriber", function () {
         return __awaiter$2(_this$2, void 0, void 0, function () {
-            var _this = this;
             var db, first, second, third;
+            var _this = this;
             return __generator$4(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -4327,8 +4327,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
@@ -5210,7 +5210,7 @@
     var nativePromiseInstanceAndProto = function () {
         try {
             // Be able to patch native async functions
-            return new Function("let F=async ()=>{},p=F();return [p,Object.getPrototypeOf(p),Promise.resolve(),F.constructor];")();
+            return [Promise$1.resolve(), Promise$1.prototype, Promise$1.resolve(), Function.constructor];
         } catch (e) {
             var P = _global.Promise;
             return P ? [P.resolve(), P.prototype, P.resolve()] : [];
@@ -5640,6 +5640,7 @@
         // Support long stacks by linking to previous completed promise.
         var numPrev = prev ? prev._numPrev + 1 : 0;
         if (numPrev < LONG_STACKS_CLIP_LIMIT) {
+            // Prohibit infinite Promise loops to get an infinite long memory consuming "tail".
             promise._prev = prev;
             promise._numPrev = numPrev;
         }
@@ -5976,8 +5977,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
@@ -6025,8 +6026,8 @@
     }(Error);
     function isIdbAndPromiseCompatible() {
         return __awaiter$4(this, void 0, void 0, function () {
-            var _this = this;
             var db;
+            var _this = this;
             return __generator$7(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -6119,8 +6120,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
@@ -6424,8 +6425,8 @@
     });
     promisedTest("Should patch global Promise within transaction scopes but leave them intact outside", function () {
         return __awaiter$3(_this$3, void 0, void 0, function () {
-            var _this = this;
             var GlobalPromise;
+            var _this = this;
             return __generator$6(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -6461,8 +6462,8 @@
                     case 0:
                         return [4 /*yield*/, db$5.transaction('rw', db$5.items, function () {
                             return __awaiter$3(_this, void 0, void 0, function () {
-                                var _this = this;
                                 var trans;
+                                var _this = this;
                                 return __generator$6(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
@@ -6673,8 +6674,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
@@ -7091,7 +7092,8 @@
         var errorList = [];
         function globalRejectionHandler(ev) {
             console.log("Got error: " + ev.reason);
-            if (errorList.indexOf(ev.reason) === -1) errorList.push(ev.reason);
+            if (errorList.indexOf(ev.reason) === -1) // Current implementation: accept multiple redundant triggers
+                errorList.push(ev.reason);
             ev.preventDefault();
         }
         window.addEventListener('unhandledrejection', globalRejectionHandler);
@@ -7665,8 +7667,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
@@ -8383,8 +8385,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
@@ -9615,8 +9617,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
@@ -9793,8 +9795,8 @@
         function step(op) {
             if (f) throw new TypeError("Generator is already executing.");
             while (_) try {
-                if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [0, t.value];
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
                 switch (op[0]) {
                     case 0:case 1:
                         t = op;break;
